@@ -68,7 +68,18 @@ def pick_schedule(roster, old):
                 if key in values:
                     continue
                 candidates = [f for f in roster if f["difficulty"] == level and (mode == "Expert (All Sports)" or f["sport"] == mode)]
-                chosen = candidates[fnv32("combatculture-v4|" + day + "|" + mode + "|" + level) % len(candidates)]
+                # Avoid recently used answers in the same mode and level.
+                # Never alter previously scheduled answers, including today's.
+                recent = set()
+                for back in range(1, 15):
+                    previous = (dt.date.fromisoformat(day) - dt.timedelta(days=back)).isoformat()
+                    prior = result.get(previous, {}).get(key)
+                    if prior:
+                        recent.add(prior)
+                eligible = [f for f in candidates if f["sport"] + "::" + f["name"] not in recent]
+                if not eligible:
+                    eligible = candidates
+                chosen = eligible[fnv32("combatculture-v4|" + day + "|" + mode + "|" + level) % len(eligible)]
                 values[key] = chosen["sport"] + "::" + chosen["name"]
     return result
 
