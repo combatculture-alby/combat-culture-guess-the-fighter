@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SPORTS = ("Muay Thai", "Boxing", "Kickboxing", "MMA")
 MODES = SPORTS + ("Expert (All Sports)",)
 LEVELS = ("Easy", "Medium", "Hard")
-FIELDS = ("name", "country", "style", "stance", "era", "difficulty", "sport", "nickname")
+FIELDS = ("name", "country", "style", "stance", "era", "difficulty", "sport", "nickname", "funFact", "sourceUrl")
 
 
 def fnv32(text):
