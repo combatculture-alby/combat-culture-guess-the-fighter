@@ -25,6 +25,18 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Check Google feed response
+        env:
+          FIGHTER_FEED_URL: 'https://script.google.com/macros/s/AKfycbwdg5hh-fRgs_eUadis_7hG01IVZLnNOgGeDijxdiN6gfDdmGxRUjbEe3N2b6A7XBr02w/exec'
+        run: |
+          python - <<'PY'
+          import os, urllib.request
+          with urllib.request.urlopen(os.environ["FIGHTER_FEED_URL"], timeout=45) as response:
+              prefix = response.read(500)
+              print("HTTP status:", response.status)
+              print("Content type:", response.headers.get("Content-Type"))
+              print("Response preview:", repr(prefix[:300].decode("utf-8", "replace")))
+          PY
       - name: Refresh roster
         env:
           FIGHTER_FEED_URL: 'https://script.google.com/macros/s/AKfycbwdg5hh-fRgs_eUadis_7hG01IVZLnNOgGeDijxdiN6gfDdmGxRUjbEe3N2b6A7XBr02w/exec'
