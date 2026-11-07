@@ -21,12 +21,10 @@ To embed in a WordPress **Custom HTML** block:
 
 The private [master fighter spreadsheet](https://docs.google.com/spreadsheets/d/1lH5AXjZkJD1m6Qddx-awPigFeL_-us_VcVLrByYwjuo/edit) stays the source of truth. The public game feed returns **only** seven permitted columns from the four fighter tabs. It does not expose your private Google Sheet file or give anyone edit access.
 
-1. Open https://script.google.com/ and create a new project, **Combat Culture Fighter Feed**.
-2. Replace `Code.gs` with the contents of [`apps-script/Code.gs`](apps-script/Code.gs). Save.
-3. Select **Deploy → New deployment → Web app**. Choose **Execute as: Me** and **Who has access: Anyone**. Authorize the script to read the spreadsheet, then **Deploy**.
-4. Copy the Web App URL ending in `/exec`.
-5. Open this repository's **Settings → Secrets and variables → Actions → New repository secret**. Name it `FIGHTER_FEED_URL`; paste the Web App URL as its value.
-6. Open **Actions → Refresh fighter roster from Google Sheets → Run workflow** to sync immediately. It also runs automatically every three hours thereafter.
+1. The Apps Script feed is deployed by the master spreadsheet owner. It returns the four game tabs and seven fighter columns only.
+2. The public feed URL is configured in [the refresh workflow](.github/workflows/sync-fighters.yml). No GitHub secret is required for this public, read-only endpoint.
+3. [GitHub Actions](https://github.com/combatculture-alby/combat-culture-guess-the-fighter/actions/workflows/sync-fighters.yml) synchronizes the roster every three hours and when the workflow is manually run.
+4. Future Apps Script deployments can be connected by updating the `FIGHTER_FEED_URL` value in the refresh workflow.
 
 Do not publish the entire master workbook to the web; the Apps Script is a narrower read-only data feed. Only enable the Web App's public access if you're comfortable making the game's fighter names, nicknames, styles, etc. visible to anyone.
 
