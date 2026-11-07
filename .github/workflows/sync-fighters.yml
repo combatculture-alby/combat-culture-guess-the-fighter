@@ -4,6 +4,9 @@ on:
   schedule:
     - cron: '17 */3 * * *'
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/sync-fighters.yml'
 
 permissions:
   contents: write
@@ -24,13 +27,8 @@ jobs:
           python-version: '3.12'
       - name: Refresh roster
         env:
-          FIGHTER_FEED_URL: ${{ secrets.FIGHTER_FEED_URL }}
-        run: |
-          if [ -z "$FIGHTER_FEED_URL" ]; then
-            echo "Roster sync not configured yet. Add FIGHTER_FEED_URL to Actions secrets."
-            exit 0
-          fi
-          python scripts/sync_fighters.py
+          FIGHTER_FEED_URL: 'https://script.google.com/macros/s/AKfycbwdg5hh-fRgs_eUadis_7hG01IVZLnNOgGeDijxdiN6gfDdmGxRUjbEe3N2b6A7XBr02w/exec'
+        run: python scripts/sync_fighters.py
       - name: Commit changes if needed
         run: |
           git add data/fighters.json data/daily-picks.json
