@@ -27,7 +27,7 @@ jobs:
           python-version: '3.12'
       - name: Check Google feed response
         env:
-          FIGHTER_FEED_URL: 'https://script.google.com/macros/s/AKfycbwdg5hh-fRgs_eUadis_7hG01IVZLnNOgGeDijxdiN6gfDdmGxRUjbEe3N2b6A7XBr02w/exec'
+          FIGHTER_FEED_URL: 'https://script.google.com/macros/s/AKfycbziDvOMDdW1sMxaXWfFMtb7WdFeA6iYral_4JaAXh34jN-fo_mOGZBwO1Gy6fuvyFgkmg/exec'
         run: |
           python - <<'PY'
           import os, urllib.request
@@ -39,7 +39,7 @@ jobs:
           PY
       - name: Refresh roster
         env:
-          FIGHTER_FEED_URL: 'https://script.google.com/macros/s/AKfycbwdg5hh-fRgs_eUadis_7hG01IVZLnNOgGeDijxdiN6gfDdmGxRUjbEe3N2b6A7XBr02w/exec'
+          FIGHTER_FEED_URL: 'https://script.google.com/macros/s/AKfycbziDvOMDdW1sMxaXWfFMtb7WdFeA6iYral_4JaAXh34jN-fo_mOGZBwO1Gy6fuvyFgkmg/exec'
         run: python scripts/sync_fighters.py
       - name: Commit changes if needed
         run: |
