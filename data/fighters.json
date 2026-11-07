@@ -1,0 +1,2502 @@
+[
+  {
+    "name": "Apidej Sit-Hirun",
+    "country": "Thailand",
+    "style": "Tae",
+    "stance": "Orthodox",
+    "era": "1960s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Kicker from Bang Nok Khwaek"
+  },
+  {
+    "name": "Wichannoi Porntawee",
+    "country": "Thailand",
+    "style": "Mat",
+    "stance": "Orthodox",
+    "era": "1970s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "The Immortal Boxer"
+  },
+  {
+    "name": "Pudpadnoi Worawut",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Southpaw",
+    "era": "1970s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Golden Shin"
+  },
+  {
+    "name": "Samart Payakaroon",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Southpaw",
+    "era": "1980s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "Jade-Faced Tiger"
+  },
+  {
+    "name": "Dieselnoi Chor Thanasukarn",
+    "country": "Thailand",
+    "style": "Khao",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "Lord Sky-Piercing Knee"
+  },
+  {
+    "name": "Karuhat Sor Supawan",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Top Wizard"
+  },
+  {
+    "name": "Chamuekpet Hapalang",
+    "country": "Thailand",
+    "style": "Khao",
+    "stance": "Southpaw",
+    "era": "1980s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Everlasting Flower"
+  },
+  {
+    "name": "Panomtuanlek Hapalang",
+    "country": "Thailand",
+    "style": "Khao",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Marine Storm Knee Kicker"
+  },
+  {
+    "name": "Samransak Muangsurin",
+    "country": "Thailand",
+    "style": "Mat",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "The Iron Fist"
+  },
+  {
+    "name": "Kongtoranee Payakaroon",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Boy Wonder"
+  },
+  {
+    "name": "Langsuan Panyuthaphum",
+    "country": "Thailand",
+    "style": "Khao",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Brutal Knee Kicker"
+  },
+  {
+    "name": "Oley Kiatoneway",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Black Pearl"
+  },
+  {
+    "name": "Cherry Sor Wanich",
+    "country": "Thailand",
+    "style": "Khao",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Black Shark"
+  },
+  {
+    "name": "Wangchannoi Sor Palangchai",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "33-Second Lightning Punch"
+  },
+  {
+    "name": "Sagat Petchyindee",
+    "country": "Thailand",
+    "style": "Mat",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "KO King"
+  },
+  {
+    "name": "Namsaknoi Yudthagarngamtorn",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "The Emperor"
+  },
+  {
+    "name": "Ramon Dekkers",
+    "country": "Netherlands",
+    "style": "Mat",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "The Turbine from Hell"
+  },
+  {
+    "name": "Samson Dutch Boy Gym",
+    "country": "Thailand",
+    "style": "Bouk",
+    "stance": "Southpaw",
+    "era": "1990s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "The Bull of Roi Et"
+  },
+  {
+    "name": "Lamnamoon Sor Sumalee",
+    "country": "Thailand",
+    "style": "Khao",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Vampire Knees"
+  },
+  {
+    "name": "Neungsiam Fairtex",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "The Rock"
+  },
+  {
+    "name": "Jongsanan Fairtex",
+    "country": "Thailand",
+    "style": "Bouk",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "The Wooden Man"
+  },
+  {
+    "name": "Boonlai Sor.Thanikul",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Twin Steel Boxers"
+  },
+  {
+    "name": "Yodkhunpon Sittraiphum",
+    "country": "Thailand",
+    "style": "Sok",
+    "stance": "Southpaw",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Elbow Hunter of 100 Stitches"
+  },
+  {
+    "name": "Sangtiennoi Sor Rungroj",
+    "country": "Thailand",
+    "style": "Bouk",
+    "stance": "Southpaw",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Fatal Kiss"
+  },
+  {
+    "name": "Bunkerd Fairtex",
+    "country": "Thailand",
+    "style": "Tae",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "The People's Champion"
+  },
+  {
+    "name": "Jean-Charles Skarbowsky",
+    "country": "France",
+    "style": "Tae",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "The Deadly Perfume"
+  },
+  {
+    "name": "Saenchai Sor Kingstar",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Southpaw",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "Ultimate Boxer from Sarakham"
+  },
+  {
+    "name": "Yodsanklai Fairtex",
+    "country": "Thailand",
+    "style": "Tae",
+    "stance": "Southpaw",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "The Boxing Computer"
+  },
+  {
+    "name": "Buakaw Banchamek",
+    "country": "Thailand",
+    "style": "Bouk",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "The White Lotus"
+  },
+  {
+    "name": "Sam-A Gaiyanghadao",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Southpaw",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Left Hand Wildfire"
+  },
+  {
+    "name": "Dany Bill",
+    "country": "Cameroon",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "The Dangerous Black Lion"
+  },
+  {
+    "name": "John Wayne Parr",
+    "country": "Australia",
+    "style": "Bouk",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "The Gunslinger"
+  },
+  {
+    "name": "Petchboonchu FA Group",
+    "country": "Thailand",
+    "style": "Khao",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Knee Killer of the Mekong"
+  },
+  {
+    "name": "Singdam Kiatmuu9",
+    "country": "Thailand",
+    "style": "Tae",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Fierce Tiger of Khmer"
+  },
+  {
+    "name": "Sangmanee Sor Tienpo",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Million Dollar Baby"
+  },
+  {
+    "name": "Liam Harrison",
+    "country": "UK",
+    "style": "Bouk",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "The Hitman"
+  },
+  {
+    "name": "Nong-O Hama",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "The Deadly Left Leg"
+  },
+  {
+    "name": "Rodtang Jitmuangnon",
+    "country": "Thailand",
+    "style": "Mat",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "The Iron Man"
+  },
+  {
+    "name": "Superbon Singha Mawynn",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": ""
+  },
+  {
+    "name": "Tawanchai P.K. Saenchaimuaythaigym",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Southpaw",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "The Beautiful Left"
+  },
+  {
+    "name": "Saeksan Or. Kwanmuang",
+    "country": "Thailand",
+    "style": "Bouk",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "The Man Who Yields to No One"
+  },
+  {
+    "name": "Jonathan Haggerty",
+    "country": "UK",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "The General"
+  },
+  {
+    "name": "Nabil Anane",
+    "country": "Thailand",
+    "style": "Tae",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Dieselnoi Tho"
+  },
+  {
+    "name": "Dani Rodriguez",
+    "country": "Switzerland",
+    "style": "Femur",
+    "stance": "Southpaw",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "The Chosen One"
+  },
+  {
+    "name": "Petchmorakot Petchyindee Academy",
+    "country": "Thailand",
+    "style": "Khao",
+    "stance": "Southpaw",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": ""
+  },
+  {
+    "name": "Stamp Fairtex",
+    "country": "Thailand",
+    "style": "Mat",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "The Red Lip Boxer"
+  },
+  {
+    "name": "Allycia Hellen Rodrigues",
+    "country": "Brazil",
+    "style": "Bouk",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": ""
+  },
+  {
+    "name": "Yothin FA Group",
+    "country": "Thailand",
+    "style": "Khao",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "King of Muay Khao"
+  },
+  {
+    "name": "Nico Carrillo",
+    "country": "Scotland",
+    "style": "Mat",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "King of the North"
+  },
+  {
+    "name": "Superlek Kiatmuu9",
+    "country": "Thailand",
+    "style": "Tae",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "The Kicking Machine"
+  },
+  {
+    "name": "Phetjeeja Lukjaoporongtom",
+    "country": "Thailand",
+    "style": "Mat",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "The Queen"
+  },
+  {
+    "name": "Yodwicha Por.Boonsit",
+    "country": "Thailand",
+    "style": "Khao",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Kop"
+  },
+  {
+    "name": "Coban Lookchaomaesaitong",
+    "country": "Thailand",
+    "style": "Mat",
+    "stance": "Southpaw",
+    "era": "1990s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "The Crusher"
+  },
+  {
+    "name": "Superlek Sorn Esarn",
+    "country": "Thailand",
+    "style": "Mat",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Remote Puncher"
+  },
+  {
+    "name": "Anuwat Kaewsamrit",
+    "country": "Thailand",
+    "style": "Mat",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "The Iron Hands of Siam"
+  },
+  {
+    "name": "Detduang Por. Pongsawang",
+    "country": "Thailand",
+    "style": "Mat",
+    "stance": "Southpaw",
+    "era": "1980s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "The Perilous Bonsai"
+  },
+  {
+    "name": "Thepnimit Sitmonchai",
+    "country": "Thailand",
+    "style": "Mat",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Mr. Knock"
+  },
+  {
+    "name": "Kaensak Sor Ploenjit",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Best Boxer of Two Years"
+  },
+  {
+    "name": "Attachai Fairtex",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Southpaw",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Divine Left"
+  },
+  {
+    "name": "Ferrari Fairtex",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "378"
+  },
+  {
+    "name": "Lerdsila Chumpairtour",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "Quick as an Eel"
+  },
+  {
+    "name": "Nadaka Yoshinari",
+    "country": "Japan",
+    "style": "Femur",
+    "stance": "Southpaw",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Muay Thai Monster"
+  },
+  {
+    "name": "Mathee Jadeepitak",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Southpaw",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Dragon Leg"
+  },
+  {
+    "name": "Chatchai Paiseetong",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Samart 2"
+  },
+  {
+    "name": "Fabio Pinca",
+    "country": "France",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Super Hero Sniper Yoshi Hiro"
+  },
+  {
+    "name": "Phet-ek Sitjaopho",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Kru O"
+  },
+  {
+    "name": "Phet-tho Sitjaopho",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Kru F"
+  },
+  {
+    "name": "Malaipet Sasiprapa",
+    "country": "Thailand",
+    "style": "Tae",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "The Diamond"
+  },
+  {
+    "name": "Sagetdao Petpayathai",
+    "country": "Thailand",
+    "style": "Khao",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Deadly Star"
+  },
+  {
+    "name": "Kevin Ross",
+    "country": "USA",
+    "style": "Bouk",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "The Soul Assassin"
+  },
+  {
+    "name": "Pakorn P.K. Saenchai Muaythaigym",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Golden Boy"
+  },
+  {
+    "name": "Ognjen Topic",
+    "country": "Serbia",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "378"
+  },
+  {
+    "name": "Rodlek P.K. Saenchaimuaythaigym",
+    "country": "Thailand",
+    "style": "Mat",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "The Steel Locomotive"
+  },
+  {
+    "name": "Kulabdam Sor.Jor.Piek-U-Thai",
+    "country": "Thailand",
+    "style": "Mat",
+    "stance": "Southpaw",
+    "era": "2020s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Left Meteorite"
+  },
+  {
+    "name": "Kongthoranee Sor.Sommai",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Southpaw",
+    "era": "2020s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "378"
+  },
+  {
+    "name": "Panpayak Jitmuangnon",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "The Angel Warrior"
+  },
+  {
+    "name": "Michael Savvas",
+    "country": "Cyprus",
+    "style": "Khao",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "The Baby Face Killer"
+  },
+  {
+    "name": "Prajanchai P.K. Saenchaimuaythaigym",
+    "country": "Thailand",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "Muay Thai",
+    "nickname": "The High-Speed Combination"
+  },
+  {
+    "name": "Veeraphol Sahaprom",
+    "country": "Thailand",
+    "style": "Mat",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "Death Mask"
+  },
+  {
+    "name": "Toshio Fujiwara",
+    "country": "Japan",
+    "style": "Mat",
+    "stance": "Orthodox",
+    "era": "1970s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": ""
+  },
+  {
+    "name": "Damien Alamos",
+    "country": "France",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "The White Lion"
+  },
+  {
+    "name": "Genji Umeno",
+    "country": "Japan",
+    "style": "Femur",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Hard",
+    "sport": "Muay Thai",
+    "nickname": "King"
+  },
+  {
+    "name": "Nathan Corbett",
+    "country": "Australia",
+    "style": "Sok",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Carnage"
+  },
+  {
+    "name": "Sylvie von Duuglas-Ittu",
+    "country": "USA",
+    "style": "Khao",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Muay Thai",
+    "nickname": "Miss Gangster Knees"
+  },
+  {
+    "name": "Jack Johnson",
+    "country": "USA",
+    "style": "Counterpuncher",
+    "stance": "Orthodox",
+    "era": "1910s",
+    "difficulty": "Hard",
+    "sport": "Boxing",
+    "nickname": "Galveston Giant"
+  },
+  {
+    "name": "Joe Louis",
+    "country": "USA",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "1940s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "Brown Bomber"
+  },
+  {
+    "name": "Floyd Patterson",
+    "country": "USA",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "1950s",
+    "difficulty": "Hard",
+    "sport": "Boxing",
+    "nickname": "The Gentleman of Boxing"
+  },
+  {
+    "name": "Sugar Ray Robinson",
+    "country": "USA",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "1950s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "Sugar"
+  },
+  {
+    "name": "Rocky Marciano",
+    "country": "USA",
+    "style": "Swarmer",
+    "stance": "Orthodox",
+    "era": "1950s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "The Brockton Blockbuster"
+  },
+  {
+    "name": "Muhammad Ali",
+    "country": "USA",
+    "style": "Out-boxer",
+    "stance": "Orthodox",
+    "era": "1960s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "The Greatest"
+  },
+  {
+    "name": "Sonny Liston",
+    "country": "USA",
+    "style": "Slugger",
+    "stance": "Orthodox",
+    "era": "1960s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "The Big Bear"
+  },
+  {
+    "name": "Joe Frazier",
+    "country": "USA",
+    "style": "Swarmer",
+    "stance": "Orthodox",
+    "era": "1970s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "Smokin' Joe"
+  },
+  {
+    "name": "George Foreman",
+    "country": "USA",
+    "style": "Slugger",
+    "stance": "Orthodox",
+    "era": "1970s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "Big George"
+  },
+  {
+    "name": "Roberto Duran",
+    "country": "Panama",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "1970s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "Hands of Stone"
+  },
+  {
+    "name": "Sugar Ray Leonard",
+    "country": "USA",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "Sugar"
+  },
+  {
+    "name": "Marvin Hagler",
+    "country": "USA",
+    "style": "Boxer-puncher",
+    "stance": "Switch",
+    "era": "1980s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "Marvelous"
+  },
+  {
+    "name": "Thomas Hearns",
+    "country": "USA",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "The Hitman"
+  },
+  {
+    "name": "Mike Tyson",
+    "country": "USA",
+    "style": "Swarmer",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "Iron Mike"
+  },
+  {
+    "name": "Salvador Sanchez",
+    "country": "Mexico",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Hard",
+    "sport": "Boxing",
+    "nickname": "Chava"
+  },
+  {
+    "name": "Larry Holmes",
+    "country": "USA",
+    "style": "Out-boxer",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "The Easton Assassin"
+  },
+  {
+    "name": "Julio Cesar Chavez",
+    "country": "Mexico",
+    "style": "Swarmer",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "The Great Mexican Champion"
+  },
+  {
+    "name": "Oscar De La Hoya",
+    "country": "USA",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "The Golden Boy"
+  },
+  {
+    "name": "Evander Holyfield",
+    "country": "USA",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "The Real Deal"
+  },
+  {
+    "name": "Lennox Lewis",
+    "country": "UK",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "The Lion"
+  },
+  {
+    "name": "Nigel Benn",
+    "country": "UK",
+    "style": "Slugger",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Boxing",
+    "nickname": "The Dark Destroyer"
+  },
+  {
+    "name": "Chris Eubank Sr.",
+    "country": "UK",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Boxing",
+    "nickname": "Simply The Best"
+  },
+  {
+    "name": "David Tua",
+    "country": "New Zealand",
+    "style": "Swarmer",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Boxing",
+    "nickname": "The Tuaman"
+  },
+  {
+    "name": "Tommy Morrison",
+    "country": "USA",
+    "style": "Slugger",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Boxing",
+    "nickname": "The Duke"
+  },
+  {
+    "name": "Roy Jones Jr.",
+    "country": "USA",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "Captain Hook"
+  },
+  {
+    "name": "Pernell Whitaker",
+    "country": "USA",
+    "style": "Out-boxer",
+    "stance": "Southpaw",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Boxing",
+    "nickname": "Sweet Pea"
+  },
+  {
+    "name": "Erik Morales",
+    "country": "Mexico",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "El Terrible"
+  },
+  {
+    "name": "Floyd Mayweather",
+    "country": "USA",
+    "style": "Counterpuncher",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "Money"
+  },
+  {
+    "name": "Wladimir Klitschko",
+    "country": "Ukraine",
+    "style": "Out-boxer",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "Dr. Steelhammer"
+  },
+  {
+    "name": "Vitali Klitschko",
+    "country": "Ukraine",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Hard",
+    "sport": "Boxing",
+    "nickname": "Dr. Ironfist"
+  },
+  {
+    "name": "Manny Pacquiao",
+    "country": "Philippines",
+    "style": "Swarmer",
+    "stance": "Southpaw",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "PacMan"
+  },
+  {
+    "name": "Juan Manuel Marquez",
+    "country": "Mexico",
+    "style": "Counterpuncher",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "Dinamita"
+  },
+  {
+    "name": "Shane Mosley",
+    "country": "USA",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "Sugar"
+  },
+  {
+    "name": "Bernard Hopkins",
+    "country": "USA",
+    "style": "Counterpuncher",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "The Executioner"
+  },
+  {
+    "name": "Canelo Alvarez",
+    "country": "Mexico",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": ""
+  },
+  {
+    "name": "Anthony Joshua",
+    "country": "UK",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "AJ"
+  },
+  {
+    "name": "Tyson Fury",
+    "country": "UK",
+    "style": "Out-boxer",
+    "stance": "Switch",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "The Gypsy King"
+  },
+  {
+    "name": "Deontay Wilder",
+    "country": "USA",
+    "style": "Slugger",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "The Bronze Bomber"
+  },
+  {
+    "name": "Andy Ruiz",
+    "country": "USA",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Hard",
+    "sport": "Boxing",
+    "nickname": "The Destroyer"
+  },
+  {
+    "name": "Gennady Golovkin",
+    "country": "Kazakhstan",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "Triple G"
+  },
+  {
+    "name": "Terence Crawford",
+    "country": "USA",
+    "style": "Boxer-puncher",
+    "stance": "Switch",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "Bud"
+  },
+  {
+    "name": "Marcos Maidana",
+    "country": "Argentina",
+    "style": "Slugger",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "El Chino"
+  },
+  {
+    "name": "Adrien Broner",
+    "country": "USA",
+    "style": "Counterpuncher",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "The Problem"
+  },
+  {
+    "name": "Vasiliy Lomachenko",
+    "country": "Ukraine",
+    "style": "Out-boxer",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "Hi-Tech"
+  },
+  {
+    "name": "Oleksandr Usyk",
+    "country": "Ukraine",
+    "style": "Out-boxer",
+    "stance": "Southpaw",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "The Cat"
+  },
+  {
+    "name": "Dmitry Bivol",
+    "country": "Russia",
+    "style": "Out-boxer",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": ""
+  },
+  {
+    "name": "Naoya Inoue",
+    "country": "Japan",
+    "style": "Boxer-puncher",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "Boxing",
+    "nickname": "The Monster"
+  },
+  {
+    "name": "Gervonta Davis",
+    "country": "USA",
+    "style": "Counterpuncher",
+    "stance": "Southpaw",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "Tank"
+  },
+  {
+    "name": "Shakur Stevenson",
+    "country": "USA",
+    "style": "Out-boxer",
+    "stance": "Southpaw",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "Boxing",
+    "nickname": "Fearless"
+  },
+  {
+    "name": "Jaron Ennis",
+    "country": "USA",
+    "style": "Boxer-puncher",
+    "stance": "Switch",
+    "era": "2020s",
+    "difficulty": "Hard",
+    "sport": "Boxing",
+    "nickname": "Boots"
+  },
+  {
+    "name": "Joe Lewis",
+    "country": "USA",
+    "style": "American",
+    "stance": "Orthodox",
+    "era": "1970s",
+    "difficulty": "Hard",
+    "sport": "Kickboxing",
+    "nickname": "Golden Boy"
+  },
+  {
+    "name": "Bill Wallace",
+    "country": "USA",
+    "style": "American",
+    "stance": "Southpaw",
+    "era": "1970s",
+    "difficulty": "Hard",
+    "sport": "Kickboxing",
+    "nickname": "Superfoot"
+  },
+  {
+    "name": "Benny Urquidez",
+    "country": "USA",
+    "style": "American",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Medium",
+    "sport": "Kickboxing",
+    "nickname": "The Jet"
+  },
+  {
+    "name": "Don Wilson",
+    "country": "USA",
+    "style": "American",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Hard",
+    "sport": "Kickboxing",
+    "nickname": "The Dragon"
+  },
+  {
+    "name": "Rob Kaman",
+    "country": "Netherlands",
+    "style": "Dutch",
+    "stance": "Orthodox",
+    "era": "1980s",
+    "difficulty": "Medium",
+    "sport": "Kickboxing",
+    "nickname": "Mr. Low Kick"
+  },
+  {
+    "name": "Ernesto Hoost",
+    "country": "Netherlands",
+    "style": "Dutch",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Easy",
+    "sport": "Kickboxing",
+    "nickname": "Mr. Perfect"
+  },
+  {
+    "name": "Peter Aerts",
+    "country": "Netherlands",
+    "style": "Dutch",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Easy",
+    "sport": "Kickboxing",
+    "nickname": "The Dutch Lumberjack"
+  },
+  {
+    "name": "Andy Hug",
+    "country": "Switzerland",
+    "style": "Japanese",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Easy",
+    "sport": "Kickboxing",
+    "nickname": "The Blue-Eyed Samurai"
+  },
+  {
+    "name": "Branko Cikatic",
+    "country": "Croatia",
+    "style": "Thai",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Kickboxing",
+    "nickname": "The Croatian Tiger"
+  },
+  {
+    "name": "Mike Bernardo",
+    "country": "South Africa",
+    "style": "Dutch",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Medium",
+    "sport": "Kickboxing",
+    "nickname": ""
+  },
+  {
+    "name": "Maurice Smith",
+    "country": "USA",
+    "style": "Thai",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Kickboxing",
+    "nickname": "Mo"
+  },
+  {
+    "name": "Rick Roufus",
+    "country": "USA",
+    "style": "American",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "Kickboxing",
+    "nickname": "The Jet"
+  },
+  {
+    "name": "Mirko Cro Cop",
+    "country": "Croatia",
+    "style": "Hybrid",
+    "stance": "Southpaw",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "Kickboxing",
+    "nickname": "Cro Cop"
+  },
+  {
+    "name": "Remy Bonjasky",
+    "country": "Netherlands",
+    "style": "Dutch",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "Kickboxing",
+    "nickname": "The Flying Gentleman"
+  },
+  {
+    "name": "Andy Souwer",
+    "country": "Netherlands",
+    "style": "Dutch",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "Kickboxing",
+    "nickname": "The Destroyer"
+  },
+  {
+    "name": "Albert Kraus",
+    "country": "Netherlands",
+    "style": "Dutch",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Hard",
+    "sport": "Kickboxing",
+    "nickname": "The Hurricane"
+  },
+  {
+    "name": "Masato",
+    "country": "Japan",
+    "style": "Japanese",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "Kickboxing",
+    "nickname": "The Silver Wolf"
+  },
+  {
+    "name": "Buakaw Banchamek",
+    "country": "Thailand",
+    "style": "Thai",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "Kickboxing",
+    "nickname": "The White Lotus"
+  },
+  {
+    "name": "Semmy Schilt",
+    "country": "Netherlands",
+    "style": "Japanese",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "Kickboxing",
+    "nickname": "Hightower"
+  },
+  {
+    "name": "Jerome Le Banner",
+    "country": "France",
+    "style": "Dutch",
+    "stance": "Southpaw",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "Kickboxing",
+    "nickname": "Geronimo"
+  },
+  {
+    "name": "Sam Greco",
+    "country": "Australia",
+    "style": "Japanese",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Hard",
+    "sport": "Kickboxing",
+    "nickname": "Slammin' Sam"
+  },
+  {
+    "name": "Ray Sefo",
+    "country": "New Zealand",
+    "style": "Thai",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "Kickboxing",
+    "nickname": "Sugarfoot"
+  },
+  {
+    "name": "Alistair Overeem",
+    "country": "Netherlands",
+    "style": "Dutch",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "Kickboxing",
+    "nickname": "The Demolition Man"
+  },
+  {
+    "name": "Mark Hunt",
+    "country": "New Zealand",
+    "style": "Hybrid",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "Kickboxing",
+    "nickname": "The Super Samoan"
+  },
+  {
+    "name": "Badr Hari",
+    "country": "Morocco",
+    "style": "Dutch",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "Kickboxing",
+    "nickname": "Bad Boy"
+  },
+  {
+    "name": "Giorgio Petrosyan",
+    "country": "Italy",
+    "style": "Hybrid",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "Kickboxing",
+    "nickname": "The Doctor"
+  },
+  {
+    "name": "Petchpanomrung Kiatmuu9",
+    "country": "Thailand",
+    "style": "Thai",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Kickboxing",
+    "nickname": "The Professor"
+  },
+  {
+    "name": "Takeru Segawa",
+    "country": "Japan",
+    "style": "Japanese",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "Kickboxing",
+    "nickname": "Natural Born Krusher"
+  },
+  {
+    "name": "Masaaki Noiri",
+    "country": "Japan",
+    "style": "Japanese",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Kickboxing",
+    "nickname": "The Amazing"
+  },
+  {
+    "name": "Yuta Kubo",
+    "country": "Japan",
+    "style": "Japanese",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Hard",
+    "sport": "Kickboxing",
+    "nickname": "The Smiling Sniper"
+  },
+  {
+    "name": "Yoshihiro Sato",
+    "country": "Japan",
+    "style": "Japanese",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Hard",
+    "sport": "Kickboxing",
+    "nickname": "The Infinite Sniper"
+  },
+  {
+    "name": "Tenshin Nasukawa",
+    "country": "Japan",
+    "style": "Japanese",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "Kickboxing",
+    "nickname": "The Prodigy"
+  },
+  {
+    "name": "Rico Verhoeven",
+    "country": "Netherlands",
+    "style": "Dutch",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "Kickboxing",
+    "nickname": "King of Kickboxing"
+  },
+  {
+    "name": "Tiffany van Soest",
+    "country": "Netherlands",
+    "style": "Dutch",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Hard",
+    "sport": "Kickboxing",
+    "nickname": "Time Bomb"
+  },
+  {
+    "name": "Kaew Fairtex",
+    "country": "Thailand",
+    "style": "Thai",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Hard",
+    "sport": "Kickboxing",
+    "nickname": ""
+  },
+  {
+    "name": "Murat Direkci",
+    "country": "Turkey",
+    "style": "Dutch",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Hard",
+    "sport": "Kickboxing",
+    "nickname": ""
+  },
+  {
+    "name": "Anissa Meksen",
+    "country": "France",
+    "style": "Hybrid",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Kickboxing",
+    "nickname": "C18"
+  },
+  {
+    "name": "Nieky Holzken",
+    "country": "Netherlands",
+    "style": "Dutch",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Kickboxing",
+    "nickname": "The Natural"
+  },
+  {
+    "name": "Sitthichai Sitsongpeenong",
+    "country": "Thailand",
+    "style": "Thai",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "Kickboxing",
+    "nickname": "Killer Kid"
+  },
+  {
+    "name": "Superbon Singha Mawynn",
+    "country": "Thailand",
+    "style": "Thai",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "Kickboxing",
+    "nickname": ""
+  },
+  {
+    "name": "Petchtanong Petchfergus",
+    "country": "Thailand",
+    "style": "Thai",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Hard",
+    "sport": "Kickboxing",
+    "nickname": ""
+  },
+  {
+    "name": "Chingiz Allazov",
+    "country": "Azerbaijan",
+    "style": "Hybrid",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "Kickboxing",
+    "nickname": "Chinga"
+  },
+  {
+    "name": "Royce Gracie",
+    "country": "Brazil",
+    "style": "Brazilian jiu-jitsu",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": ""
+  },
+  {
+    "name": "Ken Shamrock",
+    "country": "USA",
+    "style": "Well-rounded",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "The World's Most Dangerous Man"
+  },
+  {
+    "name": "Frank Shamrock",
+    "country": "USA",
+    "style": "Well-rounded",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "The Legend"
+  },
+  {
+    "name": "Kimo Leopoldo",
+    "country": "USA",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "MMA",
+    "nickname": ""
+  },
+  {
+    "name": "Dan Severn",
+    "country": "USA",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "MMA",
+    "nickname": "The Beast"
+  },
+  {
+    "name": "Mark Coleman",
+    "country": "USA",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "MMA",
+    "nickname": "The Hammer"
+  },
+  {
+    "name": "Don Frye",
+    "country": "USA",
+    "style": "Well-rounded",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "MMA",
+    "nickname": "The Predator"
+  },
+  {
+    "name": "Mark Kerr",
+    "country": "USA",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "1990s",
+    "difficulty": "Hard",
+    "sport": "MMA",
+    "nickname": "The Smashing Machine"
+  },
+  {
+    "name": "Renzo Gracie",
+    "country": "Brazil",
+    "style": "Brazilian jiu-jitsu",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Hard",
+    "sport": "MMA",
+    "nickname": ""
+  },
+  {
+    "name": "Chuck Liddell",
+    "country": "USA",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "The Iceman"
+  },
+  {
+    "name": "Randy Couture",
+    "country": "USA",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "The Natural"
+  },
+  {
+    "name": "Tito Ortiz",
+    "country": "USA",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "The Huntington Beach Bad Boy"
+  },
+  {
+    "name": "Georges St-Pierre",
+    "country": "Canada",
+    "style": "Well-rounded",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "Rush"
+  },
+  {
+    "name": "BJ Penn",
+    "country": "USA",
+    "style": "Brazilian jiu-jitsu",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "The Prodigy"
+  },
+  {
+    "name": "Lyoto Machida",
+    "country": "Brazil",
+    "style": "Striker",
+    "stance": "Southpaw",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "The Dragon"
+  },
+  {
+    "name": "Mauricio Shogun Rua",
+    "country": "Brazil",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Shogun"
+  },
+  {
+    "name": "Vitor Belfort",
+    "country": "Brazil",
+    "style": "Striker",
+    "stance": "Southpaw",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "The Phenom"
+  },
+  {
+    "name": "Kazushi Sakuraba",
+    "country": "Japan",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "The Gracie Hunter"
+  },
+  {
+    "name": "Wanderlei Silva",
+    "country": "Brazil",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "The Axe Murderer"
+  },
+  {
+    "name": "Rampage Jackson",
+    "country": "USA",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Rampage"
+  },
+  {
+    "name": "Rashad Evans",
+    "country": "USA",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Suga"
+  },
+  {
+    "name": "Mirko Cro Cop",
+    "country": "Croatia",
+    "style": "Striker",
+    "stance": "Southpaw",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "Cro Cop"
+  },
+  {
+    "name": "Antonio Rodrigo Nogueira",
+    "country": "Brazil",
+    "style": "Brazilian jiu-jitsu",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Minotauro"
+  },
+  {
+    "name": "Antonio Rogerio Nogueira",
+    "country": "Brazil",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Hard",
+    "sport": "MMA",
+    "nickname": "Minotouro"
+  },
+  {
+    "name": "Anderson Silva",
+    "country": "Brazil",
+    "style": "Striker",
+    "stance": "Switch",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "The Spider"
+  },
+  {
+    "name": "Matt Hughes",
+    "country": "USA",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": ""
+  },
+  {
+    "name": "Rich Franklin",
+    "country": "USA",
+    "style": "Striker",
+    "stance": "Southpaw",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Ace"
+  },
+  {
+    "name": "Forrest Griffin",
+    "country": "USA",
+    "style": "Well-rounded",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": ""
+  },
+  {
+    "name": "Dan Henderson",
+    "country": "USA",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Hendo"
+  },
+  {
+    "name": "Nick Diaz",
+    "country": "USA",
+    "style": "Brazilian jiu-jitsu",
+    "stance": "Southpaw",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": ""
+  },
+  {
+    "name": "Fedor Emelianenko",
+    "country": "Russia",
+    "style": "Well-rounded",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "The Last Emperor"
+  },
+  {
+    "name": "Josh Barnett",
+    "country": "USA",
+    "style": "Well-rounded",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Hard",
+    "sport": "MMA",
+    "nickname": "The Warmaster"
+  },
+  {
+    "name": "Stephan Bonnar",
+    "country": "USA",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Hard",
+    "sport": "MMA",
+    "nickname": "The American Psycho"
+  },
+  {
+    "name": "Urijah Faber",
+    "country": "USA",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "2000s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "The California Kid"
+  },
+  {
+    "name": "Demetrious Johnson",
+    "country": "USA",
+    "style": "Well-rounded",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "Mighty Mouse"
+  },
+  {
+    "name": "Michael Bisping",
+    "country": "UK",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "The Count"
+  },
+  {
+    "name": "Jon Jones",
+    "country": "USA",
+    "style": "Well-rounded",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "Bones"
+  },
+  {
+    "name": "Ronda Rousey",
+    "country": "USA",
+    "style": "Judo",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "Rowdy"
+  },
+  {
+    "name": "Amanda Nunes",
+    "country": "Brazil",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "The Lioness"
+  },
+  {
+    "name": "Valentina Shevchenko",
+    "country": "Kyrgyzstan",
+    "style": "Striker",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Bullet"
+  },
+  {
+    "name": "Joanna Jedrzejczyk",
+    "country": "Poland",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Joanna Champion"
+  },
+  {
+    "name": "Alistair Overeem",
+    "country": "Netherlands",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "The Demolition Man"
+  },
+  {
+    "name": "Mark Hunt",
+    "country": "New Zealand",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "The Super Samoan"
+  },
+  {
+    "name": "Brock Lesnar",
+    "country": "USA",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "The Beast Incarnate"
+  },
+  {
+    "name": "Cain Velasquez",
+    "country": "USA",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": ""
+  },
+  {
+    "name": "Junior dos Santos",
+    "country": "Brazil",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Cigano"
+  },
+  {
+    "name": "Daniel Cormier",
+    "country": "USA",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "DC"
+  },
+  {
+    "name": "Khabib Nurmagomedov",
+    "country": "Russia",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "The Eagle"
+  },
+  {
+    "name": "Conor McGregor",
+    "country": "Ireland",
+    "style": "Striker",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "The Notorious"
+  },
+  {
+    "name": "Max Holloway",
+    "country": "USA",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "Blessed"
+  },
+  {
+    "name": "Frankie Edgar",
+    "country": "USA",
+    "style": "Well-rounded",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "The Answer"
+  },
+  {
+    "name": "Stephen Thompson",
+    "country": "USA",
+    "style": "Striker",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Wonderboy"
+  },
+  {
+    "name": "Tony Ferguson",
+    "country": "USA",
+    "style": "Well-rounded",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "El Cucuy"
+  },
+  {
+    "name": "Nate Diaz",
+    "country": "USA",
+    "style": "Brazilian jiu-jitsu",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "The Stockton Slugger"
+  },
+  {
+    "name": "Stipe Miocic",
+    "country": "USA",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": ""
+  },
+  {
+    "name": "Jose Aldo",
+    "country": "Brazil",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "Scarface"
+  },
+  {
+    "name": "Cris Cyborg",
+    "country": "Brazil",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Cyborg"
+  },
+  {
+    "name": "Holly Holm",
+    "country": "USA",
+    "style": "Striker",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "The Preacher's Daughter"
+  },
+  {
+    "name": "Dominick Cruz",
+    "country": "USA",
+    "style": "Well-rounded",
+    "stance": "Switch",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "The Dominator"
+  },
+  {
+    "name": "Robbie Lawler",
+    "country": "USA",
+    "style": "Striker",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Ruthless"
+  },
+  {
+    "name": "Rafael dos Anjos",
+    "country": "Brazil",
+    "style": "Well-rounded",
+    "stance": "Southpaw",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "RDA"
+  },
+  {
+    "name": "Gilbert Melendez",
+    "country": "USA",
+    "style": "Well-rounded",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Hard",
+    "sport": "MMA",
+    "nickname": "El Nino"
+  },
+  {
+    "name": "Miesha Tate",
+    "country": "USA",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Cupcake"
+  },
+  {
+    "name": "Rose Namajunas",
+    "country": "USA",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2010s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Thug Rose"
+  },
+  {
+    "name": "Kayla Harrison",
+    "country": "USA",
+    "style": "Judo",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": ""
+  },
+  {
+    "name": "Francis Ngannou",
+    "country": "Cameroon",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "The Predator"
+  },
+  {
+    "name": "Israel Adesanya",
+    "country": "New Zealand",
+    "style": "Striker",
+    "stance": "Switch",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "The Last Stylebender"
+  },
+  {
+    "name": "Islam Makhachev",
+    "country": "Russia",
+    "style": "Wrestler",
+    "stance": "Southpaw",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": ""
+  },
+  {
+    "name": "Alex Pereira",
+    "country": "Brazil",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "Poatan"
+  },
+  {
+    "name": "Khamzat Chimaev",
+    "country": "Sweden",
+    "style": "Wrestler",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Borz"
+  },
+  {
+    "name": "Alexander Volkanovski",
+    "country": "Australia",
+    "style": "Well-rounded",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "The Great"
+  },
+  {
+    "name": "Charles Oliveira",
+    "country": "Brazil",
+    "style": "Brazilian jiu-jitsu",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "Do Bronx"
+  },
+  {
+    "name": "Sean O'Malley",
+    "country": "USA",
+    "style": "Striker",
+    "stance": "Switch",
+    "era": "2020s",
+    "difficulty": "Easy",
+    "sport": "MMA",
+    "nickname": "Sugar"
+  },
+  {
+    "name": "Zhang Weili",
+    "country": "China",
+    "style": "Striker",
+    "stance": "Orthodox",
+    "era": "2020s",
+    "difficulty": "Medium",
+    "sport": "MMA",
+    "nickname": "Magnum"
+  }
+]
