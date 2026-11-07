@@ -11,7 +11,7 @@ function doGet() {
     if (!sheet) throw new Error('Missing tab: ' + sport);
     const lastRow = sheet.getLastRow();
     if (lastRow < 2) throw new Error('No fighters in: ' + sport);
-    const values = sheet.getRange(2, 1, lastRow - 1, 7).getDisplayValues();
+    const values = sheet.getRange(2, 1, lastRow - 1, 9).getDisplayValues();
     for (const row of values) {
       if (!row[0] || !row[0].trim()) continue;
       fighters.push({
@@ -22,7 +22,9 @@ function doGet() {
         era: row[4].trim(),
         difficulty: row[5].trim(),
         sport: sport,
-        nickname: row[6].trim()
+        nickname: row[6].trim(),
+        funFact: (row[7] || '').trim(),
+        sourceUrl: (row[8] || '').trim()
       });
     }
   }
