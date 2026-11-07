@@ -83,5 +83,22 @@
     "Expert (All Sports)::Easy": "Boxing::Julio Cesar Chavez",
     "Expert (All Sports)::Medium": "Muay Thai::Petchboonchu FA Group",
     "Expert (All Sports)::Hard": "Muay Thai::Phet-tho Sitjaopho"
+  },
+  "2026-11-09": {
+    "Muay Thai::Easy": "Muay Thai::Nong-O Hama",
+    "Muay Thai::Medium": "Muay Thai::Michael Savvas",
+    "Muay Thai::Hard": "Muay Thai::Phet-tho Sitjaopho",
+    "Boxing::Easy": "Boxing::Roy Jones Jr.",
+    "Boxing::Medium": "Boxing::Adrien Broner",
+    "Boxing::Hard": "Boxing::Andy Ruiz",
+    "Kickboxing::Easy": "Kickboxing::Ernesto Hoost",
+    "Kickboxing::Medium": "Kickboxing::Mark Hunt",
+    "Kickboxing::Hard": "Kickboxing::Yoshihiro Sato",
+    "MMA::Easy": "MMA::Jose Aldo",
+    "MMA::Medium": "MMA::Mark Hunt",
+    "MMA::Hard": "MMA::Gilbert Melendez",
+    "Expert (All Sports)::Easy": "MMA::Tito Ortiz",
+    "Expert (All Sports)::Medium": "Boxing::Sonny Liston",
+    "Expert (All Sports)::Hard": "Muay Thai::Panomtuanlek Hapalang"
   }
 }
