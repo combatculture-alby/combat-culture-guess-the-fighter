@@ -28,7 +28,7 @@
       <div class="progress" aria-hidden="true"><div id="progress-fill"></div></div>
       <div id="preview-warning" role="status" class="preview-warning">
         <strong>JavaScript is required to run this quiz.</strong>
-        <p>This quiz needs JavaScript. If you're seeing this message, open the HTML file in Safari or Chrome on a computer, or use a hosted web link. The ChatGPT file preview and iPhone Files preview may block interactive scripts.</p>
+        <p>Please enable JavaScript in your browser and refresh the page. You can also open the quiz directly in Safari or Chrome.</p>
       </div>
       <div id="quiz-content" aria-live="polite">
         <div class="q-head"><span class="q-number">01</span><h2>What do you train?</h2><p>This helps tailor the advice, but won't block otherwise suitable gloves.</p></div>
@@ -52,7 +52,7 @@
  * Source: https://docs.google.com/spreadsheets/d/1-H28Qmx2oOZOmeHeFzHbaELldi5wNo07SV2nCeiiem4/edit
  * Spreadsheet MSRP is NOT a live retail quote. Purchase prices and personal notes are never exported.
  * Additional strength/weakness tags are optional; blank slots do not affect ranking.
- * Refresh by exporting the sheet as CSV and rerunning build_data.py.
+ * Refresh the approved snapshot from the Google Sheet before making major changes.
  */
 const CC_GLOVES = [
   {
@@ -1496,6 +1496,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       };
       parts.push('Tradeoffs: '+weaknesses.map(x=>labels[x]||lower(x)).join(', ')+'.');
     }
+    if((answers.use==='Sparring'||answers.use==='Both') && !g.testedWeight)parts.push('Tested weight not recorded; verify weight, padding and gym rules before sparring.');
     if((answers.use==='Sparring'||answers.use==='Both') && g.testedWeight && g.testedWeight!=='16 oz')
       parts.push(`Reviewed at ${g.testedWeight}; that does not verify the fit, padding or sparring approval of another weight.`);
     if(g.secondaryWeakness && g.secondaryWeakness!=='Nothing Major')parts.push('Additional tradeoff: '+lower(g.secondaryWeakness)+'.');
@@ -1540,7 +1541,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       ${result.matches.length?`<div class="results-grid">${result.matches.map(makeCard).join('')}</div>`:
         '<p class="empty">We did not find an approved glove in your price range for that training purpose. Try a higher budget or a different use. We will not suggest bag-only gloves for sparring.</p>'}
       <div class="limitations"><h3>Before you buy</h3><ul>${cautions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
-      <p class="data-note">Recommendations use ${result.readyCount} approved, eligible gloves from the latest imported spreadsheet snapshot. No external community ratings or affiliate payments affect the order.</p></div>`;
+      <p class="data-note">Recommendations use ${result.readyCount} approved, eligible gloves from a manually refreshed Combat Culture spreadsheet snapshot. No external community ratings or affiliate payments affect the order.</p></div>`;
     controls.innerHTML=`<button class="btn btn-secondary" type="button" id="edit">Edit answers</button><button class="btn btn-primary" type="button" id="again">Start over <span aria-hidden="true">↺</span></button>`;
     document.getElementById('edit').addEventListener('click',()=>{step=0;finished=false;render()});
     document.getElementById('again').addEventListener('click',()=>{for(const k of Object.keys(answers))answers[k]=k==='priorities'?[]:null;step=0;finished=false;render()});
