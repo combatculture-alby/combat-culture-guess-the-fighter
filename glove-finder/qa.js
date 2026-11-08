@@ -15,6 +15,8 @@ const module={exports:{}};
 vm.runInNewContext(scripts[1],{module,window:{}});
 new vm.Script(scripts[2]); // UI syntax check
 const engine=module.exports;
+assert.equal(gloves.filter(g=>Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0).length,20,'Unexpected priced glove count');
+assert.equal(gloves.find(g=>g.id==='fairtex-bgv1').onlinePriceUsd,139,'Fairtex should use online, not reviewer price');
 let combinations=0;
 const ceilings={under100:100,b100to200:200,b200to300:300,b300plus:Infinity};
 for(const sport of ['Boxing','Muay Thai','Kickboxing','MMA','Fitness'])
@@ -32,13 +34,14 @@ for(const material of ['Any','Genuine Leather','Synthetic']){
   for(const g of result.matches){
     assert.equal(g.approved,true);
     assert.ok(engine.useFits(g,use),'Invalid training use');
+    assert.ok(Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0,'Unsourced price displayed');
     if(g.kind==='Stretch pick'){
-      assert.ok(g.msrp>ceilings[budget]&&g.msrp<=stretchMax,'Stretch price invalid');
+      assert.ok(g.onlinePriceUsd>ceilings[budget]&&g.onlinePriceUsd<=stretchMax,'Stretch price invalid');
       assert.ok(!(sport==='Fitness'&&use==='Bag & Pads'),'Cardio stretch disallowed');
     } else {
-      assert.ok(g.msrp<=ceilings[budget],'In-budget option exceeded cap');
+      assert.ok(g.onlinePriceUsd<=ceilings[budget],'In-budget option exceeded cap');
     }
-    if(sport==='Fitness'&&use==='Bag & Pads')assert.ok(g.msrp<=200,'Fitness cap exceeded');
+    if(sport==='Fitness'&&use==='Bag & Pads')assert.ok(g.onlinePriceUsd<=200,'Fitness cap exceeded');
   }
   combinations++;
 }
