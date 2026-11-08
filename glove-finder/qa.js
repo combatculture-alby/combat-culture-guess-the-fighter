@@ -44,4 +44,46 @@ assert.equal(JSON.stringify(sparring200),
 assert.ok(gloves.find(g=>g.brand==='Primo'&&g.model==='Emblem 2'));
 assert.equal(gloves.find(g=>g.brand==='Combat Corner'&&g.model==='Cream').use,'Both');
 assert.equal(gloves.find(g=>g.brand==='Casanova').use,'Both');
-console.log('PASS:',gloves.length,'approved gloves,',combinations,'quiz combinations, UI syntax');
+
+// UI regression: finish a quiz, click Start over, then finish it again.
+{
+  const win={CC_GLOVES:gloves};
+  vm.runInNewContext(scripts[1],{window:win});
+  const elements=new Map();
+  function get(id) {
+    if(!elements.has(id))elements.set(id,{
+      id,_html:'',textContent:'',style:{},listeners:{},
+      set innerHTML(value){this._html=value;this._buttons=null},
+      get innerHTML(){return this._html},
+      remove(){},
+      addEventListener(type,callback){this.listeners[type]=callback},
+      click(){assert.ok(this.listeners.click,'Missing click handler: '+this.id);this.listeners.click()},
+      querySelectorAll(selector){
+        assert.equal(selector,'[data-answer]');
+        if(!this._buttons)this._buttons=[...this._html.matchAll(/data-answer="([^"]+)"/g)]
+          .map(match=>({dataset:{answer:match[1]},addEventListener(type,callback){this.click=callback}}));
+        return this._buttons;
+      }
+    });
+    return elements.get(id);
+  }
+  const doc={getElementById:get};
+  vm.runInNewContext(scripts[2],{document:doc,window:win});
+  function answer(value) {
+    const button=get('quiz-content').querySelectorAll('[data-answer]').find(b=>b.dataset.answer===value);
+    assert.ok(button && button.click,'Missing option '+value);
+    button.click();
+    get('continue').click();
+  }
+  function finish(){
+    for(const v of ['Muay Thai','Sparring','b100to200','none','Any'])answer(v);
+    assert.ok(get('quiz-content').innerHTML.includes('Your glove shortlist.'),'Missing result cards');
+  }
+  finish();
+  get('again').click();
+  assert.equal(get('stage-label').textContent,'QUESTION 1 OF 5','Start over did not reset step');
+  assert.ok(get('continue').innerHTML.includes('disabled'),'Next should be disabled after full reset');
+  finish();
+}
+
+console.log('PASS:',gloves.length,'approved gloves,',combinations,'quiz combinations, UI syntax and Start Over twice');
