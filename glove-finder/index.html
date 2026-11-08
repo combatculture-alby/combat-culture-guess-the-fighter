@@ -1857,15 +1857,19 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     // Two primary choices at or below the user's ceiling.
     add(inBudget[0],'Best match');
     add(preferDifferentBrand(inBudget),'Second pick');
-    // A lower-cost alternative: genuinely cheaper than the primary selections.
-    // Avoid weak candidates solely because they are cheap.
-    if(chosen.length>=2){
+    // An additional option priced below the selected budget, ideally close to 80%.
+    // "Under budget" is relative to the stated ceiling, not the two top choices.
+    if(chosen.length>=2 && Number.isFinite(cap)){
+      const target=Math.min(cap,fitnessCap??cap)*0.8;
+      const under=inBudget.filter(g=>canAdd(g)&&g.msrp<=cap)
+        .map(g=>({...g,underUtility:g.matchScore-0.16*Math.abs(g.msrp-target)}))
+        .sort((x,y)=>y.underUtility-x.underUtility||x.msrp-y.msrp);
+      add(preferDifferentBrand(under),'Under-budget pick');
+    } else if(chosen.length>=2){
       const baseline=Math.min(...chosen.map(g=>g.msrp));
-      const cheaper=inBudget.filter(g=>canAdd(g)&&g.msrp<baseline&&g.matchScore>=inBudget[0].matchScore-35);
-      const target=Number.isFinite(cap)?Math.min(baseline-1,cap*0.75):baseline*0.75;
-      const pick=cheaper.sort((x,y)=>
-        Math.abs(x.msrp-target)-Math.abs(y.msrp-target) ||y.matchScore-x.matchScore)[0];
-      add(pick,'Lower-cost option');
+      const lower=inBudget.filter(g=>canAdd(g)&&g.msrp<baseline)
+        .sort((x,y)=>y.matchScore-x.matchScore||x.msrp-y.msrp);
+      add(preferDifferentBrand(lower),'Lower-cost option');
     }
     // Stretch up only moderately; never cross the $200 fitness limit.
     // Unlimited budget has no meaningful "over budget" choice.
@@ -1881,7 +1885,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       if(chosen.length>=4)break;
       add(g,'Another suitable option');
     }
-    const displayOrder={'Best match':0,'Second pick':1,'Stretch pick':2,'Lower-cost option':3,'Another suitable option':4};
+    const displayOrder={'Best match':0,'Second pick':1,'Stretch pick':2,'Under-budget pick':3,'Lower-cost option':3,'Another suitable option':4};
     chosen.sort((x,y)=>displayOrder[x.kind]-displayOrder[y.kind]);
     return {count:inBudget.length,matches:chosen.slice(0,4),readyCount:all.length,fitnessCap,
       pending:gloves.filter(g=>g.approved===true&&incompleteReason(g)).map(g=>({...g,pendingReason:incompleteReason(g)}))};
