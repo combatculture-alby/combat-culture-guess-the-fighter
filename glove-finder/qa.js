@@ -34,6 +34,13 @@ for(const priorities of [['none'],['Value'],['Protection'],['Comfort'],['Feedbac
   }
   combinations++;
 }
+// Editorial benchmark from the owner's firsthand Muay Thai sparring preferences.
+const sparring200=engine.recommend(gloves,{
+  sport:'Muay Thai',use:'Sparring',budget:'b100to200',fit:'Any',priorities:['none']
+}).matches.map(g=>g.id);
+assert.equal(JSON.stringify(sparring200),
+  JSON.stringify(['fairtex-bgv1','thaismai-bg121','primo-emblem-2']),
+  'Muay Thai sparring editorial ranking changed unexpectedly');
 assert.ok(gloves.find(g=>g.brand==='Primo'&&g.model==='Emblem 2'));
 assert.equal(gloves.find(g=>g.brand==='Combat Corner'&&g.model==='Cream').use,'Both');
 assert.equal(gloves.find(g=>g.brand==='Casanova').use,'Both');
