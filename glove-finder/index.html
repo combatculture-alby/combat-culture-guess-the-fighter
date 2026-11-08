@@ -1367,6 +1367,13 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
         if (g.strength==='Comfort' || g.strength==='Protection') points += 3;
       }
     }
+    // Firsthand preference: for Muay Thai sparring, Fairtex BGV1, Thaismai
+    // BG121 and Primo Emblem 2 are preferred over generic sparring choices.
+    // Budget and intended-use filters still apply before ranking.
+    if(a.sport==='Muay Thai' && (a.use==='Sparring'||a.use==='Both')) {
+      const preferred=new Set(['fairtex-bgv1','thaismai-bg121','primo-emblem-2']);
+      if(preferred.has(g.id)) points += 27;
+    }
     // Fitness classes: affordable and dependable beats expensive and specialized.
     if (a.sport==='Fitness' && a.use==='Bag & Pads') {
       if (g.strength==='Value') points += 18;
