@@ -1012,7 +1012,9 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     ];
     if(answers.sport==='MMA')cautions.push('These are boxing-style training gloves, not MMA-specific sparring gloves.');
     if(result.fitnessCap!==null)cautions.unshift(
-      'For fitness/cardio bag work, we focus on practical, approved gloves at 
+      'For fitness/cardio bag work, we favor value and comfort among approved gloves at $'+result.fitnessCap+
+      ' or less, even if you selected a larger budget. Fit and hand protection still matter.'
+    );
     const countText=`${result.count} ${result.count===1?'glove meets':'gloves meet'} your budget and training-use requirements`;
     content.innerHTML=`<div class="results-header"><p class="kicker">COMBAT CULTURE PICKS</p><h2>${result.matches.length?'Your glove shortlist.':'No suitable matches yet.'}</h2>
       <span class="result-count">${esc(countText)}</span><p class="summary">${esc(summary)}</p></div>
