@@ -885,7 +885,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     // A high stated budget is a ceiling, not a target for cardio bag training.
     // Sparring and all-around requests retain their own safety and budget logic.
     const fitnessBag=a.sport==='Fitness' && a.use==='Bag & Pads';
-    const fitnessCap=fitnessBag ? Math.min(budgetCeilings[a.budget] ?? Infinity, 100) : null;
+    const fitnessCap=fitnessBag ? Math.min(budgetCeilings[a.budget] ?? Infinity, 200) : null;
     const candidates=all.filter(g=>budgetFits(g,a.budget) && useFits(g,a.use)
       && (!fitnessBag || g.msrp<=fitnessCap));
     const ranked=candidates.map(g=>({...g,matchScore:score(g,a)}))
