@@ -24,10 +24,10 @@
       <p class="intro">Five quick questions. Recommendations shaped by our firsthand testing, not generic product scores.</p>
     </header>
     <section class="panel" aria-label="Glove finder quiz">
-      <div class="panel-top"><span id="stage-label" class="step-label">QUESTION 1 OF 5</span><span class="testing">UPDATED PREVIEW</span></div>
+      <div class="panel-top"><span id="stage-label" class="step-label">QUESTION 1 OF 5</span></div>
       <div class="progress" aria-hidden="true"><div id="progress-fill"></div></div>
       <div id="preview-warning" role="status" class="preview-warning">
-        <strong>This file viewer isn't running the quiz.</strong>
+        <strong>JavaScript is required to run this quiz.</strong>
         <p>This quiz needs JavaScript. If you're seeing this message, open the HTML file in Safari or Chrome on a computer, or use a hosted web link. The ChatGPT file preview and iPhone Files preview may block interactive scripts.</p>
       </div>
       <div id="quiz-content" aria-live="polite">
@@ -1336,66 +1336,82 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
   }
   function score(g, a) {
     let points=24;
-    const strengths=g.strengths||[g.strength,g.secondaryStrength,g.thirdStrength].filter(Boolean);
-    const weaknesses=g.weaknesses||[g.weakness,g.secondaryWeakness,g.thirdWeakness].filter(Boolean);
-    // Fitness users benefit from sound value, rather than a higher retail price.
-    if(a.sport==='Fitness' && a.use==='Bag & Pads') {
-      if(strengths.includes('Value'))points+=18;
-      if(g.msrp<=60)points+=8;
-      else if(g.msrp<=100)points+=5;
-      else if(g.msrp<=150)points+=2;
-      if(weaknesses.includes('Build Quality'))points-=9;
-    }
     points += (g.use===a.use ? 10 : 7);
     points += sportBonus(g, a.sport);
     if (a.fit && a.fit!=='Any') {
-      if(g.fit===a.fit)points+=16;
-      else if(g.fit==='Normal'||a.fit==='Normal')points+=3;
-      else if(validFits.has(g.fit))points-=10;
+      if (g.fit===a.fit) points += 16;
+      else if (g.fit==='Normal' || a.fit==='Normal') points += 3;
+      else if (validFits.has(g.fit)) points -= 10;
     }
     const prefs=(a.priorities||[]).filter(p=>p!=='none');
     for (const p of prefs) {
-      const strengthIndex=strengths.indexOf(p);
-      if(strengthIndex>=0)points+=[30,18,10][Math.min(strengthIndex,2)];
-      const weaknessIndex=weaknesses.indexOf(p);
-      if(weaknessIndex>=0)points-=[14,10,6][Math.min(weaknessIndex,2)];
+      if (g.strength===p) points += 30;
+      else if (g.secondaryStrength===p) points += 19;
+      else if (g.thirdStrength===p) points += 10;
+      if (g.weakness===p) points -= 14;
+      if (g.secondaryWeakness===p) points -= 8;
+      if (g.thirdWeakness===p) points -= 5;
     }
-    if(weaknesses.includes('Build Quality'))points-=8;
-    if(weaknesses.includes('Accessibility'))points-=5;
-    if(weaknesses.includes('Bulkiness') && a.sport==='Muay Thai')points-=3;
-    if(g.availability==='Limited')points-=7;
-    else if(g.availability==='Widely Available')points+=3;
-    else if(g.availability==='Regional')points-=2;
-    if(weaknesses.includes('Price')&&(a.budget==='under100'||a.budget==='b100to200'))points-=4;
-    if(g.editorialSignal==='Top pick')points+=3;
-    if(g.editorialSignal==='Strong review')points+=1;
+    // With no stated feature preference, use modest practical tie-breakers.
+    if (!prefs.length) {
+      if (a.use==='Sparring') {
+        if (g.strength==='Protection') points += 5;
+        if (g.strength==='Comfort') points += 4;
+        if (g.strength==='Versatility' || g.strength==='Value') points += 3;
+        if (g.weakness==='Comfort') points -= 4;
+      } else if (a.use==='Bag & Pads') {
+        if (g.strength==='Value' || g.strength==='Feedback') points += 4;
+        if (g.strength==='Comfort') points += 3;
+      } else if (a.use==='Both') {
+        if (g.strength==='Versatility') points += 5;
+        if (g.strength==='Comfort' || g.strength==='Protection') points += 3;
+      }
+    }
+    // Fitness classes: affordable and dependable beats expensive and specialized.
+    if (a.sport==='Fitness' && a.use==='Bag & Pads') {
+      if (g.strength==='Value') points += 18;
+      else if (g.secondaryStrength==='Value') points += 12;
+      else if (g.thirdStrength==='Value') points += 6;
+      if (g.msrp<=70) points += 8;
+      else if (g.msrp<=100) points += 5;
+      else if (g.msrp<=150) points += 2;
+      points -= Math.max(0,g.msrp-100)*0.10;
+    }
+    if (g.weakness==='Build Quality') points -= 7;
+    if (g.weakness==='Protection' && (a.use==='Sparring'||a.use==='Both')) points -= 12;
+    if (g.weakness==='Accessibility') points -= 5;
+    if (g.availability==='Limited') points -= 7;
+    else if (g.availability==='Regional') points -= 2;
+    else if (g.availability==='Widely Available') points += 2;
+    if (g.weakness==='Price' && (a.budget==='under100'||a.budget==='b100to200')) points -= 4;
+    if (g.editorialSignal==='Top pick') points += 5;
+    if (g.editorialSignal==='Strong review') points += 2;
     return points;
   }
   function recommend(gloves,a) {
     const all=ready(gloves);
-    // A high stated budget is a ceiling, not a target for cardio bag training.
-    // Sparring and all-around requests retain their own safety and budget logic.
     const fitnessBag=a.sport==='Fitness' && a.use==='Bag & Pads';
-    const fitnessCap=fitnessBag ? Math.min(budgetCeilings[a.budget] ?? Infinity, 200) : null;
+    const fitnessCap=fitnessBag ? Math.min(budgetCeilings[a.budget] ?? Infinity,200) : null;
     const candidates=all.filter(g=>budgetFits(g,a.budget) && useFits(g,a.use)
       && (!fitnessBag || g.msrp<=fitnessCap));
     const ranked=candidates.map(g=>({...g,matchScore:score(g,a)}))
       .sort((x,y)=>y.matchScore-x.matchScore || x.msrp-y.msrp || x.brand.localeCompare(y.brand) || x.model.localeCompare(y.model));
-    const chosen=[]; const groups=new Set();
+    const chosen=[],families=new Set(),brands=new Set();
     function add(g,kind) {
-      if (!g || groups.has(family(g))) return false;
-      chosen.push({...g,kind}); groups.add(family(g)); return true;
+      if (!g || families.has(family(g))) return false;
+      chosen.push({...g,kind});families.add(family(g));brands.add(g.brand.toLowerCase());return true;
     }
+    // Prefer different brands, not two near-identical models from one maker.
     add(ranked[0],'Best match');
-    add(ranked.find(g=>!groups.has(family(g))),'Strong alternative');
-    // Choose an actually cheaper alternative only when quality of match is reasonably close.
-    if (chosen.length===2) {
+    add(ranked.find(g=>!brands.has(g.brand.toLowerCase())),'Strong alternative');
+    if(chosen.length<2)add(ranked.find(g=>!families.has(family(g))),'Strong alternative');
+    if(chosen.length===2){
       const ceiling=Math.min(...chosen.map(x=>x.msrp));
-      const cheaper=ranked.filter(g=>!groups.has(family(g)) && g.msrp<ceiling && g.matchScore>=ranked[0].matchScore-24)
+      const alternatives=ranked.filter(g=>!families.has(family(g)) && !brands.has(g.brand.toLowerCase()));
+      const cheaper=alternatives.filter(g=>g.msrp<ceiling && g.matchScore>=ranked[0].matchScore-24)
         .sort((x,y)=>x.msrp-y.msrp || y.matchScore-x.matchScore);
-      if (!add(cheaper[0],'Lower-cost alternative')) {
-        add(ranked.find(g=>!groups.has(family(g))),'Another option');
-      }
+      if(!add(cheaper[0],'Lower-cost alternative'))add(alternatives[0],'Another option');
+      if(chosen.length<3)add(ranked.find(g=>!families.has(family(g))),'Another option');
     }
     return {count:candidates.length,matches:chosen,readyCount:all.length,fitnessCap,
       pending:gloves.filter(g=>g.approved===true && incompleteReason(g)).map(g=>({...g,pendingReason:incompleteReason(g)}))};
@@ -1482,6 +1498,8 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     }
     if((answers.use==='Sparring'||answers.use==='Both') && g.testedWeight && g.testedWeight!=='16 oz')
       parts.push(`Reviewed at ${g.testedWeight}; that does not verify the fit, padding or sparring approval of another weight.`);
+    if(g.secondaryWeakness && g.secondaryWeakness!=='Nothing Major')parts.push('Additional tradeoff: '+lower(g.secondaryWeakness)+'.');
+    if(g.thirdWeakness && g.thirdWeakness!=='Nothing Major')parts.push('Also consider: '+lower(g.thirdWeakness)+'.');
     if(g.availability==='Limited')parts.push('Availability: limited, based on the owner’s classification. Verify local stock.');
     if(g.availability==='Regional')parts.push('Availability: varies by region; verify local retailers.');
     if(!g.reviewPublished)parts.push('No published review confirmed for this specific entry.');
