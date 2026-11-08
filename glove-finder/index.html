@@ -432,10 +432,10 @@ const CC_GLOVES = [
     "checkedPrice": "GBP 249 (UK retailer; sold out)",
     "researchUrl": "https://made4fighters.com/collections/muay-thai-protection/products/elion-paris-elegant-dragon-ball-z-vegeta-boxing-gloves",
     "researchDate": "2026-11-08",
-    "onlinePriceUsd": null,
-    "priceStatus": "Pending exact model USD price",
-    "priceUrl": "",
-    "priceCheckedOn": ""
+    "onlinePriceUsd": 333.11,
+    "priceStatus": "Converted estimate from GBP249 UK listing at 2026-11-08 rate 1GBP≈1.3378USD; retailer reports sold out, excludes shipping/duties",
+    "priceUrl": "https://made4fighters.com/collections/muay-thai-protection/products/elion-paris-elegant-dragon-ball-z-vegeta-boxing-gloves",
+    "priceCheckedOn": "2026-11-08"
   },
   {
     "id": "everlast-mx-hook-and-loop",
@@ -1042,10 +1042,10 @@ const CC_GLOVES = [
     "checkedPrice": "GBP 195 (Phenom official)",
     "researchUrl": "https://phenomboxing.com/products/sg-210s-pro-sparring-gloves",
     "researchDate": "2026-11-08",
-    "onlinePriceUsd": null,
-    "priceStatus": "Pending exact model USD price",
-    "priceUrl": "",
-    "priceCheckedOn": ""
+    "onlinePriceUsd": 260.87,
+    "priceStatus": "Converted estimate from £195 GBP official listing at 2026-11-08 rate 1GBP≈1.3378USD; excludes shipping and duties",
+    "priceUrl": "https://phenomboxing.com/products/sg-210s-pro-sparring-gloves",
+    "priceCheckedOn": "2026-11-08"
   },
   {
     "id": "primo-emblem-2",
@@ -1387,10 +1387,10 @@ const CC_GLOVES = [
     "checkedPrice": "MXN 2,699 (Ring Kong 16oz lace-up variant)",
     "researchUrl": "https://ringkong.com/products/seyer-boxing-gloves",
     "researchDate": "2026-11-08",
-    "onlinePriceUsd": null,
-    "priceStatus": "Pending exact model USD price",
-    "priceUrl": "",
-    "priceCheckedOn": ""
+    "onlinePriceUsd": 144.7,
+    "priceStatus": "Converted estimate from MXN2699 for 16oz lace-up at 2026-11-08 rate 1USD≈18.6524MXN; excludes shipping/duties",
+    "priceUrl": "https://ringkong.com/products/seyer-boxing-gloves",
+    "priceCheckedOn": "2026-11-08"
   },
   {
     "id": "sting-viper",
@@ -2139,7 +2139,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       <div class="stats"><span class="stat"><small>Online retail</small><strong>${Number(g.onlinePriceUsd).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</strong></span>
       <span class="stat"><small>Tested at</small><strong>${esc(g.testedWeight||'Not recorded')}</strong></span>
       <span class="stat"><small>Reviewer fit</small><strong>${esc(g.fit||'Unspecified')}</strong></span></div>
-      ${g.priceUrl?`<p class="fineprint">Price checked ${esc(g.priceCheckedOn)}. <a class="review-link" href="${esc(g.priceUrl)}" target="_blank" rel="noopener noreferrer">View retailer listing</a></p>`:''}
+      ${g.priceUrl?`<p class="fineprint">${g.priceStatus.startsWith('Converted')?'Approx. USD conversion. ':''}Price checked ${esc(g.priceCheckedOn)}. <a class="review-link" href="${esc(g.priceUrl)}" target="_blank" rel="noopener noreferrer">View retailer listing</a></p>`:''}
       <p class="match-reason">${esc(reasons(g))}</p>
       ${caveat(g)?`<p class="caveat">${esc(caveat(g))}</p>`:''}
       <a class="review-link" href="${esc(linkFor(g))}" target="_blank" rel="noopener noreferrer">${g.sourceArticle?'Read related Combat Culture article':'Browse Combat Culture reviews'} <span aria-hidden="true">↗</span></a>
