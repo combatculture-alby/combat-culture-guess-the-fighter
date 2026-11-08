@@ -21,26 +21,35 @@ for(const sport of ['Boxing','Muay Thai','Kickboxing','MMA','Fitness'])
 for(const use of ['Sparring','Bag & Pads','Both'])
 for(const budget of Object.keys(ceilings))
 for(const fit of ['Snug','Normal','Roomy','Any'])
-for(const priorities of [['none'],['Value'],['Protection'],['Comfort'],['Feedback'],['Versatility'],['Value','Comfort']]){
-  const a={sport,use,budget,fit,priorities};
+for(const priorities of [['none'],['Value'],['Protection'],['Comfort'],['Feedback'],['Versatility'],['Breathability'],['Compactness']])
+for(const style of ['Any','Japanese','Thai','Mexican'])
+for(const material of ['Any','Genuine Leather','Synthetic']){
+  const a={sport,use,budget,fit,priorities,style,material};
   const result=engine.recommend(gloves,a);
-  assert.ok(result.matches.length<=3);
-  assert.equal(new Set(result.matches.map(g=>g.id)).size,result.matches.length);
+  assert.ok(result.matches.length<=4,'More than four results');
+  assert.equal(new Set(result.matches.map(g=>g.id)).size,result.matches.length,'Duplicate result');
+  const stretchMax=ceilings[budget]+Math.min(75,Math.max(25,ceilings[budget]*0.25));
   for(const g of result.matches){
     assert.equal(g.approved,true);
-    assert.ok(g.msrp<=ceilings[budget]);
     assert.ok(engine.useFits(g,use),'Invalid training use');
+    if(g.kind==='Stretch pick'){
+      assert.ok(g.msrp>ceilings[budget]&&g.msrp<=stretchMax,'Stretch price invalid');
+      assert.ok(!(sport==='Fitness'&&use==='Bag & Pads'),'Cardio stretch disallowed');
+    } else {
+      assert.ok(g.msrp<=ceilings[budget],'In-budget option exceeded cap');
+    }
     if(sport==='Fitness'&&use==='Bag & Pads')assert.ok(g.msrp<=200,'Fitness cap exceeded');
   }
   combinations++;
 }
-// Editorial benchmark from the owner's firsthand Muay Thai sparring preferences.
-const sparring200=engine.recommend(gloves,{
-  sport:'Muay Thai',use:'Sparring',budget:'b100to200',fit:'Any',priorities:['none']
+const benchmark=engine.recommend(gloves,{
+  sport:'Muay Thai',use:'Sparring',budget:'b100to200',fit:'Any',
+  priorities:['none'],style:'Any',material:'Any'
 }).matches.map(g=>g.id);
-assert.equal(JSON.stringify(sparring200),
-  JSON.stringify(['fairtex-bgv1','thaismai-bg121','primo-emblem-2']),
-  'Muay Thai sparring editorial ranking changed unexpectedly');
+assert.equal(JSON.stringify(benchmark.slice(0,2)),
+ JSON.stringify(['fairtex-bgv1','thaismai-bg121']),
+ 'Muay Thai top two changed unexpectedly');
+assert.ok(benchmark.includes('primo-emblem-2'),'Primo should appear within $200 options');
 assert.ok(gloves.find(g=>g.brand==='Primo'&&g.model==='Emblem 2'));
 assert.equal(gloves.find(g=>g.brand==='Combat Corner'&&g.model==='Cream').use,'Both');
 assert.equal(gloves.find(g=>g.brand==='Casanova').use,'Both');
@@ -76,13 +85,14 @@ assert.equal(gloves.find(g=>g.brand==='Casanova').use,'Both');
     get('continue').click();
   }
   function finish(){
-    for(const v of ['Muay Thai','Sparring','b100to200','none','Any'])answer(v);
+    for(const v of ['Muay Thai','Sparring','b100to200','none','Any','Thai','Genuine Leather'])answer(v);
     assert.ok(get('quiz-content').innerHTML.includes('Your glove shortlist.'),'Missing result cards');
   }
   finish();
   get('again').click();
-  assert.equal(get('stage-label').textContent,'QUESTION 1 OF 5','Start over did not reset step');
-  assert.ok(get('continue').innerHTML.includes('disabled'),'Next should be disabled after full reset');
+  assert.equal(get('stage-label').textContent,'QUESTION 1 OF 7','Start over did not reset step');
+  assert.ok(get('quiz-controls').innerHTML.includes('id="continue" type="button" disabled'),
+  'Next should be disabled after full reset');
   finish();
 }
 
