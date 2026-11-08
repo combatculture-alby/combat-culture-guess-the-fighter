@@ -15,7 +15,7 @@ const module={exports:{}};
 vm.runInNewContext(scripts[1],{module,window:{}});
 new vm.Script(scripts[2]); // UI syntax check
 const engine=module.exports;
-assert.equal(gloves.filter(g=>Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0).length,33,'Unexpected priced glove count');
+assert.equal(gloves.filter(g=>Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0).length,35,'Unexpected priced glove count');
 assert.equal(gloves.find(g=>g.id==='fairtex-bgv1').onlinePriceUsd,139,'Fairtex should use online, not reviewer price');
 let combinations=0;
 const ceilings={under100:100,b100to200:200,b200to300:300,b300plus:Infinity};
