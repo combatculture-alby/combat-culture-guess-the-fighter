@@ -854,6 +854,12 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
   }
   function score(g, a) {
     let points=24;
+    // Cardio boxing should favor useful, affordable gloves over premium features.
+    if (a.sport==='Fitness' && a.use==='Bag & Pads') {
+      if (g.strength==='Value') points += 20;
+      if (g.msrp<=60) points += 6;
+      if (g.weakness==='Build Quality') points -= 8;
+    }
     points += (g.use===a.use ? 10 : 7);
     points += sportBonus(g, a.sport);
     if (a.fit && a.fit!=='Any') {
@@ -876,7 +882,12 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
   }
   function recommend(gloves,a) {
     const all=ready(gloves);
-    const candidates=all.filter(g=>budgetFits(g,a.budget) && useFits(g,a.use));
+    // A high stated budget is a ceiling, not a target for cardio bag training.
+    // Sparring and all-around requests retain their own safety and budget logic.
+    const fitnessBag=a.sport==='Fitness' && a.use==='Bag & Pads';
+    const fitnessCap=fitnessBag ? Math.min(budgetCeilings[a.budget] ?? Infinity, 100) : null;
+    const candidates=all.filter(g=>budgetFits(g,a.budget) && useFits(g,a.use)
+      && (!fitnessBag || g.msrp<=fitnessCap));
     const ranked=candidates.map(g=>({...g,matchScore:score(g,a)}))
       .sort((x,y)=>y.matchScore-x.matchScore || x.msrp-y.msrp || x.brand.localeCompare(y.brand) || x.model.localeCompare(y.model));
     const chosen=[]; const groups=new Set();
@@ -893,7 +904,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
         .sort((x,y)=>x.msrp-y.msrp || y.matchScore-x.matchScore);
       add(cheaper[0],'Lower-cost alternative');
     }
-    return {count:candidates.length,matches:chosen,readyCount:all.length,
+    return {count:candidates.length,matches:chosen,readyCount:all.length,fitnessCap,
       pending:gloves.filter(g=>g.approved===true && incompleteReason(g)).map(g=>({...g,pendingReason:incompleteReason(g)}))};
   }
   const api={incompleteReason,ready,budgetFits,useFits,score,recommend,family,preferenceLabels,REVIEW_DIRECTORY};
@@ -1000,6 +1011,28 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       'For sparring, confirm the intended weight, padding, and gym rules. A 16 oz label alone does not establish sparring safety.'
     ];
     if(answers.sport==='MMA')cautions.push('These are boxing-style training gloves, not MMA-specific sparring gloves.');
+    if(result.fitnessCap!==null)cautions.unshift(
+      'For fitness/cardio bag work, we focus on practical, approved gloves at 
+    const countText=`${result.count} ${result.count===1?'glove meets':'gloves meet'} your budget and training-use requirements`;
+    content.innerHTML=`<div class="results-header"><p class="kicker">COMBAT CULTURE PICKS</p><h2>${result.matches.length?'Your glove shortlist.':'No suitable matches yet.'}</h2>
+      <span class="result-count">${esc(countText)}</span><p class="summary">${esc(summary)}</p></div>
+      ${result.matches.length?`<div class="results-grid">${result.matches.map(makeCard).join('')}</div>`:
+        '<p class="empty">We did not find an approved glove in your price range for that training purpose. Try a higher budget or a different use. We will not suggest bag-only gloves for sparring.</p>'}
+      <div class="limitations"><h3>Before you buy</h3><ul>${cautions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+      <p class="data-note">Recommendations use ${result.readyCount} approved, eligible gloves from the latest imported spreadsheet snapshot. No external community ratings or affiliate payments affect the order.</p></div>`;
+    controls.innerHTML=`<button class="btn btn-secondary" type="button" id="edit">Edit answers</button><button class="btn btn-primary" type="button" id="again">Start over <span aria-hidden="true">↺</span></button>`;
+    document.getElementById('edit').addEventListener('click',()=>{step=0;finished=false;render()});
+    document.getElementById('again').addEventListener('click',()=>{for(const k of Object.keys(answers))answers[k]=k==='priorities'?[]:null;step=0;finished=false;render()});
+  }
+  function render(){if(finished)renderResults();else renderQuestion()}
+  render();
+})();
+
+</script>
+</body>
+</html>+result.fitnessCap+
+      ' or less, even if you selected a larger budget. Hand protection and fit still matter.'
+    );
     const countText=`${result.count} ${result.count===1?'glove meets':'gloves meet'} your budget and training-use requirements`;
     content.innerHTML=`<div class="results-header"><p class="kicker">COMBAT CULTURE PICKS</p><h2>${result.matches.length?'Your glove shortlist.':'No suitable matches yet.'}</h2>
       <span class="result-count">${esc(countText)}</span><p class="summary">${esc(summary)}</p></div>
