@@ -100,5 +100,22 @@
     "Expert (All Sports)::Easy": "MMA::Tito Ortiz",
     "Expert (All Sports)::Medium": "Boxing::Sonny Liston",
     "Expert (All Sports)::Hard": "Muay Thai::Panomtuanlek Hapalang"
+  },
+  "2026-11-10": {
+    "Muay Thai::Easy": "Muay Thai::Saenchai Sor Kingstar",
+    "Muay Thai::Medium": "Muay Thai::Nico Carrillo",
+    "Muay Thai::Hard": "Muay Thai::Kongthoranee Sor.Sommai",
+    "Boxing::Easy": "Boxing::Sugar Ray Robinson",
+    "Boxing::Medium": "Boxing::Thomas Hearns",
+    "Boxing::Hard": "Boxing::Floyd Patterson",
+    "Kickboxing::Easy": "Kickboxing::Giorgio Petrosyan",
+    "Kickboxing::Medium": "Kickboxing::Sitthichai Sitsongpeenong",
+    "Kickboxing::Hard": "Kickboxing::Albert Kraus",
+    "MMA::Easy": "MMA::Amanda Nunes",
+    "MMA::Medium": "MMA::Stipe Miocic",
+    "MMA::Hard": "MMA::Josh Barnett",
+    "Expert (All Sports)::Easy": "MMA::Mirko Cro Cop",
+    "Expert (All Sports)::Medium": "MMA::Miesha Tate",
+    "Expert (All Sports)::Hard": "Muay Thai::Samransak Muangsurin"
   }
 }
