@@ -1551,27 +1551,17 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       <p class="data-note">Recommendations use ${result.readyCount} approved, eligible gloves from a manually refreshed Combat Culture spreadsheet snapshot. No external community ratings or affiliate payments affect the order.</p></div>`;
     controls.innerHTML=`<button class="btn btn-secondary" type="button" id="edit">Edit answers</button><button class="btn btn-primary" type="button" id="again">Start over <span aria-hidden="true">↺</span></button>`;
     document.getElementById('edit').addEventListener('click',()=>{step=0;finished=false;render()});
-    document.getElementById('again').addEventListener('click',()=>{for(const k of Object.keys(answers))answers[k]=k==='priorities'?[]:null;step=0;finished=false;render()});
-  }
-  function render(){if(finished)renderResults();else renderQuestion()}
-  render();
-})();
-
-</script>
-</body>
-</html>+result.fitnessCap+
-      ' or less, even if you selected a larger budget. Hand protection and fit still matter.'
-    );
-    const countText=`${result.count} ${result.count===1?'glove meets':'gloves meet'} your budget and training-use requirements`;
-    content.innerHTML=`<div class="results-header"><p class="kicker">COMBAT CULTURE PICKS</p><h2>${result.matches.length?'Your glove shortlist.':'No suitable matches yet.'}</h2>
-      <span class="result-count">${esc(countText)}</span><p class="summary">${esc(summary)}</p></div>
-      ${result.matches.length?`<div class="results-grid">${result.matches.map(makeCard).join('')}</div>`:
-        '<p class="empty">We did not find an approved glove in your price range for that training purpose. Try a higher budget or a different use. We will not suggest bag-only gloves for sparring.</p>'}
-      <div class="limitations"><h3>Before you buy</h3><ul>${cautions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
-      <p class="data-note">Recommendations use ${result.readyCount} approved, eligible gloves from the latest imported spreadsheet snapshot. No external community ratings or affiliate payments affect the order.</p></div>`;
-    controls.innerHTML=`<button class="btn btn-secondary" type="button" id="edit">Edit answers</button><button class="btn btn-primary" type="button" id="again">Start over <span aria-hidden="true">↺</span></button>`;
-    document.getElementById('edit').addEventListener('click',()=>{step=0;finished=false;render()});
-    document.getElementById('again').addEventListener('click',()=>{for(const k of Object.keys(answers))answers[k]=k==='priorities'?[]:null;step=0;finished=false;render()});
+    document.getElementById('again').addEventListener('click',()=>{
+      // Fully clear answers and return to a clean first question.
+      answers.sport=null;
+      answers.use=null;
+      answers.budget=null;
+      answers.priorities=[];
+      answers.fit=null;
+      step=0;
+      finished=false;
+      renderQuestion();
+    });
   }
   function render(){if(finished)renderResults();else renderQuestion()}
   render();
