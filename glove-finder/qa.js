@@ -8,8 +8,10 @@ import { fileURLToPath } from 'node:url';
 const __dirname=dirname(fileURLToPath(import.meta.url));
 const html=fs.readFileSync(__dirname+'/index.html','utf8');
 const scripts=html.split('<script>').slice(1).map(x=>x.split('</script>')[0]);
-assert.ok(html.includes('assets/branding-sprite.webp'),'Brand sprite stylesheet missing');
-assert.ok(html.includes('assets/three-thinking.svg'),'Three thinking chibi art reference missing');
+for (const image of ['start-hands-on-hips.png','results-thumbs-up.png','success-fist.png','thinking-chin.png','thinking-arms-crossed.png','thinking-embarrassed.png','thinking-finger-up.png','thinking-stressed.png']) {
+  assert.ok(html.includes('https://combatcultureusa.com/wp-content/uploads/2026/11/'+image), 'Original HD chibi reference missing: '+image);
+}
+assert.ok(html.includes('Math.floor(Math.random()*5)'), 'Five thinking poses must rotate');
 assert.ok(html.includes('class="brand-ko-logo"'),'KO logo missing');
 assert.equal(scripts.length,3,'Expected data, engine and UI scripts');
 const start=scripts[0].indexOf('const CC_GLOVES = ')+'const CC_GLOVES = '.length;
