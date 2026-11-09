@@ -2186,7 +2186,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
   const engine=window.CC_LOGIC;
   const Q=[
     {key:'sport',title:'What Do You Train?',hint:'This helps us tailor the advice, but it will not block otherwise suitable gloves.',options:[
-      ['Boxing','Boxing'],['Muay Thai','Muay Thai'],['Kickboxing','Kickboxing'],['MMA','MMA'],['Fitness','Fitness / cardio training']]},
+      ['Boxing','Boxing'],['Muay Thai','Muay Thai'],['Kickboxing','Kickboxing'],['MMA','MMA'],['Fitness','Fitness / Cardio Training']]},
     {key:'use',title:'What Are These Gloves For?',hint:'Training purpose is the most important filter. Dedicated bag gloves never appear as sparring recommendations.',options:[
       ['Sparring','Sparring'],['Bag & Pads','Heavy Bag & Pads'],['Both','Both / All-Around']]},
     {key:'budget',title:'How Much Would You Spend?',hint:'Choose a maximum budget in USD. We use checked retailer prices, not personal reference prices.',options:[
@@ -2202,14 +2202,14 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       ['Genuine Leather','Genuine Leather'],['Synthetic','Synthetic'],['Any','No Preference']]}
   ];
   const answers={sport:null,use:null,budget:null,priorities:[],fit:null,style:null,material:null};
-  // A shorter route for fitness customers, and no boxing-style preference
-  // question for MMA customers shopping for MMA-specific sparring gloves.
+  // Fitness goes straight to budget and practical preferences; MMA skips the
+  // traditional boxing-glove-style question.
   const route=()=>Q.filter(q=>
     !(q.key==='use'&&answers.sport==='Fitness') &&
-    !(q.key==='style'&&answers.sport==='MMA'));
+    !(q.key==='style'&&(answers.sport==='MMA'||answers.sport==='Fitness')));
   const effectiveAnswers=()=>({...answers,
     use:answers.sport==='Fitness'?'Bag & Pads':answers.use,
-    style:answers.sport==='MMA'?'Any':answers.style});
+    style:answers.sport==='MMA'||answers.sport==='Fitness'?'Any':answers.style});
   let step=0,finished=false;
   // Lightweight synthesized sounds; playback only follows a direct user action.
   let soundOn=true, audioContext=null;
@@ -2260,8 +2260,8 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     }else if(q.key==='sport'){
       if(answers.sport!==value){
         answers.use=value==='Fitness'?'Bag & Pads':null;
-        if(value==='MMA')answers.style='Any';
-        else if(answers.sport==='MMA')answers.style=null;
+        if(value==='MMA'||value==='Fitness')answers.style='Any';
+        else if(answers.sport==='MMA'||answers.sport==='Fitness')answers.style=null;
       }
       answers.sport=value;
     }else answers[q.key]=value;
@@ -2277,7 +2277,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
         const selected=isSelected(q,value);
         return `<button type="button" class="choice ${selected?'selected':''}" data-answer="${esc(value)}" aria-pressed="${selected}">
           <span class="choice-name">${esc(label)}</span><span class="choice-indicator" aria-hidden="true">${selected?'✓':''}</span></button>`;
-      }).join('')}</div>${q.multiple?'<p class="fineprint">Choose up to two priorities, or select No strong preference.</p>':''}`;
+      }).join('')}</div>${q.multiple?'<p class="fineprint">Choose up to two priorities, or select No Strong Preference.</p>':''}`;
     content.querySelectorAll('[data-answer]').forEach(btn=>btn.addEventListener('click',()=>toggle(q,btn.dataset.answer)));
     controls.innerHTML=`<button class="btn btn-secondary" id="back" type="button" ${step===0?'disabled':''}>Back</button>
       <button class="btn btn-primary" id="continue" type="button" ${isValid(q)?'':'disabled'}>${step===questions.length-1?'Find My Gloves':'Continue'} <span aria-hidden="true">→</span></button>`;
@@ -2346,12 +2346,13 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     const prefs=answers.priorities.filter(x=>x!=='none').map(x=>x==='Feedback'?'Punch feedback':x);
     const summary=[answers.sport,answers.sport==='Fitness'?'Cardio / Bag Training':answers.use==='Both'?'All-Around':answers.use,
       labelFor(Q[2],answers.budget),prefs.join(' + ')||'No Priority',labelFor(Q[4],answers.fit),
-      ...(answers.sport==='MMA'?[]:[labelFor(Q[5],answers.style)]),labelFor(Q[6],answers.material)].join(' · ');
+      ...((answers.sport==='MMA'||answers.sport==='Fitness')?[]:[labelFor(Q[5],answers.style)]),labelFor(Q[6],answers.material)].join(' · ');
     const cautions=[
       'Prices generally use online listings checked November 8, 2026. Entries marked Estimated price use Combat Culture reference MSRP because a current exact-model price could not be verified. Verify current price, stock and shipping before buying.',
       '“Fit” and strengths reflect one reviewer’s experience, not a universal guarantee. Other glove weights can fit or feel different.',
       'For sparring, confirm the intended weight, padding, and gym rules. A 16 oz label alone does not establish sparring safety. Availability is not verified for unclassified gloves.'
     ];
+    if(answers.sport==='Fitness')cautions.push('These recommendations are for fitness classes, cardio boxing, and bag/pad training, not partner sparring.');
     if(answers.sport==='MMA' && !mmaSparring)cautions.push('For striking on bags and pads, boxing-style training gloves are suitable. MMA sparring requires purpose-built MMA sparring gloves.');
     if(result.fitnessCap!==null)cautions.unshift(
       'For fitness/cardio bag work, we favor value and comfort among approved gloves at $'+result.fitnessCap+
