@@ -2045,7 +2045,7 @@ const CC_GLOVES = [
     "weakness": "",
     "sport": "MMA",
     "reviewPublished": false,
-    "editorialSignal": "Unpublished - owner tested",
+    "editorialSignal": "Unpublished; owner assessment pending",
     "sourceArticle": "",
     "approved": true,
     "secondaryStrength": "",
@@ -2056,7 +2056,7 @@ const CC_GLOVES = [
     "strengths": [],
     "weaknesses": [],
     "style": "Western/Other",
-    "material": "Unverified",
+    "material": "Synthetic",
     "breathability": "",
     "compactness": "",
     "handmade": "Unverified",
@@ -2070,21 +2070,22 @@ const CC_GLOVES = [
     "priceCheckedOn": "2026-11-08",
     "clinchMobility": "",
     "paddingFeel": "",
-    "breakInPeriod": ""
+    "breakInPeriod": "",
+    "mmaSpecs": "PU composite shell, dual-density padding, reinforced wrist; sizes S/M, L/XL, XXL."
   },
   {
     "id": "isami-pounding-gloves",
     "brand": "Isami",
     "model": "Pounding Gloves",
     "gloveType": "MMA Sparring",
-    "testedWeight": "",
+    "testedWeight": "One Size",
     "use": "Sparring",
     "fit": "Unsure",
     "strength": "",
     "weakness": "",
     "sport": "MMA",
     "reviewPublished": false,
-    "editorialSignal": "Unpublished - owner tested",
+    "editorialSignal": "Unpublished; owner assessment pending",
     "sourceArticle": "",
     "approved": true,
     "secondaryStrength": "",
@@ -2109,7 +2110,8 @@ const CC_GLOVES = [
     "priceCheckedOn": "2026-11-08",
     "clinchMobility": "",
     "paddingFeel": "",
-    "breakInPeriod": ""
+    "breakInPeriod": "",
+    "mmaSpecs": "Mixed leather/Cortex shell, 55 mm dual-layer padding, open palm; adult one size. Not for heavy bag or mitts."
   },
   {
     "id": "fairtex-fgv18-mma-sparring",
@@ -2123,7 +2125,7 @@ const CC_GLOVES = [
     "weakness": "",
     "sport": "MMA",
     "reviewPublished": false,
-    "editorialSignal": "Unpublished - owner tested",
+    "editorialSignal": "Unpublished; owner assessment pending",
     "sourceArticle": "",
     "approved": true,
     "secondaryStrength": "",
@@ -2148,7 +2150,8 @@ const CC_GLOVES = [
     "priceCheckedOn": "2026-11-08",
     "clinchMobility": "",
     "paddingFeel": "",
-    "breakInPeriod": ""
+    "breakInPeriod": "",
+    "mmaSpecs": "Synthetic microfiber, extra knuckle padding; sizes S, M, L, XL."
   }
 ];
 if (typeof window !== 'undefined') window.CC_GLOVES = CC_GLOVES;
@@ -2473,8 +2476,8 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       };
       parts.push('Tradeoffs: '+weaknesses.map(x=>labels[x]||lower(x)).join(', ')+'.');
     }
-    if((answers.use==='Sparring'||answers.use==='Both') && !g.testedWeight)parts.push('Tested weight not recorded; verify weight, padding and gym rules before sparring.');
-    if((answers.use==='Sparring'||answers.use==='Both') && g.testedWeight && g.testedWeight!=='16 oz')
+    if(g.gloveType!=='MMA Sparring' && (answers.use==='Sparring'||answers.use==='Both') && !g.testedWeight)parts.push('Tested weight not recorded; verify weight, padding and gym rules before sparring.');
+    if(g.gloveType!=='MMA Sparring' && (answers.use==='Sparring'||answers.use==='Both') && g.testedWeight && g.testedWeight!=='16 oz')
       parts.push(`Reviewed at ${g.testedWeight}; that does not verify the fit, padding or sparring approval of another weight.`);
 
 
@@ -2482,7 +2485,8 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     if(answers.material && answers.material!=='Any' && g.material && g.material!=='Unverified' && g.material===answers.material)parts.push('Verified material preference match.');
     if(g.availability==='Limited')parts.push('Availability: limited, based on the owner’s classification. Verify local stock.');
     if(g.availability==='Regional')parts.push('Availability: varies by region; verify local retailers.');
-    if(!g.reviewPublished)parts.push('No published review confirmed for this specific entry.');
+    if(g.gloveType==='MMA Sparring')parts.push('MMA sparring specifications are from manufacturer descriptions. Combat Culture firsthand ratings are pending. Verify size and gym sparring rules.');
+    else if(!g.reviewPublished)parts.push('No published review confirmed for this specific entry.');
     return parts.join(' ');
   }
   function linkFor(g){
@@ -2493,10 +2497,11 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     return `<article class="result-card"><div class="card-top"><span class="result-tag">${esc(g.kind)}</span><span class="result-index">0${i+1}</span></div>
       <h3>${esc(g.brand)}</h3><p class="model">${esc(g.model)}</p>
       <div class="stats"><span class="stat"><small>${g.priceStatus.startsWith('Owner MSRP fallback')?'Estimated Price':'Online Retail'}</small><strong>${Number(g.onlinePriceUsd).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</strong></span>
-      <span class="stat"><small>Tested At</small><strong>${esc(g.testedWeight||'Not recorded')}</strong></span>
-      <span class="stat"><small>Reviewer Fit</small><strong>${esc(g.fit||'Unspecified')}</strong></span></div>
+      <span class="stat"><small>${g.gloveType==='MMA Sparring'?'Size':'Tested At'}</small><strong>${esc(g.testedWeight||'Not recorded')}</strong></span>
+      <span class="stat"><small>Reviewer Fit</small><strong>${esc(g.fit && g.fit!=='Unsure'?g.fit:'Not Rated')}</strong></span></div>
       ${g.priceStatus.startsWith('Owner MSRP fallback')?'<p class="fineprint">Estimated using Combat Culture reference MSRP. Current retailer price unverified.</p>':''}
       ${g.priceUrl?`<p class="fineprint">${g.priceStatus.startsWith('Converted')?'Approx. USD conversion. ':''}${g.priceStatus.startsWith('Representative')?'Comparable model; verify exact version. ':''}${g.priceStatus.includes('sold out')?'Listed item may be sold out. ':''}Price checked ${esc(g.priceCheckedOn)}. <a class="review-link" href="${esc(g.priceUrl)}" target="_blank" rel="noopener noreferrer">View retailer listing</a></p>`:''}
+      ${g.gloveType==='MMA Sparring'&&g.mmaSpecs?`<p class="fineprint">Manufacturer details: ${esc(g.mmaSpecs)}</p>`:''}
       <p class="match-reason">${esc(reasons(g))}</p>
       ${caveat(g)?`<p class="caveat">${esc(caveat(g))}</p>`:''}
       <a class="review-link" href="${esc(linkFor(g))}" target="_blank" rel="noopener noreferrer">${g.sourceArticle?'Read related Combat Culture article':'Browse Combat Culture reviews'} <span aria-hidden="true">↗</span></a>
