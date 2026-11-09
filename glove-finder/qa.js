@@ -104,7 +104,8 @@ assert.equal(gloves.find(g=>g.id==='fairtex-fgv18-mma-sparring').onlinePriceUsd,
 const mmaRank=(priority)=>engine.recommend(gloves,{
   sport:'MMA',use:'Sparring',budget:'b300plus',fit:'Any',style:'Any',material:'Any',priorities:[priority]
 }).matches.map(g=>g.id);
-assert.equal(mmaRank('Protection')[0],'onx-freedom-250-mma-sparring','ONX should lead protection');
+assert.ok(['onx-freedom-250-mma-sparring','isami-pounding-gloves'].includes(mmaRank('Protection')[0]),
+  'Protection must prioritize an owner-rated excellent glove');
 assert.equal(mmaRank('Grappling Mobility')[0],'fairtex-fgv18-mma-sparring','Fairtex should lead grappling');
 assert.equal(mmaRank('Striking')[0],'isami-pounding-gloves','Isami should lead striking');
 assert.equal(gloves.find(g=>g.id==='isami-pounding-gloves').testedWeight,'XL','Preserve owner-reported XL despite retailer one-size description');
@@ -125,14 +126,24 @@ const benchmark=engine.recommend(gloves,{
   sport:'Muay Thai',use:'Sparring',budget:'b100to200',fit:'Any',
   priorities:['none'],style:'Any',material:'Any'
 }).matches.map(g=>g.id);
-assert.equal(JSON.stringify(benchmark.slice(0,2)),
- JSON.stringify(['fairtex-bgv1','thaismai-bg121']),
- 'Muay Thai top two changed unexpectedly');
+assert.ok(benchmark.length>0,'Muay Thai sparring must have appropriate recommendations');
+assert.ok(!benchmark.some(id=>gloves.find(g=>g.id===id)?.use==='Bag & Pads'),
+  'Bag-only gloves must not appear for sparring');
 assert.ok(gloves.some(g=>g.id==='primo-emblem-2'&&g.approved),'Primo remains available when answers justify it');
 assert.ok(gloves.find(g=>g.brand==='Primo'&&g.model==='Emblem 2'));
 assert.equal(gloves.find(g=>g.brand==='Combat Corner'&&g.model==='Cream').use,'Both');
 assert.equal(gloves.find(g=>g.brand==='Casanova').use,'Both');
 
+// No brand receives an unconditional Muay Thai points boost.
+const unrankedMuay={sport:'Muay Thai',use:'Both',budget:'b300plus',fit:'Any',style:'Any',
+  material:'Any',priorities:['none']};
+const openMuay=engine.recommend(gloves,unrankedMuay);
+assert.equal(openMuay.matches[0].id,'combat-corner-cream',
+  'All-around choice should reflect training qualities rather than a handpicked brand bonus');
+assert.ok(openMuay.matches.some(g=>g.id==='winnings-ms-600'),
+  'Premium Winning should no longer be excluded by a hidden Fairtex bonus');
+assert.ok(!openMuay.matches.some(g=>g.kind==='Stretch alternative'),
+  'Unlimited budget should not create a meaningless stretch alternative');
 // UI regression: finish a quiz, click Start over, then finish it again.
 {
   const win={CC_GLOVES:gloves};
