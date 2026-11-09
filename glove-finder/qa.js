@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname=dirname(fileURLToPath(import.meta.url));
 const html=fs.readFileSync(__dirname+'/index.html','utf8');
 const scripts=html.split('<script>').slice(1).map(x=>x.split('</script>')[0]);
-for (const image of ['start-hands-on-hips.png','results-thumbs-up.png','success-fist.png','thinking-chin.png','thinking-arms-crossed.png','thinking-embarrassed.png','thinking-finger-up.png','thinking-stressed.png']) {
+for (const image of ['start-hands-on-hips-1.png','results-thumbs-up-1.png','success-fist-1.png','thinking-chin-1.png','thinking-arms-crossed-1.png','thinking-embarrassed-1.png','thinking-finger-up-1.png','thinking-stressed-1.png']) {
   assert.ok(html.includes('https://combatcultureusa.com/wp-content/uploads/2026/11/'+image), 'Original HD chibi reference missing: '+image);
 }
 assert.ok(html.includes('Math.floor(Math.random()*5)'), 'Five thinking poses must rotate');
