@@ -17,14 +17,14 @@
 .brand-ko-logo{display:inline-block;width:36px;height:42px;flex:0 0 36px;background-image:url("assets/branding-sprite.webp");background-repeat:no-repeat;background-size:144px 56px;background-position:-108px -7px}
 .q-head{display:flex;align-items:center;justify-content:space-between;gap:15px}
 .q-copy{flex:1;min-width:0}
-.brand-figure{display:block;flex:0 0 72px;width:72px;height:112px;background-image:url("assets/branding-sprite.webp");background-repeat:no-repeat;background-size:288px 112px}
-.brand-start{background-position:0 0}
-.brand-thinking{background-position:-72px 0}
-.brand-results{background-position:-144px 0}
-.brand-thinking-0,.brand-thinking-1,.brand-thinking-2{background-image:url("assets/three-thinking.svg");background-size:216px 112px}
-.brand-thinking-0{background-position:0 0}
-.brand-thinking-1{background-position:-72px 0}
-.brand-thinking-2{background-position:-144px 0}
+.brand-figure{display:block;flex:0 0 72px;width:72px;height:112px;background-repeat:no-repeat;background-position:center center;background-size:contain}
+.brand-start{background-image:url("https://combatcultureusa.com/wp-content/uploads/2026/11/start-hands-on-hips.png")}
+.brand-results{background-image:url("https://combatcultureusa.com/wp-content/uploads/2026/11/results-thumbs-up.png")}
+.brand-thinking-0{background-image:url("https://combatcultureusa.com/wp-content/uploads/2026/11/thinking-chin.png")}
+.brand-thinking-1{background-image:url("https://combatcultureusa.com/wp-content/uploads/2026/11/thinking-arms-crossed.png")}
+.brand-thinking-2{background-image:url("https://combatcultureusa.com/wp-content/uploads/2026/11/thinking-embarrassed.png")}
+.brand-thinking-3{background-image:url("https://combatcultureusa.com/wp-content/uploads/2026/11/thinking-finger-up.png")}
+.brand-thinking-4{background-image:url("https://combatcultureusa.com/wp-content/uploads/2026/11/thinking-stressed.png")}
 .result-headline-row{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .result-headline-row>div{flex:1;min-width:0}
 @media(max-width:480px){.brand-figure{transform:scale(.82);transform-origin:center right;margin-left:-10px;margin-right:-2px}.q-head,.result-headline-row{gap:5px}.brand-ko-logo{flex-basis:36px}}
@@ -3026,8 +3026,8 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
   let lastThinkingStep=-1,lastThinkingIndex=-1;
   function thinkingClass(){
     if(step!==lastThinkingStep){
-      const next=lastThinkingIndex<0?Math.floor(Math.random()*3):
-        (lastThinkingIndex+1+Math.floor(Math.random()*2))%3;
+      const next=lastThinkingIndex<0?Math.floor(Math.random()*5):
+        (lastThinkingIndex+1+Math.floor(Math.random()*4))%5;
       lastThinkingIndex=next;
       lastThinkingStep=step;
     }
