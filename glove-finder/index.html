@@ -22,7 +22,7 @@
     <header class="heading">
       <p class="kicker">THE RIGHT GLOVES. FOR YOUR TRAINING.</p>
       <h1>Find Your Next <span>Pair of Gloves.</span></h1>
-      <p class="intro">Seven quick questions. Recommendations shaped by our firsthand testing, not generic product scores.</p>
+      <p class="intro">A few quick questions tailored to your training. Recommendations shaped by our firsthand testing, not generic product scores.</p>
     </header>
     <section class="panel" aria-label="Glove finder quiz">
       <div class="panel-top"><span id="stage-label" class="step-label">QUESTION 1 OF 7</span><button id="sound-toggle" class="sound-toggle" type="button" aria-pressed="true" aria-label="Mute sound effects">Sound: On</button></div>
@@ -2116,7 +2116,12 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     const fitnessBag=a.sport==='Fitness' && a.use==='Bag & Pads';
     const cap=budgetCeilings[a.budget];
     const fitnessCap=fitnessBag?Math.min(cap??Infinity,200):null;
-    const eligible=all.filter(g=>useFits(g,a.use));
+    // MMA sparring (or mixed MMA training that includes sparring) requires a
+    // dedicated, reviewed MMA sparring glove. Boxing gloves are never substitutes.
+    // A future sheet row must explicitly supply gloveType: 'MMA Sparring'.
+    const mmaSparring=a.sport==='MMA' && (a.use==='Sparring'||a.use==='Both');
+    const eligible=all.filter(g=>useFits(g,a.use) &&
+      (mmaSparring ? g.gloveType==='MMA Sparring' : (!g.gloveType||g.gloveType==='Boxing')));
     const ranked=eligible.map(g=>({...g,matchScore:score(g,a)}))
       .sort((x,y)=>y.matchScore-x.matchScore||x.onlinePriceUsd-y.onlinePriceUsd||x.brand.localeCompare(y.brand)||x.model.localeCompare(y.model));
     const inBudget=ranked.filter(g=>g.onlinePriceUsd<=cap && (!fitnessBag||g.onlinePriceUsd<=fitnessCap));
@@ -2196,6 +2201,14 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       ['Genuine Leather','Genuine Leather'],['Synthetic','Synthetic'],['Any','No Preference']]}
   ];
   const answers={sport:null,use:null,budget:null,priorities:[],fit:null,style:null,material:null};
+  // A shorter route for fitness customers, and no boxing-style preference
+  // question for MMA customers shopping for MMA-specific sparring gloves.
+  const route=()=>Q.filter(q=>
+    !(q.key==='use'&&answers.sport==='Fitness') &&
+    !(q.key==='style'&&answers.sport==='MMA'));
+  const effectiveAnswers=()=>({...answers,
+    use:answers.sport==='Fitness'?'Bag & Pads':answers.use,
+    style:answers.sport==='MMA'?'Any':answers.style});
   let step=0,finished=false;
   // Lightweight synthesized sounds; playback only follows a direct user action.
   let soundOn=true, audioContext=null;
@@ -2243,13 +2256,21 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       if(value==='none') answers.priorities=['none'];
       else if(answers.priorities.includes(value)) answers.priorities=answers.priorities.filter(v=>v!==value);
       else {const prev=answers.priorities.filter(v=>v!=='none');if(prev.length<2)answers.priorities=[...prev,value];}
+    }else if(q.key==='sport'){
+      if(answers.sport!==value){
+        answers.use=value==='Fitness'?'Bag & Pads':null;
+        if(value==='MMA')answers.style='Any';
+        else if(answers.sport==='MMA')answers.style=null;
+      }
+      answers.sport=value;
     }else answers[q.key]=value;
     playSound('select');
     render();
   }
   function renderQuestion(){
-    const q=Q[step];stage.textContent=`QUESTION ${step+1} OF ${Q.length}`;
-    progress.style.width=`${(step+1)/Q.length*100}%`;
+    const questions=route(),q=questions[step];
+    stage.textContent=`QUESTION ${step+1} OF ${questions.length}`;
+    progress.style.width=`${(step+1)/questions.length*100}%`;
     content.innerHTML=`<div class="q-head"><span class="q-number">0${step+1}</span><h2>${esc(q.title)}</h2><p>${esc(q.hint)}</p></div>
       <div class="choices" role="group" aria-label="${esc(q.title)}">${q.options.map(([value,label])=>{
         const selected=isSelected(q,value);
@@ -2258,9 +2279,9 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       }).join('')}</div>${q.multiple?'<p class="fineprint">Choose up to two priorities, or select No strong preference.</p>':''}`;
     content.querySelectorAll('[data-answer]').forEach(btn=>btn.addEventListener('click',()=>toggle(q,btn.dataset.answer)));
     controls.innerHTML=`<button class="btn btn-secondary" id="back" type="button" ${step===0?'disabled':''}>Back</button>
-      <button class="btn btn-primary" id="continue" type="button" ${isValid(q)?'':'disabled'}>${step===Q.length-1?'Find My Gloves':'Continue'} <span aria-hidden="true">→</span></button>`;
+      <button class="btn btn-primary" id="continue" type="button" ${isValid(q)?'':'disabled'}>${step===questions.length-1?'Find My Gloves':'Continue'} <span aria-hidden="true">→</span></button>`;
     document.getElementById('back').addEventListener('click',()=>{if(step>0){playSound('back');step--;render()}});
-    document.getElementById('continue').addEventListener('click',()=>{if(!isValid(q))return;if(step===Q.length-1){playSound('done');finished=true;render()}else{playSound('next');step++;render()}});
+    document.getElementById('continue').addEventListener('click',()=>{if(!isValid(q))return;if(step===route().length-1){playSound('done');finished=true;render()}else{playSound('next');step++;render()}});
   }
   const lower=x=>String(x).toLowerCase();
   function reasons(g){
@@ -2291,10 +2312,10 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     if((answers.use==='Sparring'||answers.use==='Both') && !g.testedWeight)parts.push('Tested weight not recorded; verify weight, padding and gym rules before sparring.');
     if((answers.use==='Sparring'||answers.use==='Both') && g.testedWeight && g.testedWeight!=='16 oz')
       parts.push(`Reviewed at ${g.testedWeight}; that does not verify the fit, padding or sparring approval of another weight.`);
-    if(g.secondaryWeakness && g.secondaryWeakness!=='Nothing Major')parts.push('Additional tradeoff: '+lower(g.secondaryWeakness)+'.');
-    if(g.thirdWeakness && g.thirdWeakness!=='Nothing Major')parts.push('Also consider: '+lower(g.thirdWeakness)+'.');
-    if(answers.style!=='Any' && g.style && g.style!=='Unverified' && g.style===answers.style)parts.push('Verified style preference match.');
-    if(answers.material!=='Any' && g.material && g.material!=='Unverified' && g.material===answers.material)parts.push('Verified material preference match.');
+
+
+    if(answers.style && answers.style!=='Any' && g.style && g.style!=='Unverified' && g.style===answers.style)parts.push('Verified style preference match.');
+    if(answers.material && answers.material!=='Any' && g.material && g.material!=='Unverified' && g.material===answers.material)parts.push('Verified material preference match.');
     if(g.availability==='Limited')parts.push('Availability: limited, based on the owner’s classification. Verify local stock.');
     if(g.availability==='Regional')parts.push('Availability: varies by region; verify local retailers.');
     if(!g.reviewPublished)parts.push('No published review confirmed for this specific entry.');
@@ -2318,15 +2339,19 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     </article>`;
   }
   function renderResults(){
-    const result=engine.recommend(gloves,answers);stage.textContent='YOUR RESULTS';progress.style.width='100%';
+    const request=effectiveAnswers();
+    const mmaSparring=request.sport==='MMA' && (request.use==='Sparring'||request.use==='Both');
+    const result=engine.recommend(gloves,request);stage.textContent='YOUR RESULTS';progress.style.width='100%';
     const prefs=answers.priorities.filter(x=>x!=='none').map(x=>x==='Feedback'?'Punch feedback':x);
-    const summary=[answers.sport,answers.use==='Both'?'All-around':answers.use,labelFor(Q[2],answers.budget),prefs.join(' + ')||'No Priority',labelFor(Q[4],answers.fit),labelFor(Q[5],answers.style),labelFor(Q[6],answers.material)].join(' · ');
+    const summary=[answers.sport,answers.sport==='Fitness'?'Cardio / Bag Training':answers.use==='Both'?'All-Around':answers.use,
+      labelFor(Q[2],answers.budget),prefs.join(' + ')||'No Priority',labelFor(Q[4],answers.fit),
+      ...(answers.sport==='MMA'?[]:[labelFor(Q[5],answers.style)]),labelFor(Q[6],answers.material)].join(' · ');
     const cautions=[
       'Prices generally use online listings checked November 8, 2026. Entries marked Estimated price use Combat Culture reference MSRP because a current exact-model price could not be verified. Verify current price, stock and shipping before buying.',
       '“Fit” and strengths reflect one reviewer’s experience, not a universal guarantee. Other glove weights can fit or feel different.',
       'For sparring, confirm the intended weight, padding, and gym rules. A 16 oz label alone does not establish sparring safety. Availability is not verified for unclassified gloves.'
     ];
-    if(answers.sport==='MMA')cautions.push('These are boxing-style training gloves, not MMA-specific sparring gloves.');
+    if(answers.sport==='MMA' && !mmaSparring)cautions.push('For striking on bags and pads, boxing-style training gloves are suitable. MMA sparring requires purpose-built MMA sparring gloves.');
     if(result.fitnessCap!==null)cautions.unshift(
       'For fitness/cardio bag work, we favor value and comfort among approved gloves at $'+result.fitnessCap+
       ' or less, even if you selected a larger budget. Fit and hand protection still matter.'
@@ -2338,13 +2363,18 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
         (answers.priorities.includes('Compactness') && g.compactness==='Compact'))){
       cautions.unshift('Style, material, breathability and compactness are being classified. Unverified attributes do not affect rankings and are not presented as known facts.');
     }
+    if(mmaSparring && result.readyCount && !result.matches.length)
+      cautions.unshift('MMA sparring gloves must be explicitly classified as MMA Sparring in the Combat Culture database. We will not substitute boxing gloves.');
     if(result.matches.some(g=>g.kind==='Stretch pick'))cautions.unshift(
       'The stretch pick intentionally exceeds your selected budget. It is optional and should never replace a suitable in-budget glove.'
     );
-    const countText=`${result.count} ${result.count===1?'glove meets':'gloves meet'} your budget and training-use requirements`;
-    content.innerHTML=`<div class="results-header"><p class="kicker">COMBAT CULTURE PICKS</p><h2>${result.matches.length?'Your Glove Shortlist.':'No Suitable Matches Yet.'}</h2>
+    const countText=mmaSparring && !result.matches.length
+      ?'Dedicated MMA sparring glove recommendations are not available yet'
+      :`${result.count} ${result.count===1?'glove meets':'gloves meet'} your budget and training-use requirements`;
+    content.innerHTML=`<div class="results-header"><p class="kicker">COMBAT CULTURE PICKS</p><h2>${result.matches.length?'Your Glove Shortlist.':mmaSparring?'MMA Sparring Picks Coming Soon.':'No Suitable Matches Yet.'}</h2>
       <span class="result-count">${esc(countText)}</span><p class="summary">${esc(summary)}</p></div>
       ${result.matches.length?`<div class="results-grid">${result.matches.map(makeCard).join('')}</div>`:
+        mmaSparring?'<p class="empty">We have not added approved MMA sparring gloves yet. We will show dedicated MMA sparring gloves here once they have been reviewed and added to the finder. Boxing gloves will not be recommended for MMA sparring.</p>':
         '<p class="empty">We did not find an approved glove in your price range for that training purpose. Try a higher budget or a different use. We will not suggest bag-only gloves for sparring.</p>'}
       <div class="limitations"><h3>Before You Buy</h3><ul>${cautions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
       <p class="data-note">Recommendations use ${result.readyCount} approved gloves. When online pricing is unavailable, a clearly labeled Combat Culture MSRP estimate is used. No external community ratings or affiliate payments affect the order.</p></div>`;
