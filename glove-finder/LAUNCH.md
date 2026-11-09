@@ -13,22 +13,18 @@ The quiz is a standalone HTML page in this repository. It is not yet automatical
 
 This is the most reliable mobile launch method because it avoids iframe sizing issues.
 
-## Optional inline embed
-Add a **Custom HTML** block and paste:
+## WordPress / Kadence: interactive inline embed
+The game now supports `?embed=1`, which hides its duplicate heading/footer inside an iframe and reports its content height to the parent WordPress page via `postMessage({type:'cc-glove-finder-resize',height})`. The page receiving the message must verify the GitHub Pages origin and the iframe's `contentWindow` before resizing.
 
-```html
-<div style="width:100%;max-width:1100px;margin:0 auto">
-  <iframe
-    title="Combat Culture Boxing and Muay Thai Glove Finder"
-    src="https://combatculture-alby.github.io/combat-culture-guess-the-fighter/glove-finder/"
-    loading="lazy"
-    style="width:100%;height:1650px;border:0;display:block"
-  ></iframe>
-  <p><a href="https://combatculture-alby.github.io/combat-culture-guess-the-fighter/glove-finder/">Open the Glove Finder in a new tab</a></p>
-</div>
-```
+Suggested WordPress page:
+- Title: **Boxing & Muay Thai Glove Finder**
+- Slug: **glove-finder**
+- Use a **Custom HTML** block with the finished Combat Culture landing-page snippet. This contains its introduction, iframe embed, origin-checked resize listener, links to the reviews and beginner guide, and a direct-link fallback.
+- Prefer Kadence **Full Width** / wide content so the interactive quiz has room.
+- Preview on desktop and mobile before publishing, then add the page link to the **Gear** hub at https://combatcultureusa.com/gear/. Keep the existing GitHub Pages direct link as a fallback.
 
-Preview the published WordPress page on desktop and phone. An iframe with fixed height can create an inner scrollbar or excess whitespace; use the linked-page method if this happens.
+**Important:** WordPress must permit the inline script for automatic iframe resizing. If it strips the script, the iframe still loads with its initial fixed height and an internal scroll bar. Check that the editor retains the script after saving. If not, use a Code Snippets plugin or the direct-link approach.
+
 
 ## Database
 Source of truth: https://docs.google.com/spreadsheets/d/1-H28Qmx2oOZOmeHeFzHbaELldi5wNo07SV2nCeiiem4/edit#gid=126113403
