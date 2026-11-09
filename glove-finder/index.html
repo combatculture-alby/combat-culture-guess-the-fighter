@@ -3010,7 +3010,9 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
         ['none','No Strong Preference']]}:base;
     stage.textContent=`QUESTION ${step+1} OF ${questions.length}`;
     progress.style.width=`${(step+1)/questions.length*100}%`;
-    content.innerHTML=`<div class="q-head"><div class="q-copy"><span class="q-number">0${step+1}</span><h2>${esc(q.title)}</h2><p>${esc(q.hint)}</p></div><span class="brand-figure ${step===0?'brand-start':thinkingClass()}" aria-hidden="true"></span></div>
+    const hint=q.key==='budget'&&answers.experience==='under1'?
+      'Since you are in your first year, recommendations are capped at $100 even if you select a higher budget.':q.hint;
+    content.innerHTML=`<div class="q-head"><div class="q-copy"><span class="q-number">0${step+1}</span><h2>${esc(q.title)}</h2><p>${esc(hint)}</p></div><span class="brand-figure ${step===0?'brand-start':thinkingClass()}" aria-hidden="true"></span></div>
       <div class="choices" role="group" aria-label="${esc(q.title)}">${q.options.map(([value,label])=>{
         const selected=isSelected(q,value);
         return `<button type="button" class="choice ${selected?'selected':''}" data-answer="${esc(value)}" aria-pressed="${selected}">
