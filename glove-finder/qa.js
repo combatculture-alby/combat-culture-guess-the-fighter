@@ -24,16 +24,20 @@ const engine=module.exports;
 assert.equal(gloves.filter(g=>Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0).length,51,'Unexpected priced glove count');
 assert.equal(gloves.find(g=>g.id==='fairtex-bgv1').onlinePriceUsd,139,'Fairtex should use online, not reviewer price');
 let combinations=0;
-const ceilings={under100:100,b100to200:200,b200to300:300,b300plus:Infinity};
+const ceilings={under50:50,under100:100,b100to200:200,b200to300:300,b300plus:Infinity};
 for(const sport of ['Boxing','Muay Thai','Kickboxing','MMA','Fitness'])
 for(const use of ['Sparring','Bag & Pads','Both'])
 for(const budget of Object.keys(ceilings))
+for(const experience of ['under1','1to3','3to5','5plus'])
 for(const fit of ['Snug','Normal','Roomy','Any'])
 for(const priorities of [['none'],['Value'],['Protection'],['Comfort'],['Feedback'],['Versatility'],['Wrist Support'],['Compactness']])
 for(const style of ['Any','Japanese','Thai','Mexican','Other'])
 for(const material of ['Any','Genuine Leather','Synthetic']){
-  const a={sport,use,budget,fit,priorities,style,material};
+  const a={sport,use,budget,experience,fit,priorities,style,material};
   const result=engine.recommend(gloves,a);
+  const cap=engine.effectiveBudgetCap(a);
+  assert.equal(cap,Math.min(ceilings[budget],experience==='under1'?100:Infinity,
+    sport==='Fitness'&&use==='Bag & Pads'?200:Infinity),'Effective cap mismatch');
   assert.ok(result.matches.length<=4,'More than four results');
   assert.equal(new Set(result.matches.map(g=>g.id)).size,result.matches.length,'Duplicate result');
 
@@ -46,9 +50,11 @@ for(const material of ['Any','Genuine Leather','Synthetic']){
       assert.ok(Number.isFinite(ceilings[budget])&&g.onlinePriceUsd>ceilings[budget]&&
         g.onlinePriceUsd<=stretchMax,'Stretch option exceeds allowed range');
       assert.ok(!(sport==='Fitness'&&use==='Bag & Pads'),'Fitness cannot have a stretch option');
+      assert.ok(experience!=='under1','First-year buyers cannot get stretch picks');
+      assert.ok(budget!=='under50','$50 budget must not offer stretch picks');
       assert.ok(result.matches.some(x=>x.onlinePriceUsd<=ceilings[budget]),'Stretch cannot replace all in-budget matches');
     }else{
-      assert.ok(g.onlinePriceUsd<=ceilings[budget],'Main recommendation exceeded budget');
+      assert.ok(g.onlinePriceUsd<=cap,'Main recommendation exceeded effective budget');
     }
     if(style!=='Any')assert.equal(g.style,style,'Style mismatch');
     if(material!=='Any')assert.equal(g.material,material,'Material mismatch');
@@ -85,7 +91,7 @@ for(const [style,material] of [['Japanese','Genuine Leather'],['Mexican','Genuin
   }
 }
 // MMA branch: bag work can use boxing gloves, but sparring must not.
-const mmaBase={sport:'MMA',budget:'b100to200',fit:'Any',priorities:['none'],style:'Any',material:'Any'};
+const mmaBase={sport:'MMA',experience:'1to3',budget:'b100to200',fit:'Any',priorities:['none'],style:'Any',material:'Any'};
 const mmaBag=engine.recommend(gloves,{...mmaBase,use:'Bag & Pads'});
 assert.ok(mmaBag.matches.length>0,'MMA bag work should retain boxing glove options');
 assert.ok(mmaBag.matches.every(g=>!g.gloveType||g.gloveType==='Boxing'),'MMA bag work returned an MMA sparring glove');
@@ -94,10 +100,12 @@ assert.equal(gloves.filter(g=>g.gloveType==='MMA Sparring').length,3,'Expected t
 for(const use of ['Sparring','Both']){
   for(const budget of Object.keys(ceilings)){
     const result=engine.recommend(gloves,{...mmaBase,use,budget});
-    assert.ok(result.matches.length>0,'Missing MMA sparring options for '+use+' '+budget);
+    if(budget==='under50')assert.equal(result.matches.length,0,'No verified MMA sparring gloves under $50');
+    else assert.ok(result.matches.length>0,'Missing MMA sparring options for '+use+' '+budget);
     assert.ok(result.matches.every(g=>g.gloveType==='MMA Sparring'&&mmaModels.has(g.id)),'Boxing glove leaked into MMA '+use);
     assert.ok(result.matches.every(g=>g.use==='Sparring'||g.use==='Both'),'Unsafe MMA glove use');
-    assert.ok(result.count>=1,'MMA sparring should have at least one approved glove');
+    if(budget==='under50')assert.equal(result.count,0,'$50 MMA sparring pool must remain empty');
+    else assert.ok(result.count>=1,'MMA sparring should have approved gloves');
   }
 }
 assert.ok(mmaBag.matches.every(g=>g.gloveType==='Boxing'),'MMA bag route must use ordinary striking gloves only');
@@ -256,6 +264,33 @@ assert.equal(gloves.filter(g=>g.ratings['MMA Grappling Mobility']!==null).length
 assert.ok(gloves.filter(g=>g.gloveType==='MMA Sparring').every(g=>g.ratings['Clinch Mobility']===null),
   'No MMA glove should have a Muay Thai clinch rating');
 
+
+// Training experience must only affect the novice price cap, not glove scores.
+const experienceBase={sport:'Boxing',use:'Both',budget:'b300plus',fit:'Any',
+  priorities:['none'],style:'Any',material:'Any'};
+assert.equal(engine.effectiveBudgetCap({...experienceBase,experience:'under1'}),100);
+assert.equal(engine.effectiveBudgetCap({...experienceBase,experience:'under1',budget:'under50'}),50);
+assert.equal(engine.effectiveBudgetCap({...experienceBase,experience:'5plus'}),Infinity);
+for(const experience of ['1to3','3to5','5plus']){
+  const a={...experienceBase,experience};
+  assert.equal(engine.score(gloves[0],a),engine.score(gloves[0],experienceBase),
+    'Experience over one year cannot bias glove score');
+}
+for(const sport of ['Boxing','Muay Thai','Kickboxing','MMA','Fitness'])
+for(const use of ['Sparring','Bag & Pads','Both'])
+for(const budget of Object.keys(ceilings)){
+  const result=engine.recommend(gloves,{...experienceBase,sport,use,budget,experience:'under1'});
+  assert.ok(result.matches.every(g=>g.onlinePriceUsd<=Math.min(100,ceilings[budget])),
+    'First-year result exceeds spending guidance');
+  assert.ok(!result.matches.some(g=>g.kind==='Stretch alternative'),
+    'First-year results cannot stretch past price cap');
+}
+const lowCost=engine.recommend(gloves,{...experienceBase,experience:'5plus',budget:'under50'});
+assert.ok(lowCost.matches.length>0,'Under-$50 budget should find some approved training gloves');
+assert.ok(lowCost.matches.every(g=>g.onlinePriceUsd<=50),'$50 result exceeded selected budget');
+assert.ok(!lowCost.matches.some(g=>g.kind==='Stretch alternative'),'$50 results must have no stretch');
+
+// Feedback must open a prefilled email, never auto-send.
 // UI regression: finish a quiz, click Start over, then finish it again.
 {
   const win={CC_GLOVES:gloves};
@@ -293,7 +328,7 @@ assert.ok(gloves.filter(g=>g.gloveType==='MMA Sparring').every(g=>g.ratings['Cli
   function finish(){
     assert.ok(get('quiz-content').innerHTML.includes('brand-start'),'Opening screen chibi missing');
     let lastPose=null,thinkingTransitions=0;
-    for(const v of ['Muay Thai','Sparring','b100to200','none','Any','Thai','Genuine Leather']){
+    for(const v of ['Muay Thai','Sparring','1to3','b100to200','none','Any','Thai','Genuine Leather']){
       answer(v);
       const pose=get('quiz-content').innerHTML.match(/brand-thinking-([012])/);
       if(pose){
@@ -304,6 +339,21 @@ assert.ok(gloves.filter(g=>g.gloveType==='MMA Sparring').every(g=>g.ratings['Cli
     assert.ok(thinkingTransitions>=3,'Expected multiple thinking chibi transitions');
     assert.ok(get('quiz-content').innerHTML.includes('Your Glove Shortlist.'),'Missing result cards');
     assert.ok(get('quiz-content').innerHTML.includes('brand-results'),'Results thumbs-up chibi missing');
+    assert.ok(get('quiz-content').innerHTML.includes('id="feedback-toggle"'),'Feedback button missing');
+    get('feedback-toggle').click();
+    assert.equal(get('feedback-toggle')['aria-expanded'],'true','Feedback form did not open');
+    get('feedback-details').value='I would rank the Fairtex glove differently.';
+    get('feedback-kind').value='Disagree with a recommendation';
+    get('feedback-email').click();
+    const draft=get('feedback-email').href;
+    assert.ok(draft.startsWith('mailto:combatcultureusa@gmail.com?'),'Feedback email address missing');
+    const body=decodeURIComponent(draft.split('&body=')[1]);
+    assert.ok(body.includes('1–3 years'),'Training experience missing in feedback');
+    assert.ok(body.includes('I would rank the Fairtex glove differently.'),'Feedback text missing');
+    assert.ok(body.includes('Glove recommendations:'),'Recommended picks missing in feedback');
+    get('feedback-details').value='';
+    get('feedback-email').click();
+    assert.ok(get('feedback-status').textContent.includes('Add a short note'),'Empty feedback not validated');
   }
   finish();
   assert.equal(get('sound-toggle').textContent,'','Sound switch should have default markup label');
@@ -313,7 +363,7 @@ assert.ok(gloves.filter(g=>g.gloveType==='MMA Sparring').every(g=>g.ratings['Cli
   get('sound-toggle').click();
   assert.equal(get('sound-toggle').textContent,'Sound: On','Sound can be enabled again');
   get('again').click();
-  assert.equal(get('stage-label').textContent,'QUESTION 1 OF 7','Start over did not reset step');
+  assert.equal(get('stage-label').textContent,'QUESTION 1 OF 8','Start over did not reset step');
   assert.ok(get('quiz-controls').innerHTML.includes('id="continue" type="button" disabled'),
   'Next should be disabled after full reset');
   finish();
@@ -348,7 +398,9 @@ assert.ok(gloves.filter(g=>g.gloveType==='MMA Sparring').every(g=>g.ratings['Cli
     b.click();get('continue').click();
   }
   select('Fitness');
-  assert.equal(get('stage-label').textContent,'QUESTION 2 OF 5','Fitness should skip use and style');
+  assert.equal(get('stage-label').textContent,'QUESTION 2 OF 6','Fitness should skip use and style');
+  assert.ok(get('quiz-content').innerHTML.includes('How Long Have You Been Training?'));
+  select('5plus');
   assert.ok(get('quiz-content').innerHTML.includes('How Much Would You Spend?'));
   select('b300plus');
   select('none');
@@ -362,11 +414,11 @@ assert.ok(gloves.filter(g=>g.gloveType==='MMA Sparring').every(g=>g.ratings['Cli
   assert.ok(result.includes('fitness classes, cardio boxing'),'Fitness safety note missing');
   assert.ok(!result.includes('Japanese-Style'),'Fitness summary incorrectly includes style');
   get('again').click();
-  assert.equal(get('stage-label').textContent,'QUESTION 1 OF 7','Reset should show generic route');
+  assert.equal(get('stage-label').textContent,'QUESTION 1 OF 8','Reset should show generic route');
   select('Boxing');
-  assert.equal(get('stage-label').textContent,'QUESTION 2 OF 7','Boxing should show full route');
+  assert.equal(get('stage-label').textContent,'QUESTION 2 OF 8','Boxing should show full route');
   assert.ok(get('quiz-content').innerHTML.includes('What Are These Gloves For?'));
-  select('Sparring');select('b100to200');
+  select('Sparring');select('1to3');select('b100to200');
   assert.ok(!get('quiz-content').innerHTML.includes('data-answer="Clinch Mobility"'),
     'Boxing must not offer the Muay Thai-specific clinch priority');
   assert.ok(!get('quiz-content').innerHTML.includes('data-answer="Grappling Mobility"'),
@@ -381,5 +433,5 @@ for(const budget of Object.keys(ceilings)){
     g.onlinePriceUsd<=Math.min(200,ceilings[budget])),'Fitness returned unsuitable or expensive glove');
   assert.ok(!result.matches.some(g=>g.kind==='Stretch pick'),'Fitness should not stretch budget');
 }
-assert.equal(combinations,28800,'Unexpected combination count');
+assert.equal(combinations,180000,'Unexpected combination count');
 console.log('PASS:',gloves.length,'approved gloves,',combinations,'quiz combinations, UI syntax and Start Over twice');
