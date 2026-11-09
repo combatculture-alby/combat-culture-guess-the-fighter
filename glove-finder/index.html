@@ -2903,8 +2903,10 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       ['Boxing','Boxing'],['Muay Thai','Muay Thai'],['Kickboxing','Kickboxing'],['MMA','MMA'],['Fitness','Fitness / Cardio Training']]},
     {key:'use',title:'What Are These Gloves For?',hint:'Training purpose is the most important filter. Dedicated bag gloves never appear as sparring recommendations.',options:[
       ['Sparring','Sparring'],['Bag & Pads','Heavy Bag & Pads'],['Both','Both / All-Around']]},
-    {key:'budget',title:'How Much Would You Spend?',hint:'Your maximum budget is a firm limit. We never recommend a glove above it.',options:[
-      ['under100','Up to $100'],['b100to200','Up to $200'],['b200to300','Up to $300'],['b300plus','$300+ / No Limit']]},
+    {key:'experience',title:'How Long Have You Been Training?',hint:'For your first year, we recommend spending $100 or less. After that, your budget is your choice.',options:[
+      ['under1','Under 1 year'],['1to3','1–3 years'],['3to5','3–5 years'],['5plus','5+ years']]},
+    {key:'budget',title:'How Much Would You Spend?',hint:'Main picks respect your budget. Any stretch alternative is clearly labeled.',options:[
+      ['under50','Up to $50'],['under100','Up to $100'],['b100to200','Up to $200'],['b200to300','Up to $300'],['b300plus','$300+ / No Limit']]},
     {key:'priorities',title:'What Matters Most to You?',hint:'Choose one or two. Your answer directly affects the ranking using firsthand 1–3 ratings.',multiple:true,options:[
       ['Protection','Hand Protection'],['Comfort','Comfort'],['Wrist Support','Wrist Support'],['Feedback','Punch Feedback / Feel'],
       ['Value','Value for Money'],['Versatility','Versatility'],['Compactness','Compact / Easy to Pack'],['none','No Strong Preference']]},
@@ -2915,7 +2917,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     {key:'material',title:'Do You Prefer Leather or Synthetic?',hint:'Your material choice is a requirement. Gloves with unknown materials are excluded.',options:[
       ['Genuine Leather','Genuine Leather'],['Synthetic','Synthetic'],['Any','No Preference']]}
   ];
-  const answers={sport:null,use:null,budget:null,priorities:[],fit:null,style:null,material:null};
+  const answers={sport:null,use:null,experience:null,budget:null,priorities:[],fit:null,style:null,material:null};
   // Fitness goes straight to budget and practical preferences; MMA skips the
   // traditional boxing-glove-style question.
   const route=()=>Q.filter(q=>
@@ -2964,6 +2966,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
   const progress=document.getElementById('progress-fill'),stage=document.getElementById('stage-label');
   const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const labelFor=(q,value)=>q.options.find(([v])=>v===value)?.[1]||value;
+  const question=key=>Q.find(q=>q.key===key);
   const isSelected=(q,value)=>q.multiple?answers.priorities.includes(value):answers[q.key]===value;
   const isValid=q=>q.multiple?answers.priorities.length>0:Boolean(answers[q.key]);
   function toggle(q,value){
@@ -3135,6 +3138,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       // Fully clear answers and return to a clean first question.
       answers.sport=null;
       answers.use=null;
+      answers.experience=null;
       answers.budget=null;
       answers.priorities=[];
       answers.fit=null;
