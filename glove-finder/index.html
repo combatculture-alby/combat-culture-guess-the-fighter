@@ -32,7 +32,7 @@
         <p>Please enable JavaScript in your browser and refresh the page. You can also open the quiz directly in Safari or Chrome.</p>
       </div>
       <div id="quiz-content" aria-live="polite">
-        <div class="q-head"><span class="q-number">01</span><h2>What do you train?</h2><p>This helps tailor the advice, but won't block otherwise suitable gloves.</p></div>
+        <div class="q-head"><span class="q-number">01</span><h2>What Do You Train?</h2><p>This helps tailor the advice, but won't block otherwise suitable gloves.</p></div>
         <div class="choices" role="group" aria-label="What do you train?">
           <button type="button" class="choice" disabled>Boxing</button>
           <button type="button" class="choice" disabled>Muay Thai</button>
@@ -2179,20 +2179,20 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
   const gloves=window.CC_GLOVES||[];
   const engine=window.CC_LOGIC;
   const Q=[
-    {key:'sport',title:'What do you train?',hint:'This helps us tailor the advice, but it will not block otherwise suitable gloves.',options:[
+    {key:'sport',title:'What Do You Train?',hint:'This helps us tailor the advice, but it will not block otherwise suitable gloves.',options:[
       ['Boxing','Boxing'],['Muay Thai','Muay Thai'],['Kickboxing','Kickboxing'],['MMA','MMA'],['Fitness','Fitness / cardio training']]},
-    {key:'use',title:'What are these gloves for?',hint:'Training purpose is the most important filter. Dedicated bag gloves never appear as sparring recommendations.',options:[
+    {key:'use',title:'What Are These Gloves For?',hint:'Training purpose is the most important filter. Dedicated bag gloves never appear as sparring recommendations.',options:[
       ['Sparring','Sparring'],['Bag & Pads','Heavy Bag & Pads'],['Both','Both / All-Around']]},
-    {key:'budget',title:'How much would you spend?',hint:'Choose a maximum budget in USD. We use checked retailer prices, not personal reference prices.',options:[
+    {key:'budget',title:'How Much Would You Spend?',hint:'Choose a maximum budget in USD. We use checked retailer prices, not personal reference prices.',options:[
       ['under100','Up to $100'],['b100to200','Up to $200'],['b200to300','Up to $300'],['b300plus','$300+ / No Limit']]},
-    {key:'priorities',title:'What matters most to you?',hint:'Choose one or two. Your answer directly affects the ranking using firsthand glove notes.',multiple:true,options:[
+    {key:'priorities',title:'What Matters Most to You?',hint:'Choose one or two. Your answer directly affects the ranking using firsthand glove notes.',multiple:true,options:[
       ['Protection','Hand Protection'],['Comfort','Comfort'],['Wrist Support','Wrist Support'],['Feedback','Punch Feedback / Feel'],
       ['Value','Value for Money'],['Versatility','Versatility'],['Breathability','Breathability / Airflow'],['Compactness','Compact / Easy to Pack'],['none','No Strong Preference']]},
-    {key:'fit',title:'What fit do you prefer?',hint:'Fit is subjective. These descriptions reflect the reviewer’s experience and may differ for your hands.',options:[
+    {key:'fit',title:'What Fit Do You Prefer?',hint:'Fit is subjective. These descriptions reflect the reviewer’s experience and may differ for your hands.',options:[
       ['Snug','Snug'],['Normal','Standard'],['Roomy','Roomy'],['Any','No Preference']]},
-    {key:'style',title:'Do you prefer a glove style?',hint:'Styles describe traditional construction influences, not manufacturing country. Unverified styles are never assumed.',options:[
+    {key:'style',title:'Do You Prefer a Glove Style?',hint:'Styles describe traditional construction influences, not manufacturing country. Unverified styles are never assumed.',options:[
       ['Japanese','Japanese-Style'],['Mexican','Mexican-Style'],['Thai','Thai-Style'],['Western/Other','Other / Western-Style'],['Any','No Preference']]},
-    {key:'material',title:'Do you prefer leather or synthetic?',hint:'Material is a preference, not a measure of quality. We only use verified glove material classifications.',options:[
+    {key:'material',title:'Do You Prefer Leather or Synthetic?',hint:'Material is a preference, not a measure of quality. We only use verified glove material classifications.',options:[
       ['Genuine Leather','Genuine Leather'],['Synthetic','Synthetic'],['Any','No Preference']]}
   ];
   const answers={sport:null,use:null,budget:null,priorities:[],fit:null,style:null,material:null};
@@ -2342,7 +2342,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       'The stretch pick intentionally exceeds your selected budget. It is optional and should never replace a suitable in-budget glove.'
     );
     const countText=`${result.count} ${result.count===1?'glove meets':'gloves meet'} your budget and training-use requirements`;
-    content.innerHTML=`<div class="results-header"><p class="kicker">COMBAT CULTURE PICKS</p><h2>${result.matches.length?'Your glove shortlist.':'No suitable matches yet.'}</h2>
+    content.innerHTML=`<div class="results-header"><p class="kicker">COMBAT CULTURE PICKS</p><h2>${result.matches.length?'Your Glove Shortlist.':'No Suitable Matches Yet.'}</h2>
       <span class="result-count">${esc(countText)}</span><p class="summary">${esc(summary)}</p></div>
       ${result.matches.length?`<div class="results-grid">${result.matches.map(makeCard).join('')}</div>`:
         '<p class="empty">We did not find an approved glove in your price range for that training purpose. Try a higher budget or a different use. We will not suggest bag-only gloves for sparring.</p>'}
