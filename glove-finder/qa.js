@@ -6,6 +6,7 @@ const assert=require('node:assert/strict');
 const html=fs.readFileSync(__dirname+'/index.html','utf8');
 const scripts=html.split('<script>').slice(1).map(x=>x.split('</script>')[0]);
 assert.ok(html.includes('assets/branding-sprite.webp'),'Brand sprite stylesheet missing');
+assert.ok(html.includes('assets/three-thinking.svg'),'Three thinking chibi art reference missing');
 assert.ok(html.includes('class="brand-ko-logo"'),'KO logo missing');
 assert.equal(scripts.length,3,'Expected data, engine and UI scripts');
 const start=scripts[0].indexOf('const CC_GLOVES = ')+'const CC_GLOVES = '.length;
@@ -134,7 +135,16 @@ assert.equal(gloves.find(g=>g.brand==='Casanova').use,'Both');
   }
   function finish(){
     assert.ok(get('quiz-content').innerHTML.includes('brand-start'),'Opening screen chibi missing');
-    for(const v of ['Muay Thai','Sparring','b100to200','none','Any','Thai','Genuine Leather'])answer(v);
+    let lastPose=null,thinkingTransitions=0;
+    for(const v of ['Muay Thai','Sparring','b100to200','none','Any','Thai','Genuine Leather']){
+      answer(v);
+      const pose=get('quiz-content').innerHTML.match(/brand-thinking-([012])/);
+      if(pose){
+        if(lastPose!==null)assert.ok(pose[1]!==lastPose,'Thinking chibi should change between questions');
+        lastPose=pose[1];thinkingTransitions++;
+      }
+    }
+    assert.ok(thinkingTransitions>=3,'Expected multiple thinking chibi transitions');
     assert.ok(get('quiz-content').innerHTML.includes('Your Glove Shortlist.'),'Missing result cards');
     assert.ok(get('quiz-content').innerHTML.includes('brand-results'),'Results thumbs-up chibi missing');
   }
