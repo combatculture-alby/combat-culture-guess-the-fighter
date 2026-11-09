@@ -33,9 +33,9 @@ Preview the published WordPress page on desktop and phone. An iframe with fixed 
 ## Database
 Source of truth: https://docs.google.com/spreadsheets/d/1-H28Qmx2oOZOmeHeFzHbaELldi5wNo07SV2nCeiiem4/edit#gid=126113403
 
-**Only edit the visible `Gloves Master` tab.** It contains all 152 records, with 51 quiz-approved gloves at the top. Columns A-C are brand, model, and quiz approval; D-J are owner-rated 1–3 Protection, Comfort, Build Quality, Wrist Support, Feedback, Versatility, and Value; K is a six-quality completion indicator. Columns L-AU retain the review, fit, usage, material, price, and source data. `Best Use` is column N, `Hand Fit` is column P, `Glove Style` is Q, `Material` is R, `Quiz Online USD Price` is AF, and `Suitable Uses` is AU. Historical 1–5 scores in U-Y are hidden to avoid confusing them with the new scoring scale.
+**Only edit the visible `Gloves Master` tab.** It contains all 152 records, with 51 quiz-approved gloves at the top. Columns A-C are brand, model, and quiz approval; D-J are owner-rated 1–3 Protection, Comfort, Build Quality, Wrist Support, Feedback, Versatility, and Value; K-M are the 1–3 Compactness, Clinch Mobility, and Availability ratings; N is the six-quality completion indicator. Columns O-AU retain the review, fit, usage, material, price, and source data. `Best Use` is column Q, `Hand Fit` is column S, `Glove Style` is T, `Material` is U, `Quiz Online USD Price` is AG, and `Suitable Uses` is AU. Historical 1–5 scores in X-AB remain hidden to avoid confusion with the new scoring scale.
 
-The previous `Rate Gloves (1-3)`, `Sheet1`, `Gloves I own`, and community research tabs are hidden backups, **not sources for new quiz syncs**. The quiz is still refreshed manually, not from a live spreadsheet feed. Do not fill unknown values; optional classification and region-specific availability remain unverified until the owner confirms them.
+The previous `Rate Gloves (1-3)`, `Sheet1`, `Gloves I own`, and community research tabs are hidden backups, **not sources for new quiz syncs**. A snapshot called `Backup - master before extra ratings` also preserves the exact former categorical fields. The quiz is still refreshed manually, not from a live spreadsheet feed. Do not fill unknown values; optional classification and region-specific availability remain unverified until the owner confirms them.
 
 
 ## Scoring (owner-rated, 1-3 scale)
@@ -55,6 +55,18 @@ For $300+ / no limit, Value has no baseline weight unless specifically selected.
 
 Use, price, style, material and glove type are eligibility requirements; explicit style and material preferences are never overridden. Suitable Uses can authorize a model for both sparring and bag/pad work even when Best Use says Sparring; the field must be personally verified. A sparring glove rated 1 for Protection is ineligible for sparring. With an explicit fit preference: exact +3, reasonably compatible +1, incompatible -3. No editorial, brand or premium-budget bonuses.
 
+
+
+### Extra ratings and current scoring
+All three new dimensions use 1 = unfavorable/bad, 2 = okay or uncertain (neutral), 3 = favorable/good. Leave a field blank when no assessment is available; neither a blank nor 2 changes the score.
+
+- **Compactness (K):** Bulky -> 1, Standard -> 2, Compact -> 3. A small default factor; a +4 priority weight when users choose compactness.
+- **Clinch Mobility (L):** Restricted -> 1, Average -> 2, Good or Excellent -> 3. A small default factor in sparring/all-around, higher for MMA sparring, and strongly weighted for MMA grappling priority.
+- **Availability (M):** Limited -> 1, Regional or Not Verified -> 2, Widely Available -> 3. Small convenience factor only, never substitutes for verified price/stock.
+- **Glove Style (T):** Japanese, Mexican, Thai, Other, or Unverified. Previous Western/Other entries became Other, and the quiz option is just Other.
+
+The legacy categorized values were replaced in the live quiz by the ratings from K-M. There are 48 compactness, 13 mobility, and 4 availability classifications currently present. No other glove ratings were filled in speculatively.
+
 ## Refreshing the live quiz
 The live quiz is **not automatically synced to Google Sheets**. Its index.html includes a snapshot of approved models with embedded ratings fields and, when verified, suitableUses. After editing **Gloves Master** (not the hidden backup tabs), synchronize the approved rows and 1–3 ratings into the website snapshot, preserving IDs and verified eligibility fields, then run node glove-finder/qa.js. Do not fill in unknown ratings, style, material, weight or use merely to create more recommendations. The quiz is published from the repository's main branch with GitHub Pages.
 
@@ -62,7 +74,7 @@ The live quiz is **not automatically synced to Google Sheets**. Its index.html i
 The owner reviewed 16 oz, Normal fit, Mexican style, Genuine Leather, Best Use: Sparring, Suitable Uses: Sparring and Bag & Pads. Cleto Reyes USA's exact Traditional Training Gloves listing was USD 269 on 2026-11-08: https://cletoreyesboxing.com/product/cleto-reyes-traditional-training-gloves/
 
 ## QA
-Run `node glove-finder/qa.js` after modifying the quiz. It checks approved ratings, UI syntax, all 23,040 answer permutations, budget limits, training safety, score neutrality, Cleto Reyes suitability, and completing the quiz twice with Start Over.
+Run `node glove-finder/qa.js` after modifying the quiz. It checks approved ratings, UI syntax, all 28,800 answer permutations, budget limits, training safety, score neutrality, Cleto Reyes suitability, and completing the quiz twice with Start Over.
 
 ## Launch checklist
 - Open the GitHub Pages link on iPhone and desktop.
