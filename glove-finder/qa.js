@@ -340,6 +340,9 @@ assert.ok(!lowCost.matches.some(g=>g.kind==='Stretch alternative'),'$50 results 
     assert.ok(get('quiz-content').innerHTML.includes('Your Glove Shortlist.'),'Missing result cards');
     assert.ok(get('quiz-content').innerHTML.includes('brand-results'),'Results thumbs-up chibi missing');
     assert.ok(get('quiz-content').innerHTML.includes('id="feedback-toggle"'),'Feedback button missing');
+    assert.ok(get('quiz-content').innerHTML.includes('id="feedback-form" hidden'),'Feedback form must start closed');
+    // The fake DOM persists elements across a render; native innerHTML would recreate hidden nodes.
+    get('feedback-form').hidden=true;
     get('feedback-toggle').click();
     assert.equal(get('feedback-toggle')['aria-expanded'],'true','Feedback form did not open');
     get('feedback-details').value='I would rank the Fairtex glove differently.';
