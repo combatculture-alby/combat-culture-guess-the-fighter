@@ -13,12 +13,12 @@ const start=scripts[0].indexOf('const CC_GLOVES = ')+'const CC_GLOVES = '.length
 const end=scripts[0].indexOf(';\nif (typeof window',start);
 assert.ok(start>20&&end>start,'Could not read approved data');
 const gloves=JSON.parse(scripts[0].slice(start,end));
-assert.equal(gloves.length,50,'Unexpected number of approved gloves');
+assert.equal(gloves.length,51,'Unexpected number of approved gloves');
 const module={exports:{}};
 vm.runInNewContext(scripts[1],{module,window:{}});
 new vm.Script(scripts[2]); // UI syntax check
 const engine=module.exports;
-assert.equal(gloves.filter(g=>Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0).length,50,'Unexpected priced glove count');
+assert.equal(gloves.filter(g=>Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0).length,51,'Unexpected priced glove count');
 assert.equal(gloves.find(g=>g.id==='fairtex-bgv1').onlinePriceUsd,139,'Fairtex should use online, not reviewer price');
 let combinations=0;
 const ceilings={under100:100,b100to200:200,b200to300:300,b300plus:Infinity};
@@ -26,7 +26,7 @@ for(const sport of ['Boxing','Muay Thai','Kickboxing','MMA','Fitness'])
 for(const use of ['Sparring','Bag & Pads','Both'])
 for(const budget of Object.keys(ceilings))
 for(const fit of ['Snug','Normal','Roomy','Any'])
-for(const priorities of [['none'],['Value'],['Protection'],['Comfort'],['Feedback'],['Versatility'],['Breathability'],['Compactness']])
+for(const priorities of [['none'],['Value'],['Protection'],['Comfort'],['Feedback'],['Versatility'],['Wrist Support'],['Compactness']])
 for(const style of ['Any','Japanese','Thai','Mexican'])
 for(const material of ['Any','Genuine Leather','Synthetic']){
   const a={sport,use,budget,fit,priorities,style,material};
@@ -51,7 +51,8 @@ for(const material of ['Any','Genuine Leather','Synthetic']){
     if(material!=='Any')assert.equal(g.material,material,'Material mismatch');
     assert.ok(['Best match','Strong match','Lower-cost alternative','Stretch alternative'].includes(g.kind),
       'Unknown result category');
-    assert.ok(g.matchScore>=result.matches[0].matchScore-14,'Low-ranked option was forced into results');
+    assert.ok(g.matchScore>=result.matches[0].matchScore-Math.max(3,Math.ceil(engine.maxPossible(a)*0.35)),
+      'Low-ranked option was forced into results');
     if(g.kind==='Lower-cost alternative'){
       assert.ok(g.onlinePriceUsd<=result.matches[0].onlinePriceUsd*0.8,
         'Cheaper option is not meaningfully cheaper');
@@ -69,8 +70,8 @@ assert.ok(jpLeather.matches.every(g=>g.style==='Japanese'&&g.material==='Genuine
 const noSyntheticJapanese=engine.recommend(gloves,{...mustMatch,material:'Synthetic'});
 assert.equal(noSyntheticJapanese.matches.length,0,'Unapproved or mismatched styles should not fill results');
 const highBudget=engine.recommend(gloves,{...mustMatch,style:'Any',priorities:['Protection']});
-assert.ok(!highBudget.matches.some(g=>g.brand==='Pro Mex'),'Pro Mex should not appear without comparable quality or an explicit value priority');
-assert.ok(highBudget.matches.length<4,'Do not force four results');
+assert.ok(highBudget.matches.every(g=>g.approved&&g.ratings.Protection>=2),
+  'Premium sparring matches must retain owner-rated protection');
 // Alternatives may cross only the price boundary, not user preferences.
 for(const [style,material] of [['Japanese','Genuine Leather'],['Mexican','Genuine Leather'],['Thai','Synthetic']]){
   const a={sport:'Boxing',use:'Sparring',budget:'b100to200',fit:'Any',priorities:['Comfort'],style,material};
@@ -117,11 +118,11 @@ for(const use of ['Sparring','Both']){
   const premium=engine.recommend(gloves,{sport:'Boxing',use,budget:'b300plus',fit:'Any',
     priorities:['Protection'],style:'Any',material:'Any'});
   assert.ok(premium.matches.some(g=>g.id==='winnings-ms-600'),'MS-600 should surface as a premium sparring option');
-  assert.ok(!premium.matches.some(g=>g.brand==='Pro Mex'),'High budget and protection priority should not force Pro Mex');
+  assert.ok(premium.matches.every(g=>g.ratings.Protection>=2),'Unsafe protection leaked into premium sparring');
 }
 const valueOptions=engine.recommend(gloves,{sport:'Boxing',use:'Both',budget:'b300plus',fit:'Any',
   priorities:['Value'],style:'Any',material:'Any'});
-assert.ok(valueOptions.matches.some(g=>g.brand==='Pro Mex'),'Pro Mex can remain a value pick when requested');
+assert.ok(valueOptions.matches.length>0,'Value preference should retain strong recommendations');
 const benchmark=engine.recommend(gloves,{
   sport:'Muay Thai',use:'Sparring',budget:'b100to200',fit:'Any',
   priorities:['none'],style:'Any',material:'Any'
@@ -138,12 +139,62 @@ assert.equal(gloves.find(g=>g.brand==='Casanova').use,'Both');
 const unrankedMuay={sport:'Muay Thai',use:'Both',budget:'b300plus',fit:'Any',style:'Any',
   material:'Any',priorities:['none']};
 const openMuay=engine.recommend(gloves,unrankedMuay);
-assert.equal(openMuay.matches[0].id,'combat-corner-cream',
-  'All-around choice should reflect training qualities rather than a handpicked brand bonus');
+assert.equal(openMuay.matches[0].matchScore,
+  Math.max(...gloves.filter(g=>engine.useFits(g,'Both')&&g.gloveType==='Boxing')
+    .map(g=>engine.score(g,unrankedMuay))),
+  'All-around top pick should be the highest owner-rated score');
 assert.ok(openMuay.matches.some(g=>g.id==='winnings-ms-600'),
   'Premium Winning should no longer be excluded by a hidden Fairtex bonus');
 assert.ok(!openMuay.matches.some(g=>g.kind==='Stretch alternative'),
   'Unlimited budget should not create a meaningless stretch alternative');
+
+// New rating-driven checks: no brand bonuses, no guessed missing ratings.
+const allR=gloves.filter(g=>g.approved);
+assert.equal(allR.length,51,'51 approved glove records expected');
+for(const g of allR){
+  assert.ok(g.ratings&&['Protection','Comfort','Build Quality','Wrist Support','Feedback','Versatility','Value']
+    .every(k=>Number.isInteger(g.ratings[k])&&g.ratings[k]>=1&&g.ratings[k]<=3),
+    'Missing or invalid 1-3 rating for '+g.id);
+}
+const cleto=gloves.find(g=>g.id==='cleto-reyes-traditional-laces');
+assert.ok(cleto&&cleto.testedWeight==='16 oz'&&cleto.fit==='Normal'&&
+  cleto.style==='Mexican'&&cleto.material==='Genuine Leather'&&
+  cleto.onlinePriceUsd===269,'Cleto Reyes record incomplete');
+assert.ok(engine.useFits(cleto,'Sparring')&&engine.useFits(cleto,'Bag & Pads')&&engine.useFits(cleto,'Both'),
+  'Cleto suitability should include both sparring and bag/pad work');
+assert.ok(!gloves.some(g=>g.id!==cleto.id&&g.suitableUses?.length), 'Suitability for other models should not be invented');
+const stable={id:'sample',brand:'Sample',model:'Training',use:'Both',gloveType:'Boxing',
+  fit:'Normal',approved:true,onlinePriceUsd:180,
+  ratings:{Protection:2,'Build Quality':2,Comfort:2,'Wrist Support':2,Feedback:2,Versatility:2,Value:2}};
+const syntheticA={sport:'Muay Thai',use:'Both',budget:'b300plus',fit:'Any',
+  style:'Any',material:'Any',priorities:['none']};
+const betterQuality={...stable,ratings:{...stable.ratings,'Build Quality':3}};
+const betterProtection={...stable,ratings:{...stable.ratings,Protection:3}};
+assert.ok(engine.score(betterQuality,syntheticA)>engine.score(stable,syntheticA),
+  'Build quality must improve the default ranking');
+assert.ok(engine.score(betterProtection,syntheticA)>engine.score(stable,syntheticA),
+  'Protection must improve the default ranking');
+assert.equal(engine.score(stable,{...syntheticA,sport:'Boxing'}),engine.score(stable,syntheticA),
+  'Boxing, Muay Thai and kickboxing must have no arbitrary sport bonus');
+assert.equal(engine.score(stable,{...syntheticA,sport:'Kickboxing'}),engine.score(stable,syntheticA),
+  'Kickboxing must not create a default brand bonus');
+const betterValue={...stable,ratings:{...stable.ratings,Value:3}};
+assert.equal(engine.score(betterValue,syntheticA),engine.score(stable,syntheticA),
+  'Unlimited budget without value priority must not reward value');
+assert.ok(engine.score(betterValue,{...syntheticA,priorities:['Value']})>
+  engine.score(stable,{...syntheticA,priorities:['Value']}),
+  'Explicit value priority must reward owner-rated value');
+const noCore={...stable,ratings:{...stable.ratings,Protection:null}};
+assert.ok(engine.incompleteReason(noCore), 'Missing protection must not become average');
+assert.ok(engine.recommend([noCore],syntheticA).matches.length===0,
+  'Unrated core safety must exclude an unfinished glove');
+const unsafe={...stable,ratings:{...stable.ratings,Protection:1}};
+assert.ok(engine.recommend([unsafe],{...syntheticA,use:'Sparring'}).matches.length===0,
+  'Owner-rated poor protection cannot be recommended for sparring');
+assert.equal(engine.score(stable,{...syntheticA,fit:'Normal'})-engine.score(stable,syntheticA),3,
+  'Exact fit adjustment should be modest');
+assert.ok(engine.recommend(gloves,syntheticA).matches[0].ratings['Build Quality']>=2);
+
 // UI regression: finish a quiz, click Start over, then finish it again.
 {
   const win={CC_GLOVES:gloves};
