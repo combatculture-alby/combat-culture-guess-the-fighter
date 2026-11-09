@@ -12,12 +12,12 @@ const start=scripts[0].indexOf('const CC_GLOVES = ')+'const CC_GLOVES = '.length
 const end=scripts[0].indexOf(';\nif (typeof window',start);
 assert.ok(start>20&&end>start,'Could not read approved data');
 const gloves=JSON.parse(scripts[0].slice(start,end));
-assert.equal(gloves.length,49,'Unexpected number of approved gloves');
+assert.equal(gloves.length,50,'Unexpected number of approved gloves');
 const module={exports:{}};
 vm.runInNewContext(scripts[1],{module,window:{}});
 new vm.Script(scripts[2]); // UI syntax check
 const engine=module.exports;
-assert.equal(gloves.filter(g=>Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0).length,49,'Unexpected priced glove count');
+assert.equal(gloves.filter(g=>Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0undefined'Unexpected priced glove count');
 assert.equal(gloves.find(g=>g.id==='fairtex-bgv1').onlinePriceUsd,139,'Fairtex should use online, not reviewer price');
 let combinations=0;
 const ceilings={under100:100,b100to200:200,b200to300:300,b300plus:Infinity};
@@ -76,6 +76,18 @@ assert.equal(mmaRank('Grappling Mobility')[0],'fairtex-fgv18-mma-sparring','Fair
 assert.equal(mmaRank('Striking')[0],'isami-pounding-gloves','Isami should lead striking');
 assert.equal(gloves.find(g=>g.id==='isami-pounding-gloves').testedWeight,'XL','Preserve owner-reported XL despite retailer one-size description');
 assert.equal(gloves.find(g=>g.id==='fairtex-fgv18-mma-sparring').mmaProtection,'Average','Fairtex padding caution matters');
+const ms600=gloves.find(g=>g.id==='winnings-ms-600');
+assert.ok(ms600&&ms600.testedWeight==='16 oz'&&ms600.use==='Both','Winning MS-600 missing 16oz sparring suitability');
+assert.equal(ms600.onlinePriceUsd,535,'Winning MS-600 price is not the verified exact-model listing');
+for(const use of ['Sparring','Both']){
+  const premium=engine.recommend(gloves,{sport:'Boxing',use,budget:'b300plus',fit:'Any',
+    priorities:['Protection'],style:'Any',material:'Any'});
+  assert.ok(premium.matches.some(g=>g.id==='winnings-ms-600'),'MS-600 should surface as a premium sparring option');
+  assert.ok(!premium.matches.some(g=>g.brand==='Pro Mex'),'High budget and protection priority should not force Pro Mex');
+}
+const valueOptions=engine.recommend(gloves,{sport:'Boxing',use:'Both',budget:'b300plus',fit:'Any',
+  priorities:['Value'],style:'Any',material:'Any'});
+assert.ok(valueOptions.matches.some(g=>g.brand==='Pro Mex'),'Pro Mex can remain a value pick when requested');
 const benchmark=engine.recommend(gloves,{
   sport:'Muay Thai',use:'Sparring',budget:'b100to200',fit:'Any',
   priorities:['none'],style:'Any',material:'Any'
@@ -118,7 +130,7 @@ assert.equal(gloves.find(g=>g.brand==='Casanova').use,'Both');
     assert.ok(button && button.click,'Missing option '+value);
     button.click();
     get('continue').click();
-    if(value==='Muay Thai')assert.ok(get('quiz-content').innerHTML.includes('brand-thinking'),'Thinking chibi missing on question screen');
+    if(value==='Muay Thai')assert.ok(/brand-thinking-[012]/.test(get('quiz-content').innerHTML),'Thinking chibi missing on question screen');
   }
   function finish(){
     assert.ok(get('quiz-content').innerHTML.includes('brand-start'),'Opening screen chibi missing');
