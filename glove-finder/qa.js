@@ -33,7 +33,7 @@ for(const material of ['Any','Genuine Leather','Synthetic']){
   const stretchMax=ceilings[budget]+Math.min(75,Math.max(25,ceilings[budget]*0.25));
   for(const g of result.matches){
     assert.equal(g.approved,true);
-    assert.ok(engine.useFits(g,use),'Invalid training use');
+    assert.ok(sport==='MMA'&&(use==='Sparring'||use==='Both') ? (g.gloveType==='MMA Sparring'&&(g.use==='Sparring'||g.use==='Both')) : engine.useFits(g,use),'Invalid training use');
     assert.ok(Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0,'Unsourced price displayed');
     if(g.kind==='Stretch pick'){
       assert.ok(g.onlinePriceUsd>ceilings[budget]&&g.onlinePriceUsd<=stretchMax,'Stretch price invalid');
