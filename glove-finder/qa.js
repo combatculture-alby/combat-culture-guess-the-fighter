@@ -65,6 +65,15 @@ assert.ok(mmaBag.matches.every(g=>g.gloveType==='Boxing'),'MMA bag route must us
 assert.equal(gloves.find(g=>g.id==='onx-freedom-250-mma-sparring').onlinePriceUsd,249);
 assert.equal(gloves.find(g=>g.id==='isami-pounding-gloves').onlinePriceUsd,139.95);
 assert.equal(gloves.find(g=>g.id==='fairtex-fgv18-mma-sparring').onlinePriceUsd,99);
+// Firsthand MMA assessments must change rankings for striking and grappling goals.
+const mmaRank=(priority)=>engine.recommend(gloves,{
+  sport:'MMA',use:'Sparring',budget:'b300plus',fit:'Any',style:'Any',material:'Any',priorities:[priority]
+}).matches.map(g=>g.id);
+assert.equal(mmaRank('Protection')[0],'onx-freedom-250-mma-sparring','ONX should lead protection');
+assert.equal(mmaRank('Grappling Mobility')[0],'fairtex-fgv18-mma-sparring','Fairtex should lead grappling');
+assert.equal(mmaRank('Striking')[0],'isami-pounding-gloves','Isami should lead striking');
+assert.equal(gloves.find(g=>g.id==='isami-pounding-gloves').testedWeight,'XL','Preserve owner-reported XL despite retailer one-size description');
+assert.equal(gloves.find(g=>g.id==='fairtex-fgv18-mma-sparring').mmaProtection,'Average','Fairtex padding caution matters');
 const benchmark=engine.recommend(gloves,{
   sport:'Muay Thai',use:'Sparring',budget:'b100to200',fit:'Any',
   priorities:['none'],style:'Any',material:'Any'
