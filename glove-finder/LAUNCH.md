@@ -3,7 +3,7 @@
 ## Hosted quiz
 https://combatculture-alby.github.io/combat-culture-guess-the-fighter/glove-finder/
 
-The quiz is a standalone HTML page in this repository. It is not yet automatically synced to Google Sheets. Current data is a manually refreshed snapshot of 47 approved gloves. It asks seven questions and can present up to four options: two in-budget picks, an optional stretch pick, and an under-budget alternative. An unlimited budget has no stretch pick.
+The quiz is a standalone HTML page in this repository. It is not yet automatically synced to Google Sheets. Current data is a manually refreshed snapshot of 51 owner-approved and owner-rated gloves. It asks seven questions and can present up to four options: up to three competitive in-budget picks, with optional lower-cost or stretch alternatives when space and quality allow. An unlimited budget has no stretch pick.
 
 ## WordPress / Kadence: quickest launch
 1. In WordPress, create a page titled **Boxing & Muay Thai Glove Finder**, suggested slug `glove-finder`.
@@ -33,10 +33,34 @@ Preview the published WordPress page on desktop and phone. An iframe with fixed 
 ## Database
 Source: https://docs.google.com/spreadsheets/d/1-H28Qmx2oOZOmeHeFzHbaELldi5wNo07SV2nCeiiem4/edit
 
-The first 21 columns are the core database. Optional classification columns include Secondary Strength, Availability, Secondary Weakness, Third Strength and Third Weakness. Empty optional fields are treated as unknown and never guessed. Region-specific availability is not yet verified; do not advertise region-based recommendations.
+The first 21 columns contain the original review taxonomy. The **Rate Gloves (1-3)** tab holds six performance ratings (Protection, Comfort, Build Quality, Wrist Support, Feedback, Versatility) and Value as a seventh rating. The **Sheet1** and **Gloves I own** tabs now include a **Suitable Uses** field in column AM, left blank unless additional training uses have been personally verified. Optional classification columns include Secondary Strength, Availability, Secondary Weakness, Third Strength and Third Weakness. Empty optional fields are treated as unknown and never guessed. Region-specific availability is not yet verified; do not advertise region-based recommendations.
+
+
+## Scoring (owner-rated, 1-3 scale)
+**1 = Bad, 2 = Fine, 3 = Good. Blank means unverified, never an invented 2.** A 2 contributes zero; a 1 subtracts its weight; a 3 adds its weight. Protection and Build Quality require owner ratings before a model can enter the shortlist.
+
+| Attribute | Sparring | Bag & Pads | All-Around | Cardio |
+| --- | ---: | ---: | ---: | ---: |
+| Protection | 4 | 1 | 3 | 1 |
+| Build Quality | 3 | 3 | 3 | 2 |
+| Comfort | 2 | 2 | 2 | 3 |
+| Wrist Support | 1 | 1 | 1 | 1 |
+| Feedback | 1 | 4 | 2 | 1 |
+| Versatility | 1 | 1 | 3 | 1 |
+| Value | 1 | 1 | 1 | 4 |
+
+For $300+ / no limit, Value has no baseline weight unless specifically selected. Each selected rated priority adds 4 to that category's weight. MMA sparring uses purpose-built gloves and an owner-derived grappling-mobility modifier. Fitness/cardio bag work has a $200 ceiling even when a higher budget is selected. Boxing, Muay Thai and kickboxing have no brand/sport bonuses.
+
+Use, price, style, material and glove type are eligibility requirements; explicit style and material preferences are never overridden. Suitable Uses can authorize a model for both sparring and bag/pad work even when Best Use says Sparring; the field must be personally verified. A sparring glove rated 1 for Protection is ineligible for sparring. With an explicit fit preference: exact +3, reasonably compatible +1, incompatible -3. No editorial, brand or premium-budget bonuses.
+
+## Refreshing the live quiz
+The live quiz is **not automatically synced to Google Sheets**. Its index.html includes a snapshot of approved models with embedded ratings fields and, when verified, suitableUses. After editing the spreadsheet, deliberately synchronize the approved rows to the website snapshot and run node glove-finder/qa.js. Do not fill in unknown ratings, style, material, weight or use merely to create more recommendations. The quiz is published from the repository's main branch with GitHub Pages.
+
+### Cleto Reyes Traditional Laces
+The owner reviewed 16 oz, Normal fit, Mexican style, Genuine Leather, Best Use: Sparring, Suitable Uses: Sparring and Bag & Pads. Cleto Reyes USA's exact Traditional Training Gloves listing was USD 269 on 2026-11-08: https://cletoreyesboxing.com/product/cleto-reyes-traditional-training-gloves/
 
 ## QA
-Run `node glove-finder/qa.js` after modifying the quiz. It checks data count, UI script syntax, all 23,040 answer permutations, four-pick budget restrictions, Muay Thai editorial recommendations, and completing the quiz twice with Start Over.
+Run `node glove-finder/qa.js` after modifying the quiz. It checks approved ratings, UI syntax, all 23,040 answer permutations, budget limits, training safety, score neutrality, Cleto Reyes suitability, and completing the quiz twice with Start Over.
 
 ## Launch checklist
 - Open the GitHub Pages link on iPhone and desktop.
