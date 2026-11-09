@@ -5,6 +5,8 @@ const vm=require('node:vm');
 const assert=require('node:assert/strict');
 const html=fs.readFileSync(__dirname+'/index.html','utf8');
 const scripts=html.split('<script>').slice(1).map(x=>x.split('</script>')[0]);
+assert.ok(html.includes('assets/branding-sprite.webp'),'Brand sprite stylesheet missing');
+assert.ok(html.includes('class="brand-ko-logo"'),'KO logo missing');
 assert.equal(scripts.length,3,'Expected data, engine and UI scripts');
 const start=scripts[0].indexOf('const CC_GLOVES = ')+'const CC_GLOVES = '.length;
 const end=scripts[0].indexOf(';\nif (typeof window',start);
@@ -116,10 +118,13 @@ assert.equal(gloves.find(g=>g.brand==='Casanova').use,'Both');
     assert.ok(button && button.click,'Missing option '+value);
     button.click();
     get('continue').click();
+    if(value==='Muay Thai')assert.ok(get('quiz-content').innerHTML.includes('brand-thinking'),'Thinking chibi missing on question screen');
   }
   function finish(){
+    assert.ok(get('quiz-content').innerHTML.includes('brand-start'),'Opening screen chibi missing');
     for(const v of ['Muay Thai','Sparring','b100to200','none','Any','Thai','Genuine Leather'])answer(v);
     assert.ok(get('quiz-content').innerHTML.includes('Your Glove Shortlist.'),'Missing result cards');
+    assert.ok(get('quiz-content').innerHTML.includes('brand-results'),'Results thumbs-up chibi missing');
   }
   finish();
   assert.equal(get('sound-toggle').textContent,'','Sound switch should have default markup label');
