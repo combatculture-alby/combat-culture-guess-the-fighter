@@ -2120,8 +2120,9 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     // dedicated, reviewed MMA sparring glove. Boxing gloves are never substitutes.
     // A future sheet row must explicitly supply gloveType: 'MMA Sparring'.
     const mmaSparring=a.sport==='MMA' && (a.use==='Sparring'||a.use==='Both');
-    const eligible=all.filter(g=>useFits(g,a.use) &&
-      (mmaSparring ? g.gloveType==='MMA Sparring' : (!g.gloveType||g.gloveType==='Boxing')));
+    const eligible=all.filter(g=>
+      (mmaSparring ? (g.gloveType==='MMA Sparring' && (g.use==='Sparring'||g.use==='Both')) :
+        (useFits(g,a.use) && (!g.gloveType||g.gloveType==='Boxing'))));
     const ranked=eligible.map(g=>({...g,matchScore:score(g,a)}))
       .sort((x,y)=>y.matchScore-x.matchScore||x.onlinePriceUsd-y.onlinePriceUsd||x.brand.localeCompare(y.brand)||x.model.localeCompare(y.model));
     const inBudget=ranked.filter(g=>g.onlinePriceUsd<=cap && (!fitnessBag||g.onlinePriceUsd<=fitnessCap));
