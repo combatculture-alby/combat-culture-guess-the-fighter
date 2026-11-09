@@ -20,6 +20,10 @@ assert.equal(gloves.length,51,'Unexpected number of approved gloves');
 const module={exports:{}};
 vm.runInNewContext(scripts[1],{module,window:{}});
 new vm.Script(scripts[2]); // UI syntax check
+assert.ok(!scripts[2].includes("['Other','Other']"),
+  'Style question must not offer Other; No Preference already covers the intent');
+assert.ok(scripts[2].includes("['Any','No Preference']"),
+  'No Preference must remain a style option');
 const engine=module.exports;
 assert.equal(gloves.filter(g=>Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0).length,51,'Unexpected priced glove count');
 assert.equal(gloves.find(g=>g.id==='fairtex-bgv1').onlinePriceUsd,139,'Fairtex should use online, not reviewer price');
@@ -339,6 +343,8 @@ assert.ok(!lowCost.matches.some(g=>g.kind==='Stretch alternative'),'$50 results 
     assert.ok(thinkingTransitions>=3,'Expected multiple thinking chibi transitions');
     assert.ok(get('quiz-content').innerHTML.includes('Your Glove Shortlist.'),'Missing result cards');
     assert.ok(get('quiz-content').innerHTML.includes('brand-results'),'Results thumbs-up chibi missing');
+    assert.ok(get('quiz-content').innerHTML.includes('Prices shown may not include shipping fees or applicable taxes.'),
+      'Results must disclose possible shipping and tax charges');
     assert.ok(get('quiz-content').innerHTML.includes('id="feedback-toggle"'),'Feedback button missing');
     assert.ok(get('quiz-content').innerHTML.includes('id="feedback-form" hidden'),'Feedback form must start closed');
     // The fake DOM persists elements across a render; native innerHTML would recreate hidden nodes.
