@@ -38,11 +38,24 @@ for(const material of ['Any','Genuine Leather','Synthetic']){
     assert.equal(g.approved,true);
     assert.ok(sport==='MMA'&&(use==='Sparring'||use==='Both') ? (g.gloveType==='MMA Sparring'&&(g.use==='Sparring'||g.use==='Both')) : engine.useFits(g,use),'Invalid training use');
     assert.ok(Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0,'Unsourced price displayed');
-    assert.ok(g.onlinePriceUsd<=ceilings[budget],'Recommended glove exceeds chosen budget');
+    const stretchMax=ceilings[budget]+Math.min(75,Math.max(25,ceilings[budget]*0.25));
+    if(g.kind==='Stretch alternative'){
+      assert.ok(Number.isFinite(ceilings[budget])&&g.onlinePriceUsd>ceilings[budget]&&
+        g.onlinePriceUsd<=stretchMax,'Stretch option exceeds allowed range');
+      assert.ok(!(sport==='Fitness'&&use==='Bag & Pads'),'Fitness cannot have a stretch option');
+      assert.ok(result.matches.some(x=>x.onlinePriceUsd<=ceilings[budget]),'Stretch cannot replace all in-budget matches');
+    }else{
+      assert.ok(g.onlinePriceUsd<=ceilings[budget],'Main recommendation exceeded budget');
+    }
     if(style!=='Any')assert.equal(g.style,style,'Style mismatch');
     if(material!=='Any')assert.equal(g.material,material,'Material mismatch');
-    assert.ok(g.kind==='Best match'||g.kind==='Strong match','Result category is forced');
+    assert.ok(['Best match','Strong match','Lower-cost alternative','Stretch alternative'].includes(g.kind),
+      'Unknown result category');
     assert.ok(g.matchScore>=result.matches[0].matchScore-14,'Low-ranked option was forced into results');
+    if(g.kind==='Lower-cost alternative'){
+      assert.ok(g.onlinePriceUsd<=result.matches[0].onlinePriceUsd*0.8,
+        'Cheaper option is not meaningfully cheaper');
+    }
     if(sport==='Fitness'&&use==='Bag & Pads')assert.ok(g.onlinePriceUsd<=200,'Fitness cap exceeded');
   }
   combinations++;
@@ -56,8 +69,17 @@ assert.ok(jpLeather.matches.every(g=>g.style==='Japanese'&&g.material==='Genuine
 const noSyntheticJapanese=engine.recommend(gloves,{...mustMatch,material:'Synthetic'});
 assert.equal(noSyntheticJapanese.matches.length,0,'Unapproved or mismatched styles should not fill results');
 const highBudget=engine.recommend(gloves,{...mustMatch,style:'Any',priorities:['Protection']});
-assert.ok(!highBudget.matches.some(g=>g.brand==='Pro Mex'),'Pro Mex should not appear merely to fill a cheap slot');
+assert.ok(!highBudget.matches.some(g=>g.brand==='Pro Mex'),'Pro Mex should not appear without comparable quality or an explicit value priority');
 assert.ok(highBudget.matches.length<4,'Do not force four results');
+// Alternatives may cross only the price boundary, not user preferences.
+for(const [style,material] of [['Japanese','Genuine Leather'],['Mexican','Genuine Leather'],['Thai','Synthetic']]){
+  const a={sport:'Boxing',use:'Sparring',budget:'b100to200',fit:'Any',priorities:['Comfort'],style,material};
+  const result=engine.recommend(gloves,a);
+  for(const item of result.matches){
+    assert.equal(item.style,style,'Alternative changed style');
+    assert.equal(item.material,material,'Alternative changed material');
+  }
+}
 // MMA branch: bag work can use boxing gloves, but sparring must not.
 const mmaBase={sport:'MMA',budget:'b100to200',fit:'Any',priorities:['none'],style:'Any',material:'Any'};
 const mmaBag=engine.recommend(gloves,{...mmaBase,use:'Bag & Pads'});
