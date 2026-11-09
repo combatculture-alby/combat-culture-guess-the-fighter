@@ -69,6 +69,7 @@ assert.equal(gloves.find(g=>g.brand==='Casanova').use,'Both');
       get innerHTML(){return this._html},
       remove(){},
       addEventListener(type,callback){this.listeners[type]=callback},
+      setAttribute(name,value){this[name]=value},
       click(){assert.ok(this.listeners.click,'Missing click handler: '+this.id);this.listeners.click()},
       querySelectorAll(selector){
         assert.equal(selector,'[data-answer]');
@@ -89,9 +90,15 @@ assert.equal(gloves.find(g=>g.brand==='Casanova').use,'Both');
   }
   function finish(){
     for(const v of ['Muay Thai','Sparring','b100to200','none','Any','Thai','Genuine Leather'])answer(v);
-    assert.ok(get('quiz-content').innerHTML.includes('Your glove shortlist.'),'Missing result cards');
+    assert.ok(get('quiz-content').innerHTML.includes('Your Glove Shortlist.'),'Missing result cards');
   }
   finish();
+  assert.equal(get('sound-toggle').textContent,'','Sound switch should have default markup label');
+  get('sound-toggle').click();
+  assert.equal(get('sound-toggle').textContent,'Sound: Off','Mute should disable audio');
+  assert.equal(get('sound-toggle')['aria-pressed'],'false','Mute should be accessible');
+  get('sound-toggle').click();
+  assert.equal(get('sound-toggle').textContent,'Sound: On','Sound can be enabled again');
   get('again').click();
   assert.equal(get('stage-label').textContent,'QUESTION 1 OF 7','Start over did not reset step');
   assert.ok(get('quiz-controls').innerHTML.includes('id="continue" type="button" disabled'),
