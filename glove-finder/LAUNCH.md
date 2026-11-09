@@ -33,9 +33,9 @@ Preview the published WordPress page on desktop and phone. An iframe with fixed 
 ## Database
 Source of truth: https://docs.google.com/spreadsheets/d/1-H28Qmx2oOZOmeHeFzHbaELldi5wNo07SV2nCeiiem4/edit#gid=126113403
 
-**Only edit the visible `Gloves Master` tab.** It contains all 152 records, with 51 quiz-approved gloves at the top. Columns A-C are brand, model, and quiz approval; D-J are owner-rated 1–3 Protection, Comfort, Build Quality, Wrist Support, Feedback, Versatility, and Value; K-M are the 1–3 Compactness, Clinch Mobility, and Availability ratings; N is the six-quality completion indicator. Columns O-AU retain the review, fit, usage, material, price, and source data. `Best Use` is column Q, `Hand Fit` is column S, `Glove Style` is T, `Material` is U, `Quiz Online USD Price` is AG, and `Suitable Uses` is AU. Historical 1–5 scores in X-AB remain hidden to avoid confusion with the new scoring scale.
+**Only edit the visible `Gloves Master` tab.** It contains all 152 records, with 51 quiz-approved gloves at the top. Columns A-C are brand, model, and quiz approval; D-J are owner-rated 1–3 Protection, Comfort, Build Quality, Wrist Support, Feedback, Versatility, and Value; K-M are the 1–3 Compactness, Muay Thai Clinch Mobility, and MMA Grappling Mobility ratings; N is the six-quality completion indicator. Columns O-AU retain the review, fit, usage, material, price, and source data. `Best Use` is column Q, `Hand Fit` is column S, `Glove Style` is T, `Material` is U, `Quiz Online USD Price` is AG, and `Suitable Uses` is AU. Historical 1–5 scores in X-AB remain hidden to avoid confusion with the new scoring scale.
 
-The previous `Rate Gloves (1-3)`, `Sheet1`, `Gloves I own`, and community research tabs are hidden backups, **not sources for new quiz syncs**. A snapshot called `Backup - master before extra ratings` also preserves the exact former categorical fields. The quiz is still refreshed manually, not from a live spreadsheet feed. Do not fill unknown values; optional classification and region-specific availability remain unverified until the owner confirms them.
+The previous `Rate Gloves (1-3)`, `Sheet1`, `Gloves I own`, and community research tabs are hidden backups, **not sources for new quiz syncs**. A snapshot called `Backup - master before extra ratings` also preserves the exact former categorical fields. The quiz is still refreshed manually, not from a live spreadsheet feed. Do not fill unknown values; retail price and other optional attributes remain unverified until the owner confirms them.
 
 
 ## Scoring (owner-rated, 1-3 scale)
@@ -51,21 +51,21 @@ The previous `Rate Gloves (1-3)`, `Sheet1`, `Gloves I own`, and community resear
 | Versatility | 1 | 1 | 3 | 1 |
 | Value | 1 | 1 | 1 | 4 |
 
-For $300+ / no limit, Value has no baseline weight unless specifically selected. Each selected rated priority adds 4 to that category's weight. MMA sparring uses purpose-built gloves and an owner-derived grappling-mobility modifier. Fitness/cardio bag work has a $200 ceiling even when a higher budget is selected. Boxing, Muay Thai and kickboxing have no brand/sport bonuses.
+For $300+ / no limit, Value has no baseline weight unless specifically selected. Each selected rated priority adds 4 to that category's weight. MMA sparring uses purpose-built gloves and its own grappling-mobility rating; Muay Thai clinch scores are separate. Fitness/cardio bag work has a $200 ceiling even when a higher budget is selected. Boxing, Muay Thai and kickboxing have no brand/sport bonuses.
 
 Use, price, style, material and glove type are eligibility requirements; explicit style and material preferences are never overridden. Suitable Uses can authorize a model for both sparring and bag/pad work even when Best Use says Sparring; the field must be personally verified. A sparring glove rated 1 for Protection is ineligible for sparring. With an explicit fit preference: exact +3, reasonably compatible +1, incompatible -3. No editorial, brand or premium-budget bonuses.
 
 
 
-### Extra ratings and current scoring
-All three new dimensions use 1 = unfavorable/bad, 2 = okay or uncertain (neutral), 3 = favorable/good. Leave a field blank when no assessment is available; neither a blank nor 2 changes the score.
+### Additional ratings and sport-specific scoring
+Compactness, Muay Thai clinch, and MMA grappling use the same scale: **1 = Bad/Restricted, 2 = Okay/Unknown (neutral), 3 = Good**. A blank is unrated and does not create an artificial average.
 
-- **Compactness (K):** Bulky -> 1, Standard -> 2, Compact -> 3. A small default factor; a +4 priority weight when users choose compactness.
-- **Clinch Mobility (L):** Restricted -> 1, Average -> 2, Good or Excellent -> 3. A small default factor in sparring/all-around, higher for MMA sparring, and strongly weighted for MMA grappling priority.
-- **Availability (M):** Limited -> 1, Regional or Not Verified -> 2, Widely Available -> 3. Small convenience factor only, never substitutes for verified price/stock.
-- **Glove Style (T):** Japanese, Mexican, Thai, Other, or Unverified. Previous Western/Other entries became Other, and the quiz option is just Other.
+- **Compactness (K):** Bulky = 1, Standard = 2, Compact = 3. A minor baseline factor for any sport; user priority adds 4 weight.
+- **Clinch Mobility (L): Muay Thai ONLY.** Counts for Muay Thai sparring and all-around training (weight 3; +4 if selected as a priority). It does not affect boxing, kickboxing, fitness/cardio, MMA, or Muay Thai bag/pads-only.
+- **MMA Grappling Mobility (M): MMA sparring ONLY.** Distinct from Muay Thai clinching. Small default MMA sparring weight 2; +8 when Grappling Mobility is selected as a priority. The three firsthand MMA assessments were moved here from the old Clinch Mobility field.
+- **Availability removed.** Geo-specific inventory cannot be assessed consistently. Neither the master ratings tab nor the quiz scoring includes an Availability field. Previous values are preserved in the hidden `Backup - before discipline scoring` tab.
 
-The legacy categorized values were replaced in the live quiz by the ratings from K-M. There are 48 compactness, 13 mobility, and 4 availability classifications currently present. No other glove ratings were filled in speculatively.
+`Muay Thai Clinch Mobility` is offered only on the Muay Thai sparring/all-around priorities question. `Grappling Mobility` remains an MMA-specific choice. No sport-specific rules are applied to other combat sports.
 
 ## Refreshing the live quiz
 The live quiz is **not automatically synced to Google Sheets**. Its index.html includes a snapshot of approved models with embedded ratings fields and, when verified, suitableUses. After editing **Gloves Master** (not the hidden backup tabs), synchronize the approved rows and 1–3 ratings into the website snapshot, preserving IDs and verified eligibility fields, then run node glove-finder/qa.js. Do not fill in unknown ratings, style, material, weight or use merely to create more recommendations. The quiz is published from the repository's main branch with GitHub Pages.
