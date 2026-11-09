@@ -159,7 +159,7 @@ for(const g of allR){
   assert.ok(g.ratings&&['Protection','Comfort','Build Quality','Wrist Support','Feedback','Versatility','Value']
     .every(k=>Number.isInteger(g.ratings[k])&&g.ratings[k]>=1&&g.ratings[k]<=3),
     'Missing or invalid core 1-3 rating for '+g.id);
-  for(const name of ['Compactness','Clinch Mobility','Availability']){
+  for(const name of ['Compactness','Clinch Mobility','MMA Grappling Mobility']){
     const n=g.ratings[name];
     assert.ok(n===null||(Number.isInteger(n)&&n>=1&&n<=3),
       'Invalid or non-neutral unverified extra rating for '+g.id+' '+name);
@@ -206,7 +206,7 @@ assert.ok(engine.recommend(gloves,syntheticA).matches[0].ratings['Build Quality'
 
 
 // Additional 1-3 scores: a 2 is neutral, unknown is neutral, and specializations matter.
-const extraNeutral={...stable,ratings:{...stable.ratings,Compactness:2,'Clinch Mobility':2,Availability:2}};
+const extraNeutral={...stable,ratings:{...stable.ratings,Compactness:2,'Clinch Mobility':2,'MMA Grappling Mobility':2}};
 assert.equal(engine.score(extraNeutral,syntheticA),engine.score(stable,syntheticA),
   '2 and unrated must both contribute zero');
 const compactGood={...extraNeutral,ratings:{...extraNeutral.ratings,Compactness:3}};
@@ -216,22 +216,45 @@ const compactPriority=engine.score(compactGood,{...syntheticA,priorities:['Compa
   engine.score(extraNeutral,{...syntheticA,priorities:['Compactness']});
 assert.ok(compactPriority>engine.score(compactGood,syntheticA)-engine.score(extraNeutral,syntheticA),
   'Explicit compactness preference must increase the weight');
-const availGood={...extraNeutral,ratings:{...extraNeutral.ratings,Availability:3}};
-assert.ok(engine.score(availGood,syntheticA)>engine.score(extraNeutral,syntheticA),
-  'Verified availability=3 must provide a small benefit');
-assert.ok(engine.score(availGood,syntheticA)-engine.score(extraNeutral,syntheticA)<=2,
-  'Availability should never outweigh protection or build quality');
-const mobileGood={...extraNeutral,ratings:{...extraNeutral.ratings,'Clinch Mobility':3}};
+const clinchGood={...extraNeutral,ratings:{...extraNeutral.ratings,'Clinch Mobility':3}};
+const muayBoth={...syntheticA,sport:'Muay Thai',use:'Both'};
+const clinchBaseDelta=engine.score(clinchGood,muayBoth)-engine.score(extraNeutral,muayBoth);
+assert.ok(clinchBaseDelta>=3,'Muay Thai all-around must reward good clinch mobility');
+assert.ok(engine.score(clinchGood,{...muayBoth,priorities:['Clinch Mobility']})-
+  engine.score(extraNeutral,{...muayBoth,priorities:['Clinch Mobility']})>clinchBaseDelta,
+  'Choosing clinch as a Muay Thai priority must increase its weight');
+assert.ok(engine.score(clinchGood,{...muayBoth,use:'Sparring'})>
+  engine.score(extraNeutral,{...muayBoth,use:'Sparring'}),
+  'Muay Thai sparring must account for clinch mobility');
+assert.equal(engine.score(clinchGood,{...muayBoth,use:'Bag & Pads'}),
+  engine.score(extraNeutral,{...muayBoth,use:'Bag & Pads'}),
+  'Bag/pad-only Muay Thai must not use clinch mobility');
+for(const otherSport of ['Boxing','Kickboxing','MMA','Fitness']){
+  for(const use of ['Sparring','Bag & Pads','Both']){
+    const a={...syntheticA,sport:otherSport,use};
+    assert.equal(engine.score(clinchGood,a),engine.score(extraNeutral,a),
+      'Clinch must not influence '+otherSport+' / '+use);
+    assert.equal(engine.getWeights(a)['Clinch Mobility'],undefined,
+      'Clinch weight must be absent outside Muay Thai sparring/all-around');
+  }
+}
 const mmaContrast={...syntheticA,sport:'MMA',use:'Sparring'};
+const mobileGood={...extraNeutral,ratings:{...extraNeutral.ratings,'MMA Grappling Mobility':3}};
 assert.ok(engine.score(mobileGood,{...mmaContrast,priorities:['Grappling Mobility']})-
   engine.score(extraNeutral,{...mmaContrast,priorities:['Grappling Mobility']})>=8,
-  'MMA grappling priority must strongly reward clinch mobility');
-assert.equal(engine.mobilityRating(extraNeutral),2,'Clinch mobility rating 2 should be neutral');
-assert.ok(!gloves.some(g=>Object.hasOwn(g,'compactness')||Object.hasOwn(g,'clinchMobility')||Object.hasOwn(g,'availability')),
-  'Old categorical ratings must not persist as contradictory data');
+  'MMA grappling priority must strongly reward separate MMA mobility');
+assert.equal(engine.mobilityRating(extraNeutral),2,'Separate MMA mobility rating 2 should be neutral');
+assert.equal(engine.score(mobileGood,{...syntheticA,sport:'Boxing'}),
+  engine.score(extraNeutral,{...syntheticA,sport:'Boxing'}),
+  'MMA grappling score must not affect boxing');
+assert.ok(!gloves.some(g=>Object.hasOwn(g,'compactness')||Object.hasOwn(g,'clinchMobility')||Object.hasOwn(g,'availability')||Object.hasOwn(g.ratings,'Availability')),
+  'Old categorical fields and Availability scoring must be gone');
 assert.ok(gloves.filter(g=>g.ratings.Compactness!==null).length>=45,'Existing compactness ratings lost');
-assert.ok(gloves.filter(g=>g.ratings['Clinch Mobility']!==null).length>=12,'Existing clinch ratings lost');
-assert.ok(gloves.filter(g=>g.ratings.Availability!==null).length>=4,'Existing availability ratings lost');
+assert.ok(gloves.filter(g=>g.ratings['Clinch Mobility']!==null).length>=10,'Existing Muay Thai clinch ratings lost');
+assert.equal(gloves.filter(g=>g.ratings['MMA Grappling Mobility']!==null).length,3,
+  'Three separate MMA mobility assessments must be preserved');
+assert.ok(gloves.filter(g=>g.gloveType==='MMA Sparring').every(g=>g.ratings['Clinch Mobility']===null),
+  'No MMA glove should have a Muay Thai clinch rating');
 
 // UI regression: finish a quiz, click Start over, then finish it again.
 {
@@ -264,6 +287,8 @@ assert.ok(gloves.filter(g=>g.ratings.Availability!==null).length>=4,'Existing av
     button.click();
     get('continue').click();
     if(value==='Muay Thai')assert.ok(/brand-thinking-[012]/.test(get('quiz-content').innerHTML),'Thinking chibi missing on question screen');
+    if(value==='b100to200')assert.ok(get('quiz-content').innerHTML.includes('data-answer="Clinch Mobility"'),
+      'Muay Thai sparring priority question must offer Clinch Mobility');
   }
   function finish(){
     assert.ok(get('quiz-content').innerHTML.includes('brand-start'),'Opening screen chibi missing');
@@ -341,6 +366,11 @@ assert.ok(gloves.filter(g=>g.ratings.Availability!==null).length>=4,'Existing av
   select('Boxing');
   assert.equal(get('stage-label').textContent,'QUESTION 2 OF 7','Boxing should show full route');
   assert.ok(get('quiz-content').innerHTML.includes('What Are These Gloves For?'));
+  select('Sparring');select('b100to200');
+  assert.ok(!get('quiz-content').innerHTML.includes('data-answer="Clinch Mobility"'),
+    'Boxing must not offer the Muay Thai-specific clinch priority');
+  assert.ok(!get('quiz-content').innerHTML.includes('data-answer="Grappling Mobility"'),
+    'Boxing must not offer the MMA-specific grappling priority');
 }
 
 const fitnessScenarios={sport:'Fitness',use:'Bag & Pads',fit:'Any',style:'Any',material:'Any',priorities:['none']};
