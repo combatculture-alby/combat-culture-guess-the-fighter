@@ -10,12 +10,12 @@ const start=scripts[0].indexOf('const CC_GLOVES = ')+'const CC_GLOVES = '.length
 const end=scripts[0].indexOf(';\nif (typeof window',start);
 assert.ok(start>20&&end>start,'Could not read approved data');
 const gloves=JSON.parse(scripts[0].slice(start,end));
-assert.equal(gloves.length,47,'Unexpected number of approved gloves');
+assert.equal(gloves.length,46,'Unexpected number of approved gloves');
 const module={exports:{}};
 vm.runInNewContext(scripts[1],{module,window:{}});
 new vm.Script(scripts[2]); // UI syntax check
 const engine=module.exports;
-assert.equal(gloves.filter(g=>Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0).length,47,'Unexpected priced glove count');
+assert.equal(gloves.filter(g=>Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0).length,46,'Unexpected priced glove count');
 assert.equal(gloves.find(g=>g.id==='fairtex-bgv1').onlinePriceUsd,139,'Fairtex should use online, not reviewer price');
 let combinations=0;
 const ceilings={under100:100,b100to200:200,b200to300:300,b300plus:Infinity};
