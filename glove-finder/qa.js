@@ -30,7 +30,7 @@ for(const use of ['Sparring','Bag & Pads','Both'])
 for(const budget of Object.keys(ceilings))
 for(const fit of ['Snug','Normal','Roomy','Any'])
 for(const priorities of [['none'],['Value'],['Protection'],['Comfort'],['Feedback'],['Versatility'],['Wrist Support'],['Compactness']])
-for(const style of ['Any','Japanese','Thai','Mexican'])
+for(const style of ['Any','Japanese','Thai','Mexican','Other'])
 for(const material of ['Any','Genuine Leather','Synthetic']){
   const a={sport,use,budget,fit,priorities,style,material};
   const result=engine.recommend(gloves,a);
@@ -76,7 +76,7 @@ const highBudget=engine.recommend(gloves,{...mustMatch,style:'Any',priorities:['
 assert.ok(highBudget.matches.every(g=>g.approved&&g.ratings.Protection>=2),
   'Premium sparring matches must retain owner-rated protection');
 // Alternatives may cross only the price boundary, not user preferences.
-for(const [style,material] of [['Japanese','Genuine Leather'],['Mexican','Genuine Leather'],['Thai','Synthetic']]){
+for(const [style,material] of [['Japanese','Genuine Leather'],['Mexican','Genuine Leather'],['Thai','Synthetic'],['Other','Genuine Leather']]){
   const a={sport:'Boxing',use:'Sparring',budget:'b100to200',fit:'Any',priorities:['Comfort'],style,material};
   const result=engine.recommend(gloves,a);
   for(const item of result.matches){
@@ -117,6 +117,7 @@ assert.equal(gloves.find(g=>g.id==='fairtex-fgv18-mma-sparring').mmaProtection,'
 const ms600=gloves.find(g=>g.id==='winnings-ms-600');
 assert.ok(ms600&&ms600.testedWeight==='16 oz'&&ms600.use==='Both','Winning MS-600 missing 16oz sparring suitability');
 assert.equal(ms600.onlinePriceUsd,535,'Winning MS-600 price is not the verified exact-model listing');
+assert.ok(gloves.every(g=>g.style!=='Western/Other'),'Obsolete Western style labels remain');
 for(const use of ['Sparring','Both']){
   const premium=engine.recommend(gloves,{sport:'Boxing',use,budget:'b300plus',fit:'Any',
     priorities:['Protection'],style:'Any',material:'Any'});
@@ -157,7 +158,12 @@ assert.equal(allR.length,51,'51 approved glove records expected');
 for(const g of allR){
   assert.ok(g.ratings&&['Protection','Comfort','Build Quality','Wrist Support','Feedback','Versatility','Value']
     .every(k=>Number.isInteger(g.ratings[k])&&g.ratings[k]>=1&&g.ratings[k]<=3),
-    'Missing or invalid 1-3 rating for '+g.id);
+    'Missing or invalid core 1-3 rating for '+g.id);
+  for(const name of ['Compactness','Clinch Mobility','Availability']){
+    const n=g.ratings[name];
+    assert.ok(n===null||(Number.isInteger(n)&&n>=1&&n<=3),
+      'Invalid or non-neutral unverified extra rating for '+g.id+' '+name);
+  }
 }
 const cleto=gloves.find(g=>g.id==='cleto-reyes-traditional-laces');
 assert.ok(cleto&&cleto.testedWeight==='16 oz'&&cleto.fit==='Normal'&&
@@ -197,6 +203,35 @@ assert.ok(engine.recommend([unsafe],{...syntheticA,use:'Sparring'}).matches.leng
 assert.equal(engine.score(stable,{...syntheticA,fit:'Normal'})-engine.score(stable,syntheticA),3,
   'Exact fit adjustment should be modest');
 assert.ok(engine.recommend(gloves,syntheticA).matches[0].ratings['Build Quality']>=2);
+
+
+// Additional 1-3 scores: a 2 is neutral, unknown is neutral, and specializations matter.
+const extraNeutral={...stable,ratings:{...stable.ratings,Compactness:2,'Clinch Mobility':2,Availability:2}};
+assert.equal(engine.score(extraNeutral,syntheticA),engine.score(stable,syntheticA),
+  '2 and unrated must both contribute zero');
+const compactGood={...extraNeutral,ratings:{...extraNeutral.ratings,Compactness:3}};
+assert.ok(engine.score(compactGood,syntheticA)>engine.score(extraNeutral,syntheticA),
+  'Compactness=3 must contribute to rankings');
+const compactPriority=engine.score(compactGood,{...syntheticA,priorities:['Compactness']})-
+  engine.score(extraNeutral,{...syntheticA,priorities:['Compactness']});
+assert.ok(compactPriority>engine.score(compactGood,syntheticA)-engine.score(extraNeutral,syntheticA),
+  'Explicit compactness preference must increase the weight');
+const availGood={...extraNeutral,ratings:{...extraNeutral.ratings,Availability:3}};
+assert.ok(engine.score(availGood,syntheticA)>engine.score(extraNeutral,syntheticA),
+  'Verified availability=3 must provide a small benefit');
+assert.ok(engine.score(availGood,syntheticA)-engine.score(extraNeutral,syntheticA)<=2,
+  'Availability should never outweigh protection or build quality');
+const mobileGood={...extraNeutral,ratings:{...extraNeutral.ratings,'Clinch Mobility':3}};
+const mmaContrast={...syntheticA,sport:'MMA',use:'Sparring'};
+assert.ok(engine.score(mobileGood,{...mmaContrast,priorities:['Grappling Mobility']})-
+  engine.score(extraNeutral,{...mmaContrast,priorities:['Grappling Mobility']})>=8,
+  'MMA grappling priority must strongly reward clinch mobility');
+assert.equal(engine.mobilityRating(extraNeutral),2,'Clinch mobility rating 2 should be neutral');
+assert.ok(!gloves.some(g=>Object.hasOwn(g,'compactness')||Object.hasOwn(g,'clinchMobility')||Object.hasOwn(g,'availability')),
+  'Old categorical ratings must not persist as contradictory data');
+assert.ok(gloves.filter(g=>g.ratings.Compactness!==null).length>=45,'Existing compactness ratings lost');
+assert.ok(gloves.filter(g=>g.ratings['Clinch Mobility']!==null).length>=12,'Existing clinch ratings lost');
+assert.ok(gloves.filter(g=>g.ratings.Availability!==null).length>=4,'Existing availability ratings lost');
 
 // UI regression: finish a quiz, click Start over, then finish it again.
 {
@@ -316,4 +351,5 @@ for(const budget of Object.keys(ceilings)){
     g.onlinePriceUsd<=Math.min(200,ceilings[budget])),'Fitness returned unsuitable or expensive glove');
   assert.ok(!result.matches.some(g=>g.kind==='Stretch pick'),'Fitness should not stretch budget');
 }
+assert.equal(combinations,28800,'Unexpected combination count');
 console.log('PASS:',gloves.length,'approved gloves,',combinations,'quiz combinations, UI syntax and Start Over twice');
