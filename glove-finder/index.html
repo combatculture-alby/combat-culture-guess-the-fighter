@@ -14,11 +14,21 @@
 .preview-warning{background:#3b311b;border:1px solid #b28c35;border-radius:12px;color:#fff1c3;padding:18px 20px;margin:22px 0 6px;line-height:1.55}.preview-warning strong{display:block;margin-bottom:6px}.preview-warning p{margin:0}.choices button:disabled{opacity:.65;cursor:not-allowed}
 
 .sound-toggle{border:1px solid #585f5a;background:#282d2c;color:#e5e9e5;padding:8px 12px;border-radius:7px;font-size:12px;font-weight:750;white-space:nowrap;cursor:pointer}.sound-toggle:hover{border-color:var(--accent)}.sound-toggle[aria-pressed="false"]{color:#aab5b2}
+.brand-ko-logo{display:inline-block;width:36px;height:42px;flex:0 0 36px;background-image:url("assets/branding-sprite.webp");background-repeat:no-repeat;background-size:144px 56px;background-position:-108px -7px}
+.q-head{display:flex;align-items:center;justify-content:space-between;gap:15px}
+.q-copy{flex:1;min-width:0}
+.brand-figure{display:block;flex:0 0 72px;width:72px;height:112px;background-image:url("assets/branding-sprite.webp");background-repeat:no-repeat;background-size:288px 112px}
+.brand-start{background-position:0 0}
+.brand-thinking{background-position:-72px 0}
+.brand-results{background-position:-144px 0}
+.result-headline-row{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.result-headline-row>div{flex:1;min-width:0}
+@media(max-width:480px){.brand-figure{transform:scale(.82);transform-origin:center right;margin-left:-10px;margin-right:-2px}.q-head,.result-headline-row{gap:5px}.brand-ko-logo{flex-basis:36px}}
 </style>
 </head>
 <body>
   <main class="shell">
-    <div class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> COMBAT CULTURE <span class="eyebrow-divider">/</span> GLOVE FINDER</div>
+    <div class="eyebrow"><span class="brand-ko-logo" aria-hidden="true"></span> COMBAT CULTURE <span class="eyebrow-divider">/</span> GLOVE FINDER</div>
     <header class="heading">
       <p class="kicker">THE RIGHT GLOVES. FOR YOUR TRAINING.</p>
       <h1>Find Your Next <span>Pair of Gloves.</span></h1>
@@ -32,7 +42,7 @@
         <p>Please enable JavaScript in your browser and refresh the page. You can also open the quiz directly in Safari or Chrome.</p>
       </div>
       <div id="quiz-content" aria-live="polite">
-        <div class="q-head"><span class="q-number">01</span><h2>What Do You Train?</h2><p>This helps tailor the advice, but won't block otherwise suitable gloves.</p></div>
+        <div class="q-head"><div class="q-copy"><span class="q-number">01</span><h2>What Do You Train?</h2><p>This helps tailor the advice, but won't block otherwise suitable gloves.</p></div><span class="brand-figure brand-start" aria-hidden="true"></span></div>
         <div class="choices" role="group" aria-label="What do you train?">
           <button type="button" class="choice" disabled>Boxing</button>
           <button type="button" class="choice" disabled>Muay Thai</button>
@@ -2473,7 +2483,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       ['Wrist Support','Wrist Support'],['Value','Value for Money'],['none','No Strong Preference']]}:base;
     stage.textContent=`QUESTION ${step+1} OF ${questions.length}`;
     progress.style.width=`${(step+1)/questions.length*100}%`;
-    content.innerHTML=`<div class="q-head"><span class="q-number">0${step+1}</span><h2>${esc(q.title)}</h2><p>${esc(q.hint)}</p></div>
+    content.innerHTML=`<div class="q-head"><div class="q-copy"><span class="q-number">0${step+1}</span><h2>${esc(q.title)}</h2><p>${esc(q.hint)}</p></div><span class="brand-figure ${step===0?'brand-start':'brand-thinking'}" aria-hidden="true"></span></div>
       <div class="choices" role="group" aria-label="${esc(q.title)}">${q.options.map(([value,label])=>{
         const selected=isSelected(q,value);
         return `<button type="button" class="choice ${selected?'selected':''}" data-answer="${esc(value)}" aria-pressed="${selected}">
@@ -2582,7 +2592,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     const countText=mmaSparring && !result.matches.length
       ?'Dedicated MMA sparring glove recommendations are not available yet'
       :`${result.count} ${result.count===1?'glove meets':'gloves meet'} your budget and training-use requirements`;
-    content.innerHTML=`<div class="results-header"><p class="kicker">COMBAT CULTURE PICKS</p><h2>${result.matches.length?'Your Glove Shortlist.':mmaSparring?'MMA Sparring Picks Coming Soon.':'No Suitable Matches Yet.'}</h2>
+    content.innerHTML=`<div class="results-header"><div class="result-headline-row"><div><p class="kicker">COMBAT CULTURE PICKS</p><h2>${result.matches.length?'Your Glove Shortlist.':mmaSparring?'MMA Sparring Picks Coming Soon.':'No Suitable Matches Yet.'}</h2></div><span class="brand-figure brand-results" aria-hidden="true"></span></div>
       <span class="result-count">${esc(countText)}</span><p class="summary">${esc(summary)}</p></div>
       ${result.matches.length?`<div class="results-grid">${result.matches.map(makeCard).join('')}</div>`:
         mmaSparring?'<p class="empty">We have not added approved MMA sparring gloves yet. We will show dedicated MMA sparring gloves here once they have been reviewed and added to the finder. Boxing gloves will not be recommended for MMA sparring.</p>':
