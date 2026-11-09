@@ -1,8 +1,11 @@
 // Run with: node glove-finder/qa.js
 // Dependency-free regression checks for the published Glove Finder snapshot.
-const fs=require('node:fs');
-const vm=require('node:vm');
-const assert=require('node:assert/strict');
+import fs from 'node:fs';
+import vm from 'node:vm';
+import assert from 'node:assert/strict';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname=dirname(fileURLToPath(import.meta.url));
 const html=fs.readFileSync(__dirname+'/index.html','utf8');
 const scripts=html.split('<script>').slice(1).map(x=>x.split('</script>')[0]);
 assert.ok(html.includes('assets/branding-sprite.webp'),'Brand sprite stylesheet missing');
