@@ -2345,6 +2345,11 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       const preferred=new Set(['fairtex-bgv1','thaismai-bg121','primo-emblem-2']);
       if(preferred.has(g.id)) points += 27;
     }
+    // A firsthand-tested 16 oz all-around protective glove deserves priority
+    // for protection-focused sparring when the buyer has a premium budget.
+    if(a.budget==='b300plus' && (a.use==='Sparring'||a.use==='Both') &&
+       prefs.includes('Protection') && g.use==='Both' &&
+       g.testedWeight==='16 oz' && g.strength==='Protection')points+=20;
     // Fitness classes: affordable and dependable beats expensive and specialized.
     if (a.sport==='Fitness' && a.use==='Bag & Pads') {
       if (g.strength==='Value') points += 18;
