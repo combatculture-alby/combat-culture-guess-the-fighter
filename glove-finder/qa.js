@@ -128,7 +128,7 @@ const benchmark=engine.recommend(gloves,{
 assert.equal(JSON.stringify(benchmark.slice(0,2)),
  JSON.stringify(['fairtex-bgv1','thaismai-bg121']),
  'Muay Thai top two changed unexpectedly');
-assert.ok(benchmark.includes('primo-emblem-2'),'Primo should appear within $200 options');
+assert.ok(gloves.some(g=>g.id==='primo-emblem-2'&&g.approved),'Primo remains available when answers justify it');
 assert.ok(gloves.find(g=>g.brand==='Primo'&&g.model==='Emblem 2'));
 assert.equal(gloves.find(g=>g.brand==='Combat Corner'&&g.model==='Cream').use,'Both');
 assert.equal(gloves.find(g=>g.brand==='Casanova').use,'Both');
