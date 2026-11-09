@@ -2326,16 +2326,12 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
         if (g.strength==='Value' || g.strength==='Feedback') points += 4;
         if (g.strength==='Comfort') points += 3;
       } else if (a.use==='Both') {
-        if (g.strength==='Versatility') points += 5;
-        if (g.strength==='Comfort' || g.strength==='Protection') points += 3;
+        // With no expressed priorities, assess balanced training suitability:
+        // protection, comfort and versatility matter for all-around training.
+        if (['Versatility','Comfort','Protection'].includes(g.strength))points += 12;
+        if (['Versatility','Comfort','Protection'].includes(g.secondaryStrength))points += 7;
+        if (g.weakness==='Comfort'||g.weakness==='Protection')points -= 7;
       }
-    }
-    // Firsthand preference: for Muay Thai sparring, Fairtex BGV1, Thaismai
-    // BG121 and Primo Emblem 2 are preferred over generic sparring choices.
-    // Budget and intended-use filters still apply before ranking.
-    if(a.sport==='Muay Thai' && (a.use==='Sparring'||a.use==='Both')) {
-      const preferred=new Set(['fairtex-bgv1','thaismai-bg121','primo-emblem-2']);
-      if(preferred.has(g.id)) points += 27;
     }
     // A firsthand-tested 16 oz all-around protective glove deserves priority
     // for protection-focused sparring when the buyer has a premium budget.
@@ -2354,10 +2350,10 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     }
     if (g.weakness==='Build Quality') points -= 7;
     if (g.weakness==='Protection' && (a.use==='Sparring'||a.use==='Both')) points -= 12;
-    if (g.weakness==='Accessibility') points -= 5;
-    if (g.availability==='Limited') points -= 7;
-    else if (g.availability==='Regional') points -= 2;
-    else if (g.availability==='Widely Available') points += 2;
+    // Sourcing difficulty belongs in the buying caveats, not the performance
+    // score; expensive gloves should not be called less suitable just because
+    // they are difficult to purchase.
+    if (g.weakness==='Accessibility') points -= 2;
     if (g.weakness==='Price' && (a.budget==='under100'||a.budget==='b100to200')) points -= 4;
     if (g.editorialSignal==='Top pick') points += 5;
     if (g.editorialSignal==='Strong review') points += 2;
