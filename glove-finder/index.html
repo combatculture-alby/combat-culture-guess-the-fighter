@@ -2747,7 +2747,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
 (function(root){
   'use strict';
   const REVIEW_DIRECTORY='https://combatcultureusa.com/boxing-muay-thai-glove-reviews/';
-  const budgetCeilings={under100:100,b100to200:200,b200to300:300,b300plus:Infinity};
+  const budgetCeilings={under50:50,under100:100,b100to200:200,b200to300:300,b300plus:Infinity};
   const weights={
     Sparring:{Protection:4,'Build Quality':3,Comfort:2,'Wrist Support':1,Feedback:1,Versatility:1,Value:1,Compactness:1},
     'Bag & Pads':{Protection:1,'Build Quality':3,Comfort:2,'Wrist Support':1,Feedback:4,Versatility:1,Value:1,Compactness:1},
@@ -2776,7 +2776,13 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     return null;
   }
   function ready(gloves){return gloves.filter(g=>!incompleteReason(g));}
-  function budgetFits(g,budget){return budgetCeilings[budget]!==undefined&&g.onlinePriceUsd<=budgetCeilings[budget];}
+  function effectiveBudgetCap(a){
+    const chosen=budgetCeilings[a.budget];
+    if(chosen===undefined)return 0;
+    return Math.min(chosen,a.experience==='under1'?100:Infinity,
+      a.sport==='Fitness'&&a.use==='Bag & Pads'?200:Infinity);
+  }
+  function budgetFits(g,budget,experience){return g.onlinePriceUsd<=effectiveBudgetCap({budget,experience});}
   function useFits(g,purpose){
     const allowed=Array.isArray(g.suitableUses)&&g.suitableUses.length?g.suitableUses:
       g.use==='Both'?['Sparring','Bag & Pads']:[g.use];
@@ -2795,7 +2801,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     const muayThaiClinch=a.sport==='Muay Thai'&&(a.use==='Sparring'||a.use==='Both');
     if(muayThaiClinch)w['Clinch Mobility']=3;
     if(isMmaSparring(a))w['MMA Grappling Mobility']=2;
-    if(a.budget==='b300plus'&&a.sport!=='Fitness')w.Value=0;
+    if(a.budget==='b300plus'&&a.sport!=='Fitness'&&a.experience!=='under1')w.Value=0;
     for(const p of (a.priorities||[])){
       if(p==='Clinch Mobility'&&!muayThaiClinch)continue;
       if(Object.prototype.hasOwnProperty.call(w,p))w[p]+=4;
@@ -2829,8 +2835,9 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
   function recommend(gloves,a){
     const all=ready(gloves);
     const fitnessBag=a.sport==='Fitness'&&a.use==='Bag & Pads';
-    const cap=budgetCeilings[a.budget];
-    const fitnessCap=fitnessBag?Math.min(cap??Infinity,200):null;
+    const cap=effectiveBudgetCap(a);
+    const fitnessCap=fitnessBag?cap:null;
+    const beginnerCap=a.experience==='under1'?cap:null;
     const mmaSparring=isMmaSparring(a);
     const matching=all.filter(g=>{
       if(mmaSparring){
@@ -2869,17 +2876,17 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
         g.onlinePriceUsd<=best.onlinePriceUsd*0.8&&!families.has(family(g)));
       add(cheaper,'Lower-cost alternative');
     }
-    if(best&&chosen.length<4&&Number.isFinite(cap)&&!fitnessBag){
+    if(best&&chosen.length<4&&Number.isFinite(cap)&&!fitnessBag&&a.experience!=='under1'&&a.budget!=='under50'){
       const stretchMax=cap+Math.min(75,Math.max(25,cap*0.25));
       const stretch=rank(matching.filter(g=>g.onlinePriceUsd>cap&&g.onlinePriceUsd<=stretchMax));
       const candidate=stretch.find(g=>competitive(g)&&!families.has(family(g)));
       add(candidate,'Stretch alternative');
     }
-    return{count:inBudget.length,matches:chosen,readyCount:all.length,fitnessCap,
+    return{count:inBudget.length,matches:chosen,readyCount:all.length,fitnessCap,beginnerCap,effectiveCap:cap,
       pending:gloves.filter(g=>g.approved===true&&incompleteReason(g))
         .map(g=>({...g,pendingReason:incompleteReason(g)}))};
   }
-  const api={incompleteReason,ready,budgetFits,useFits,score,recommend,family,
+  const api={incompleteReason,ready,budgetFits,effectiveBudgetCap,useFits,score,recommend,family,
     rating,getWeights,maxPossible,mobilityRating,preferenceLabels,REVIEW_DIRECTORY};
   if(typeof module!=='undefined'&&module.exports)module.exports=api;
   if(root)root.CC_LOGIC=api;
