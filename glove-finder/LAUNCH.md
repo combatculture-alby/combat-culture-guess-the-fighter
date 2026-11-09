@@ -3,7 +3,7 @@
 ## Hosted quiz
 https://combatculture-alby.github.io/combat-culture-guess-the-fighter/glove-finder/
 
-The quiz is a standalone HTML page in this repository. It is not yet automatically synced to Google Sheets. Current data is a manually refreshed snapshot of 51 owner-approved and owner-rated gloves. It asks seven questions and can present up to four options: up to three competitive in-budget picks, with optional lower-cost or stretch alternatives when space and quality allow. An unlimited budget has no stretch pick.
+The quiz is a standalone HTML page in this repository. It is not yet automatically synced to Google Sheets. Current data is a manually refreshed snapshot of 51 owner-approved and owner-rated gloves. It asks up to eight questions (fewer for Fitness and MMA) and can present up to four options: up to three competitive in-budget picks, with optional lower-cost or stretch alternatives when space and quality allow. An unlimited budget has no stretch pick.
 
 ## WordPress / Kadence: quickest launch
 1. In WordPress, create a page titled **Boxing & Muay Thai Glove Finder**, suggested slug `glove-finder`.
@@ -51,7 +51,7 @@ The previous `Rate Gloves (1-3)`, `Sheet1`, `Gloves I own`, and community resear
 | Versatility | 1 | 1 | 3 | 1 |
 | Value | 1 | 1 | 1 | 4 |
 
-For $300+ / no limit, Value has no baseline weight unless specifically selected. Each selected rated priority adds 4 to that category's weight. MMA sparring uses purpose-built gloves and its own grappling-mobility rating; Muay Thai clinch scores are separate. Fitness/cardio bag work has a $200 ceiling even when a higher budget is selected. Boxing, Muay Thai and kickboxing have no brand/sport bonuses.
+For $300+ / no limit, Value has no baseline weight unless specifically selected (except for first-year trainees, where a $100 budget cap applies). Each selected rated priority adds 4 to that category's weight. MMA sparring uses purpose-built gloves and its own grappling-mobility rating; Muay Thai clinch scores are separate. Fitness/cardio bag work has a $200 ceiling even when a higher budget is selected. Boxing, Muay Thai and kickboxing have no brand/sport bonuses.
 
 Use, price, style, material and glove type are eligibility requirements; explicit style and material preferences are never overridden. Suitable Uses can authorize a model for both sparring and bag/pad work even when Best Use says Sparring; the field must be personally verified. A sparring glove rated 1 for Protection is ineligible for sparring. With an explicit fit preference: exact +3, reasonably compatible +1, incompatible -3. No editorial, brand or premium-budget bonuses.
 
@@ -67,6 +67,12 @@ Compactness, Muay Thai clinch, and MMA grappling use the same scale: **1 = Bad/R
 
 `Muay Thai Clinch Mobility` is offered only on the Muay Thai sparring/all-around priorities question. `Grappling Mobility` remains an MMA-specific choice. No sport-specific rules are applied to other combat sports.
 
+## Budget, training experience and feedback
+- **Up to $50** is now the lowest budget choice. It is strictly capped at $50 with no stretch option. There are currently four owner-approved gloves at or below $50. If no safe glove fits a user's exact style, material and training use, show no exact matches rather than invent one.
+- **Training experience** is asked after training purpose: Under 1 year, 1–3 years, 3–5 years, 5+ years. Under 1 year, every recommendation stays at $100 or below, even if the user chose a larger budget; their lower chosen limit still applies. First-year picks cannot be stretch alternatives. The policy is explicitly explained during the budget question and on the results page. Experience from one year upward does not change score or cap.
+- **Feedback** is available on the results screen, including when there are no matches. The user chooses a feedback category and writes a note. Clicking Open Email Draft uses a prefilled mailto link to the published Combat Culture address combatcultureusa@gmail.com. It includes the user's comment, selected quiz answers and recommendation names. This is not an anonymous or server-submitted feedback form, and nothing is delivered until the user sends their email.
+- The quiz is static GitHub Pages; no backend or personal-information collection is introduced. If feedback volume grows, a dedicated form service could replace the mailto step.
+
 ## Refreshing the live quiz
 The live quiz is **not automatically synced to Google Sheets**. Its index.html includes a snapshot of approved models with embedded ratings fields and, when verified, suitableUses. After editing **Gloves Master** (not the hidden backup tabs), synchronize the approved rows and 1–3 ratings into the website snapshot, preserving IDs and verified eligibility fields, then run node glove-finder/qa.js. Do not fill in unknown ratings, style, material, weight or use merely to create more recommendations. The quiz is published from the repository's main branch with GitHub Pages.
 
@@ -74,11 +80,11 @@ The live quiz is **not automatically synced to Google Sheets**. Its index.html i
 The owner reviewed 16 oz, Normal fit, Mexican style, Genuine Leather, Best Use: Sparring, Suitable Uses: Sparring and Bag & Pads. Cleto Reyes USA's exact Traditional Training Gloves listing was USD 269 on 2026-11-08: https://cletoreyesboxing.com/product/cleto-reyes-traditional-training-gloves/
 
 ## QA
-Run `node glove-finder/qa.js` after modifying the quiz. It checks approved ratings, UI syntax, all 28,800 answer permutations, budget limits, training safety, score neutrality, Cleto Reyes suitability, and completing the quiz twice with Start Over.
+Run `node glove-finder/qa.js` after modifying the quiz. It checks approved ratings, UI syntax, all 144,000 answer permutations, budget limits, training safety, score neutrality, Cleto Reyes suitability, and completing the quiz twice with Start Over.
 
 ## Launch checklist
 - Open the GitHub Pages link on iPhone and desktop.
-- Complete all seven questions and verify results render, then press Start Over and complete all seven again.
+- Complete all eight questions (six for Fitness) and verify results render, then press Start Over and complete all seven again.
 - Check a cardio-boxing scenario, a sparring scenario, and a high-budget bag-work scenario.
 - Verify the WordPress page's button or iframe.
 - Check the published page's mobile appearance.
