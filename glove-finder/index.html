@@ -3102,13 +3102,22 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     const result=engine.recommend(gloves,request);stage.textContent='YOUR RESULTS';progress.style.width='100%';
     const prefs=answers.priorities.filter(x=>x!=='none').map(x=>x==='Feedback'?'Punch feedback':x);
     const summary=[answers.sport,answers.sport==='Fitness'?'Cardio / Bag Training':answers.use==='Both'?'All-Around':answers.use,
-      labelFor(Q[2],answers.budget),prefs.join(' + ')||'No Priority',labelFor(Q[4],answers.fit),
-      ...((answers.sport==='MMA'||answers.sport==='Fitness')?[]:[labelFor(Q[5],answers.style)]),labelFor(Q[6],answers.material)].join(' · ');
+      labelFor(question('experience'),answers.experience),labelFor(question('budget'),answers.budget),
+      prefs.join(' + ')||'No Priority',labelFor(question('fit'),answers.fit),
+      ...((answers.sport==='MMA'||answers.sport==='Fitness')?[]:[labelFor(question('style'),answers.style)]),
+      labelFor(question('material'),answers.material)].join(' · ');
     const cautions=[
       'Retail prices were last checked for the database on or before November 8, 2026. Entries marked Estimated price use Combat Culture reference MSRP because a current exact-model price could not be verified. Verify current price, stock and shipping before buying.',
       '“Fit” and strengths reflect one reviewer’s experience, not a universal guarantee. Other glove weights can fit or feel different.',
       'For sparring, confirm the intended weight, padding, and gym rules. A 16 oz label alone does not establish sparring safety. Verify current retailer stock independently.'
     ];
+    if(answers.experience==='under1')cautions.unshift(
+      'Since you are in your first year, recommendations stay at $'+result.effectiveCap+
+      ' or less. Our starter guideline is to spend no more than $100, even if you select a higher budget. This does not imply expensive gloves are unsuitable.'
+    );
+    if(answers.budget==='under50'&&!result.matches.length)cautions.unshift(
+      'No approved gloves meet every requirement at $50 or less. Consider a $100 budget or relaxing a preference. We will not substitute unsuitable gloves.'
+    );
     if(answers.sport==='Fitness')cautions.push('These recommendations are for fitness classes, cardio boxing, and bag/pad training, not partner sparring.');
     if(answers.sport==='MMA' && !mmaSparring)cautions.push('For striking on bags and pads, boxing-style training gloves are suitable. MMA sparring requires purpose-built MMA sparring gloves.');
     if(result.fitnessCap!==null)cautions.unshift(
