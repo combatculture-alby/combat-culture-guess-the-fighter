@@ -298,7 +298,7 @@ assert.ok(!lowCost.matches.some(g=>g.kind==='Stretch alternative'),'$50 results 
   const elements=new Map();
   function get(id) {
     if(!elements.has(id))elements.set(id,{
-      id,_html:'',textContent:'',style:{},listeners:{},
+      id,_html:'',textContent:'',style:{},listeners:{},hidden:id==='feedback-form','aria-expanded':'false',
       set innerHTML(value){this._html=value;this._buttons=null},
       get innerHTML(){return this._html},
       remove(){},
@@ -433,5 +433,5 @@ for(const budget of Object.keys(ceilings)){
     g.onlinePriceUsd<=Math.min(200,ceilings[budget])),'Fitness returned unsuitable or expensive glove');
   assert.ok(!result.matches.some(g=>g.kind==='Stretch pick'),'Fitness should not stretch budget');
 }
-assert.equal(combinations,180000,'Unexpected combination count');
-console.log('PASS:',gloves.length,'approved gloves,',combinations,'quiz combinations, UI syntax and Start Over twice');
+assert.equal(combinations,144000,'Unexpected combination count');
+console.log('PASS:',gloves.length,'approved gloves,',combinations,'quiz combinations, beginner $100 cap, feedback, UI and Start Over twice');
