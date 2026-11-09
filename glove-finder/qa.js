@@ -10,12 +10,12 @@ const start=scripts[0].indexOf('const CC_GLOVES = ')+'const CC_GLOVES = '.length
 const end=scripts[0].indexOf(';\nif (typeof window',start);
 assert.ok(start>20&&end>start,'Could not read approved data');
 const gloves=JSON.parse(scripts[0].slice(start,end));
-assert.equal(gloves.length,46,'Unexpected number of approved gloves');
+assert.equal(gloves.length,49,'Unexpected number of approved gloves');
 const module={exports:{}};
 vm.runInNewContext(scripts[1],{module,window:{}});
 new vm.Script(scripts[2]); // UI syntax check
 const engine=module.exports;
-assert.equal(gloves.filter(g=>Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0).length,46,'Unexpected priced glove count');
+assert.equal(gloves.filter(g=>Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0).length,49,'Unexpected priced glove count');
 assert.equal(gloves.find(g=>g.id==='fairtex-bgv1').onlinePriceUsd,139,'Fairtex should use online, not reviewer price');
 let combinations=0;
 const ceilings={under100:100,b100to200:200,b200to300:300,b300plus:Infinity};
@@ -50,18 +50,21 @@ const mmaBase={sport:'MMA',budget:'b100to200',fit:'Any',priorities:['none'],styl
 const mmaBag=engine.recommend(gloves,{...mmaBase,use:'Bag & Pads'});
 assert.ok(mmaBag.matches.length>0,'MMA bag work should retain boxing glove options');
 assert.ok(mmaBag.matches.every(g=>!g.gloveType||g.gloveType==='Boxing'),'MMA bag work returned an MMA sparring glove');
+const mmaModels=new Set(['onx-freedom-250-mma-sparring','isami-pounding-gloves','fairtex-fgv18-mma-sparring']);
+assert.equal(gloves.filter(g=>g.gloveType==='MMA Sparring').length,3,'Expected three MMA sparring models');
 for(const use of ['Sparring','Both']){
-  const result=engine.recommend(gloves,{...mmaBase,use});
-  assert.equal(result.matches.length,0,'No MMA sparring gloves are approved yet');
+  for(const budget of Object.keys(ceilings)){
+    const result=engine.recommend(gloves,{...mmaBase,use,budget});
+    assert.ok(result.matches.length>0,'Missing MMA sparring options for '+use+' '+budget);
+    assert.ok(result.matches.every(g=>g.gloveType==='MMA Sparring'&&mmaModels.has(g.id)),'Boxing glove leaked into MMA '+use);
+    assert.ok(result.matches.every(g=>g.use==='Sparring'||g.use==='Both'),'Unsafe MMA glove use');
+    assert.ok(result.matches.some(g=>g.id==='fairtex-fgv18-mma-sparring'),'Affordable Fairtex MMA sparring glove missing');
+  }
 }
-const prototype=gloves.find(g=>g.use==='Sparring' && g.onlinePriceUsd<=200);
-assert.ok(prototype,'Expected a sparring fixture');
-const futureMma={...prototype,id:'future-mma-sparring',brand:'Future MMA',model:'Sparring Test Fixture',gloveType:'MMA Sparring',use:'Sparring'};
-for(const use of ['Sparring','Both']){
-  const result=engine.recommend([...gloves,futureMma],{...mmaBase,use});
-  assert.ok(result.matches.some(g=>g.id==='future-mma-sparring'),'Dedicated MMA sparring glove missing in '+use);
-  assert.ok(result.matches.every(g=>g.gloveType==='MMA Sparring'),'Boxing glove leaked into MMA '+use);
-}
+assert.ok(mmaBag.matches.every(g=>g.gloveType==='Boxing'),'MMA bag route must use ordinary striking gloves only');
+assert.equal(gloves.find(g=>g.id==='onx-freedom-250-mma-sparring').onlinePriceUsd,249);
+assert.equal(gloves.find(g=>g.id==='isami-pounding-gloves').onlinePriceUsd,139.95);
+assert.equal(gloves.find(g=>g.id==='fairtex-fgv18-mma-sparring').onlinePriceUsd,99);
 const benchmark=engine.recommend(gloves,{
   sport:'Muay Thai',use:'Sparring',budget:'b100to200',fit:'Any',
   priorities:['none'],style:'Any',material:'Any'
