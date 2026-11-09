@@ -45,6 +45,23 @@ for(const material of ['Any','Genuine Leather','Synthetic']){
   }
   combinations++;
 }
+// MMA branch: bag work can use boxing gloves, but sparring must not.
+const mmaBase={sport:'MMA',budget:'b100to200',fit:'Any',priorities:['none'],style:'Any',material:'Any'};
+const mmaBag=engine.recommend(gloves,{...mmaBase,use:'Bag & Pads'});
+assert.ok(mmaBag.matches.length>0,'MMA bag work should retain boxing glove options');
+assert.ok(mmaBag.matches.every(g=>!g.gloveType||g.gloveType==='Boxing'),'MMA bag work returned an MMA sparring glove');
+for(const use of ['Sparring','Both']){
+  const result=engine.recommend(gloves,{...mmaBase,use});
+  assert.equal(result.matches.length,0,'No MMA sparring gloves are approved yet');
+}
+const prototype=gloves.find(g=>g.use==='Sparring' && g.onlinePriceUsd<=200);
+assert.ok(prototype,'Expected a sparring fixture');
+const futureMma={...prototype,id:'future-mma-sparring',brand:'Future MMA',model:'Sparring Test Fixture',gloveType:'MMA Sparring',use:'Sparring'};
+for(const use of ['Sparring','Both']){
+  const result=engine.recommend([...gloves,futureMma],{...mmaBase,use});
+  assert.ok(result.matches.some(g=>g.id==='future-mma-sparring'),'Dedicated MMA sparring glove missing in '+use);
+  assert.ok(result.matches.every(g=>g.gloveType==='MMA Sparring'),'Boxing glove leaked into MMA '+use);
+}
 const benchmark=engine.recommend(gloves,{
   sport:'Muay Thai',use:'Sparring',budget:'b100to200',fit:'Any',
   priorities:['none'],style:'Any',material:'Any'
