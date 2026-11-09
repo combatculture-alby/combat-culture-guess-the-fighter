@@ -117,5 +117,22 @@
     "Expert (All Sports)::Easy": "MMA::Mirko Cro Cop",
     "Expert (All Sports)::Medium": "MMA::Miesha Tate",
     "Expert (All Sports)::Hard": "Muay Thai::Samransak Muangsurin"
+  },
+  "2026-11-11": {
+    "Muay Thai::Easy": "Muay Thai::Dieselnoi Chor Thanasukarn",
+    "Muay Thai::Medium": "Muay Thai::Kaensak Sor Ploenjit",
+    "Muay Thai::Hard": "Muay Thai::Cherry Sor Wanich",
+    "Boxing::Easy": "Boxing::George Foreman",
+    "Boxing::Medium": "Boxing::Shakur Stevenson",
+    "Boxing::Hard": "Boxing::Nigel Benn",
+    "Kickboxing::Easy": "Kickboxing::Mirko Cro Cop",
+    "Kickboxing::Medium": "Kickboxing::Anissa Meksen",
+    "Kickboxing::Hard": "Kickboxing::Maurice Smith",
+    "MMA::Easy": "MMA::Daniel Cormier",
+    "MMA::Medium": "MMA::Nick Diaz",
+    "MMA::Hard": "MMA::Mark Kerr",
+    "Expert (All Sports)::Easy": "Boxing::Oleksandr Usyk",
+    "Expert (All Sports)::Medium": "MMA::Ken Shamrock",
+    "Expert (All Sports)::Hard": "Kickboxing::Maurice Smith"
   }
 }
