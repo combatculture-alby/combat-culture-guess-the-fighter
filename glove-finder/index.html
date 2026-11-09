@@ -2369,31 +2369,58 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     const cap=budgetCeilings[a.budget];
     const fitnessCap=fitnessBag?Math.min(cap??Infinity,200):null;
     const mmaSparring=a.sport==='MMA' && (a.use==='Sparring'||a.use==='Both');
-    // Approval, training suitability, stated budget, material and style
-    // are requirements. Do not substitute what the customer did not request.
-    const eligible=all.filter(g=>{
+    // Non-negotiable: approved, correct sparring use/type, exact requested
+    // style and material. Budget exceptions are labeled separately, never
+    // substituted into the main matches.
+    const matching=all.filter(g=>{
       if(mmaSparring){
         if(g.gloveType!=='MMA Sparring'||(g.use!=='Sparring'&&g.use!=='Both'))return false;
       }else if(!useFits(g,a.use)||(g.gloveType&&g.gloveType!=='Boxing'))return false;
-      if(g.onlinePriceUsd>cap||(fitnessBag&&g.onlinePriceUsd>fitnessCap))return false;
       if(a.style&&a.style!=='Any'&&g.style!==a.style)return false;
       if(a.material&&a.material!=='Any'&&g.material!==a.material)return false;
       return true;
     });
-    const ranked=eligible.map(g=>({...g,matchScore:score(g,a)}))
-      .sort((x,y)=>y.matchScore-x.matchScore||x.onlinePriceUsd-y.onlinePriceUsd||x.brand.localeCompare(y.brand)||x.model.localeCompare(y.model));
+    const rank=items=>items.map(g=>({...g,matchScore:score(g,a)}))
+      .sort((x,y)=>y.matchScore-x.matchScore||x.onlinePriceUsd-y.onlinePriceUsd||
+        x.brand.localeCompare(y.brand)||x.model.localeCompare(y.model));
+    const inBudget=rank(matching.filter(g=>g.onlinePriceUsd<=cap &&
+      (!fitnessBag||g.onlinePriceUsd<=fitnessCap)));
     const chosen=[],families=new Set();
-    const topScore=ranked[0]?.matchScore;
-    for(const g of ranked){
-      if(chosen.length>=4)break;
-      // Recommend strong near-equals, rather than manufacturing a four-card mix.
-      if(g.matchScore<topScore-14)break;
-      if(families.has(family(g)))continue;
-      chosen.push({...g,kind:chosen.length===0?'Best match':'Strong match'});
+    function add(g,kind){
+      if(!g||families.has(family(g)))return false;
+      chosen.push({...g,kind});
       families.add(family(g));
+      return true;
     }
-    return {count:eligible.length,matches:chosen,readyCount:all.length,fitnessCap,
-      pending:gloves.filter(g=>g.approved===true&&incompleteReason(g)).map(g=>({...g,pendingReason:incompleteReason(g)}))};
+    const best=inBudget[0];
+    const threshold=best?best.matchScore-14:-Infinity;
+    // Main recommendations come first, with no arbitrary brand diversity.
+    // A small list is fine when only one glove fits particularly well.
+    for(const g of inBudget){
+      if(chosen.length>=2||g.matchScore<threshold)break;
+      add(g,chosen.length===0?'Best match':'Strong match');
+    }
+    // A meaningfully cheaper but still competitive option is optional.
+    // With no firm upper bound, compare against the main pick's price.
+    if(best && chosen.length<4){
+      const referencePrice=best.onlinePriceUsd;
+      const cheaper=inBudget.find(g=>g.matchScore>=threshold &&
+        g.onlinePriceUsd<=referencePrice*0.8 && !families.has(family(g)));
+      add(cheaper,'Lower-cost alternative');
+    }
+    // A modest stretch is allowed only when an in-budget match already exists,
+    // never for fitness/cardio, and never at the cost of style/material/safety.
+    if(best && chosen.length<4 && Number.isFinite(cap) && !fitnessBag){
+      const stretchMax=cap+Math.min(75,Math.max(25,cap*0.25));
+      const stretch=rank(matching.filter(g=>g.onlinePriceUsd>cap &&
+        g.onlinePriceUsd<=stretchMax));
+      const alternative=stretch.find(g=>g.matchScore>=threshold &&
+        !families.has(family(g)));
+      add(alternative,'Stretch alternative');
+    }
+    return {count:inBudget.length,matches:chosen,readyCount:all.length,fitnessCap,
+      pending:gloves.filter(g=>g.approved===true&&incompleteReason(g))
+        .map(g=>({...g,pendingReason:incompleteReason(g)}))};
   }
   const api={incompleteReason,ready,budgetFits,useFits,score,recommend,family,preferenceLabels,REVIEW_DIRECTORY};
   if (typeof module!=='undefined' && module.exports) module.exports=api;
@@ -2613,8 +2640,8 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     }
     if(mmaSparring && result.readyCount && !result.matches.length)
       cautions.unshift('MMA sparring gloves must be explicitly classified as MMA Sparring in the Combat Culture database. We will not substitute boxing gloves.');
-    if(result.matches.some(g=>g.kind==='Stretch pick'))cautions.unshift(
-      'The stretch pick intentionally exceeds your selected budget. It is optional and should never replace a suitable in-budget glove.'
+    if(result.matches.some(g=>g.kind==='Stretch alternative'))cautions.unshift(
+      'The stretch alternative is optional and exceeds your budget slightly. All other preferences, including style, material and sparring suitability, still match.'
     );
     const countText=`${result.count} ${result.count===1?'approved glove matches':'approved gloves match'} your stated requirements`;
     content.innerHTML=`<div class="results-header"><div class="result-headline-row"><div><p class="kicker">COMBAT CULTURE PICKS</p><h2>${result.matches.length?'Your Glove Shortlist.':'No Exact Matches Yet.'}</h2></div><span class="brand-figure brand-results" aria-hidden="true"></span></div>
