@@ -43,6 +43,14 @@
 #feedback-status{min-height:1.4em;font-size:13px;color:var(--accent);margin:0}
 @media(max-width:640px){.feedback-panel{padding:18px}.feedback-toggle,.feedback-send{width:100%;max-width:none}}
 .price-disclaimer{margin:12px 0 0;color:#c6cbca;font-size:12px;line-height:1.5}
+
+/* Embedded on combatcultureusa.com: let WordPress own the title and introduction. */
+body.cc-embed{background:#101214;min-height:0}
+body.cc-embed .shell{width:100%;max-width:none;padding:0;margin:0}
+body.cc-embed .eyebrow,body.cc-embed .heading,body.cc-embed .footnote{display:none}
+body.cc-embed .panel{min-height:0;box-shadow:none;padding:28px 30px;border-radius:14px}
+body.cc-embed .progress{margin:16px 0 22px}
+@media(max-width:640px){body.cc-embed .panel{padding:21px 17px;border-radius:12px}}
 </style>
 </head>
 <body>
@@ -2910,6 +2918,21 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
   <script>
 (() => {
   'use strict';
+  // Clean inline-embed mode for the Combat Culture WordPress page.
+  const embedded=/(?:^|[?&])embed=1(?:&|$)/.test(window.location?.search||'');
+  if(embedded){
+    document.body.classList.add('cc-embed');
+    const shell=document.querySelector('.shell');
+    const sendHeight=()=>{
+      if(!shell||!window.parent||window.parent===window)return;
+      const height=Math.ceil(shell.getBoundingClientRect().height)+8;
+      if(height>=300&&height<=10000)
+        window.parent.postMessage({type:'cc-glove-finder-resize',height},'*');
+    };
+    if(window.ResizeObserver&&shell)new window.ResizeObserver(sendHeight).observe(shell);
+    if(window.addEventListener)window.addEventListener('load',sendHeight);
+    if(window.requestAnimationFrame)window.requestAnimationFrame(sendHeight);
+  }
   document.getElementById('preview-warning')?.remove();
   const gloves=window.CC_GLOVES||[];
   const engine=window.CC_LOGIC;
