@@ -123,4 +123,61 @@ assert.equal(gloves.find(g=>g.brand==='Casanova').use,'Both');
   finish();
 }
 
+// Fitness pathway: skip sport-use and glove-style questions, respect cap, and reset.
+{
+  const win={CC_GLOVES:gloves};
+  vm.runInNewContext(scripts[1],{window:win});
+  const elements=new Map();
+  function get(id){
+    if(!elements.has(id))elements.set(id,{
+      id,textContent:'',style:{},listeners:{},
+      set innerHTML(v){this._html=v;this._buttons=null;},
+      get innerHTML(){return this._html||'';},
+      remove(){},setAttribute(k,v){this[k]=v;},
+      addEventListener(k,fn){this.listeners[k]=fn;},
+      click(){assert.ok(this.listeners.click,'No click handler for '+id);this.listeners.click();},
+      querySelectorAll(selector){
+        assert.equal(selector,'[data-answer]');
+        if(!this._buttons)this._buttons=[...this.innerHTML.matchAll(/data-answer="([^"]+)"/g)]
+          .map(m=>({dataset:{answer:m[1]},addEventListener(k,fn){this.click=fn;}}));
+        return this._buttons;
+      }
+    });
+    return elements.get(id);
+  }
+  vm.runInNewContext(scripts[2],{window:win,document:{getElementById:get}});
+  function select(value){
+    const b=get('quiz-content').querySelectorAll('[data-answer]').find(b=>b.dataset.answer===value);
+    assert.ok(b,'Missing choice '+value);
+    b.click();get('continue').click();
+  }
+  select('Fitness');
+  assert.equal(get('stage-label').textContent,'QUESTION 2 OF 5','Fitness should skip use and style');
+  assert.ok(get('quiz-content').innerHTML.includes('How Much Would You Spend?'));
+  select('b300plus');
+  select('none');
+  select('Any');
+  assert.ok(get('quiz-content').innerHTML.includes('Do You Prefer Leather or Synthetic?'));
+  select('Any');
+  const result=get('quiz-content').innerHTML;
+  assert.ok(result.includes('Your Glove Shortlist.'),'Fitness route did not finish');
+  assert.ok(result.includes('Cardio / Bag Training'),'Fitness summary missing');
+  assert.ok(!result.includes('undefined'),'Fitness result has undefined answers');
+  assert.ok(result.includes('fitness classes, cardio boxing'),'Fitness safety note missing');
+  assert.ok(!result.includes('Japanese-Style'),'Fitness summary incorrectly includes style');
+  get('again').click();
+  assert.equal(get('stage-label').textContent,'QUESTION 1 OF 7','Reset should show generic route');
+  select('Boxing');
+  assert.equal(get('stage-label').textContent,'QUESTION 2 OF 7','Boxing should show full route');
+  assert.ok(get('quiz-content').innerHTML.includes('What Are These Gloves For?'));
+}
+
+const fitnessScenarios={sport:'Fitness',use:'Bag & Pads',fit:'Any',style:'Any',material:'Any',priorities:['none']};
+for(const budget of Object.keys(ceilings)){
+  const result=engine.recommend(gloves,{...fitnessScenarios,budget});
+  assert.ok(result.matches.length>0,'No suitable cardio gloves for '+budget);
+  assert.ok(result.matches.every(g=>(g.use==='Bag & Pads'||g.use==='Both') &&
+    g.onlinePriceUsd<=Math.min(200,ceilings[budget])),'Fitness returned unsuitable or expensive glove');
+  assert.ok(!result.matches.some(g=>g.kind==='Stretch pick'),'Fitness should not stretch budget');
+}
 console.log('PASS:',gloves.length,'approved gloves,',combinations,'quiz combinations, UI syntax and Start Over twice');
