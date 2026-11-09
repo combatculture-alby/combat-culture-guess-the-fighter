@@ -2306,15 +2306,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       if(prefs.includes('Grappling Mobility')) points += ({Excellent:45,Good:22,Average:0,Restricted:-35})[g.clinchMobility]||0;
       if(prefs.includes('Striking') && g.strength==='Striking')points+=24;
     }
-    // Optional style and material preferences are soft bonuses: unknown is neutral.
-    if(a.style && a.style!=='Any' && g.style && g.style!=='Unverified'){
-      points += (g.style===a.style ? 16 : -5);
-    }
-    if(a.material && a.material!=='Any' && g.material && g.material!=='Unverified'){
-      if(g.material===a.material) points += 16;
-      else if(g.material==='Mixed Materials') points += 2;
-      else points -= 5;
-    }
+    // Style and material are filtered as requirements, not scored as bonuses.
     if(prefs.includes('Breathability')){
       if(g.breathability==='High')points+=27;
       else if(g.breathability==='Low')points-=15;
@@ -2376,67 +2368,31 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     const fitnessBag=a.sport==='Fitness' && a.use==='Bag & Pads';
     const cap=budgetCeilings[a.budget];
     const fitnessCap=fitnessBag?Math.min(cap??Infinity,200):null;
-    // MMA sparring (or mixed MMA training that includes sparring) requires a
-    // dedicated, reviewed MMA sparring glove. Boxing gloves are never substitutes.
-    // A future sheet row must explicitly supply gloveType: 'MMA Sparring'.
     const mmaSparring=a.sport==='MMA' && (a.use==='Sparring'||a.use==='Both');
-    const eligible=all.filter(g=>
-      (mmaSparring ? (g.gloveType==='MMA Sparring' && (g.use==='Sparring'||g.use==='Both')) :
-        (useFits(g,a.use) && (!g.gloveType||g.gloveType==='Boxing'))));
+    // Approval, training suitability, stated budget, material and style
+    // are requirements. Do not substitute what the customer did not request.
+    const eligible=all.filter(g=>{
+      if(mmaSparring){
+        if(g.gloveType!=='MMA Sparring'||(g.use!=='Sparring'&&g.use!=='Both'))return false;
+      }else if(!useFits(g,a.use)||(g.gloveType&&g.gloveType!=='Boxing'))return false;
+      if(g.onlinePriceUsd>cap||(fitnessBag&&g.onlinePriceUsd>fitnessCap))return false;
+      if(a.style&&a.style!=='Any'&&g.style!==a.style)return false;
+      if(a.material&&a.material!=='Any'&&g.material!==a.material)return false;
+      return true;
+    });
     const ranked=eligible.map(g=>({...g,matchScore:score(g,a)}))
       .sort((x,y)=>y.matchScore-x.matchScore||x.onlinePriceUsd-y.onlinePriceUsd||x.brand.localeCompare(y.brand)||x.model.localeCompare(y.model));
-    // With an unlimited budget, favor serious premium options rather than
-    // automatically presenting a budget/value pair. Value remains a valid
-    // priority when explicitly requested.
-    const allInBudget=ranked.filter(g=>g.onlinePriceUsd<=cap && (!fitnessBag||g.onlinePriceUsd<=fitnessCap));
-    const premiumMode=a.budget==='b300plus' && a.sport!=='Fitness' &&
-      !mmaSparring && !(a.priorities||[]).includes('Value');
-    const premiumCandidates=allInBudget.filter(g=>g.onlinePriceUsd>=200);
-    const inBudget=premiumMode && premiumCandidates.length>=2 ? premiumCandidates : allInBudget;
-    const chosen=[],families=new Set(),brands=new Set();
-    function canAdd(g){return g && !families.has(family(g));}
-    function add(g,kind) {
-      if(!canAdd(g))return false;
-      chosen.push({...g,kind});families.add(family(g));brands.add(g.brand.toLowerCase());return true;
-    }
-    function preferDifferentBrand(candidates){
-      return candidates.find(g=>canAdd(g)&&!brands.has(g.brand.toLowerCase()))
-        ||candidates.find(canAdd);
-    }
-    // Two primary choices at or below the user's ceiling.
-    add(inBudget[0],'Best match');
-    add(preferDifferentBrand(inBudget),'Second pick');
-    // An additional option priced below the selected budget, ideally close to 80%.
-    // "Under budget" is relative to the stated ceiling, not the two top choices.
-    if(chosen.length>=2 && Number.isFinite(cap)){
-      const target=Math.min(cap,fitnessCap??cap)*0.8;
-      const under=inBudget.filter(g=>canAdd(g)&&g.onlinePriceUsd<=cap)
-        .map(g=>({...g,underUtility:g.matchScore-0.16*Math.abs(g.onlinePriceUsd-target)}))
-        .sort((x,y)=>y.underUtility-x.underUtility||x.onlinePriceUsd-y.onlinePriceUsd);
-      add(preferDifferentBrand(under),'Under-budget pick');
-    } else if(chosen.length>=2 && !premiumMode){
-      const baseline=Math.min(...chosen.map(g=>g.onlinePriceUsd));
-      const lower=inBudget.filter(g=>canAdd(g)&&g.onlinePriceUsd<baseline)
-        .sort((x,y)=>y.matchScore-x.matchScore||x.onlinePriceUsd-y.onlinePriceUsd);
-      add(preferDifferentBrand(lower),'Lower-cost option');
-    }
-    // Stretch up only moderately; never cross the $200 fitness limit.
-    // Unlimited budget has no meaningful "over budget" choice.
-    if(Number.isFinite(cap)&&!fitnessBag){
-      const stretchMax=cap+Math.min(75,Math.max(25,cap*0.25));
-      const stretch=ranked.filter(g=>g.onlinePriceUsd>cap&&g.onlinePriceUsd<=stretchMax&&canAdd(g))
-        .sort((x,y)=>y.matchScore-x.matchScore||x.onlinePriceUsd-y.onlinePriceUsd);
-      add(preferDifferentBrand(stretch),'Stretch pick');
-    }
-    // Where a budget has no comparable stretch or cheaper choice,
-    // don't fabricate one. Fill from suitable in-budget options only.
-    for(const g of inBudget){
+    const chosen=[],families=new Set();
+    const topScore=ranked[0]?.matchScore;
+    for(const g of ranked){
       if(chosen.length>=4)break;
-      add(g,'Another suitable option');
+      // Recommend strong near-equals, rather than manufacturing a four-card mix.
+      if(g.matchScore<topScore-14)break;
+      if(families.has(family(g)))continue;
+      chosen.push({...g,kind:chosen.length===0?'Best match':'Strong match'});
+      families.add(family(g));
     }
-    const displayOrder={'Best match':0,'Second pick':1,'Stretch pick':2,'Under-budget pick':3,'Lower-cost option':3,'Another suitable option':4};
-    chosen.sort((x,y)=>displayOrder[x.kind]-displayOrder[y.kind]);
-    return {count:inBudget.length,matches:chosen.slice(0,4),readyCount:all.length,fitnessCap,
+    return {count:eligible.length,matches:chosen,readyCount:all.length,fitnessCap,
       pending:gloves.filter(g=>g.approved===true&&incompleteReason(g)).map(g=>({...g,pendingReason:incompleteReason(g)}))};
   }
   const api={incompleteReason,ready,budgetFits,useFits,score,recommend,family,preferenceLabels,REVIEW_DIRECTORY};
@@ -2452,20 +2408,20 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
   const gloves=window.CC_GLOVES||[];
   const engine=window.CC_LOGIC;
   const Q=[
-    {key:'sport',title:'What Do You Train?',hint:'This helps us tailor the advice, but it will not block otherwise suitable gloves.',options:[
+    {key:'sport',title:'What Do You Train?',hint:'Training type helps rank gloves suited to your discipline.',options:[
       ['Boxing','Boxing'],['Muay Thai','Muay Thai'],['Kickboxing','Kickboxing'],['MMA','MMA'],['Fitness','Fitness / Cardio Training']]},
     {key:'use',title:'What Are These Gloves For?',hint:'Training purpose is the most important filter. Dedicated bag gloves never appear as sparring recommendations.',options:[
       ['Sparring','Sparring'],['Bag & Pads','Heavy Bag & Pads'],['Both','Both / All-Around']]},
-    {key:'budget',title:'How Much Would You Spend?',hint:'Choose a maximum budget in USD. We use checked retailer prices, not personal reference prices.',options:[
+    {key:'budget',title:'How Much Would You Spend?',hint:'Your maximum budget is a firm limit. We never recommend a glove above it.',options:[
       ['under100','Up to $100'],['b100to200','Up to $200'],['b200to300','Up to $300'],['b300plus','$300+ / No Limit']]},
     {key:'priorities',title:'What Matters Most to You?',hint:'Choose one or two. Your answer directly affects the ranking using firsthand glove notes.',multiple:true,options:[
       ['Protection','Hand Protection'],['Comfort','Comfort'],['Wrist Support','Wrist Support'],['Feedback','Punch Feedback / Feel'],
       ['Value','Value for Money'],['Versatility','Versatility'],['Breathability','Breathability / Airflow'],['Compactness','Compact / Easy to Pack'],['none','No Strong Preference']]},
     {key:'fit',title:'What Fit Do You Prefer?',hint:'Fit is subjective. These descriptions reflect the reviewer’s experience and may differ for your hands.',options:[
       ['Snug','Snug'],['Normal','Standard'],['Roomy','Roomy'],['Any','No Preference']]},
-    {key:'style',title:'Do You Prefer a Glove Style?',hint:'Styles describe traditional construction influences, not manufacturing country. Unverified styles are never assumed.',options:[
+    {key:'style',title:'Do You Prefer a Glove Style?',hint:'Your style choice is a requirement. Only verified matches will appear.',options:[
       ['Japanese','Japanese-Style'],['Mexican','Mexican-Style'],['Thai','Thai-Style'],['Western/Other','Other / Western-Style'],['Any','No Preference']]},
-    {key:'material',title:'Do You Prefer Leather or Synthetic?',hint:'Material is a preference, not a measure of quality. We only use verified glove material classifications.',options:[
+    {key:'material',title:'Do You Prefer Leather or Synthetic?',hint:'Your material choice is a requirement. Gloves with unknown materials are excluded.',options:[
       ['Genuine Leather','Genuine Leather'],['Synthetic','Synthetic'],['Any','No Preference']]}
   ];
   const answers={sport:null,use:null,budget:null,priorities:[],fit:null,style:null,material:null};
@@ -2660,14 +2616,11 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     if(result.matches.some(g=>g.kind==='Stretch pick'))cautions.unshift(
       'The stretch pick intentionally exceeds your selected budget. It is optional and should never replace a suitable in-budget glove.'
     );
-    const countText=mmaSparring && !result.matches.length
-      ?'Dedicated MMA sparring glove recommendations are not available yet'
-      :`${result.count} ${result.count===1?'glove meets':'gloves meet'} your budget and training-use requirements`;
-    content.innerHTML=`<div class="results-header"><div class="result-headline-row"><div><p class="kicker">COMBAT CULTURE PICKS</p><h2>${result.matches.length?'Your Glove Shortlist.':mmaSparring?'MMA Sparring Picks Coming Soon.':'No Suitable Matches Yet.'}</h2></div><span class="brand-figure brand-results" aria-hidden="true"></span></div>
+    const countText=`${result.count} ${result.count===1?'approved glove matches':'approved gloves match'} your stated requirements`;
+    content.innerHTML=`<div class="results-header"><div class="result-headline-row"><div><p class="kicker">COMBAT CULTURE PICKS</p><h2>${result.matches.length?'Your Glove Shortlist.':'No Exact Matches Yet.'}</h2></div><span class="brand-figure brand-results" aria-hidden="true"></span></div>
       <span class="result-count">${esc(countText)}</span><p class="summary">${esc(summary)}</p></div>
       ${result.matches.length?`<div class="results-grid">${result.matches.map(makeCard).join('')}</div>`:
-        mmaSparring?'<p class="empty">We have not added approved MMA sparring gloves yet. We will show dedicated MMA sparring gloves here once they have been reviewed and added to the finder. Boxing gloves will not be recommended for MMA sparring.</p>':
-        '<p class="empty">We did not find an approved glove in your price range for that training purpose. Try a higher budget or a different use. We will not suggest bag-only gloves for sparring.</p>'}
+        '<p class="empty">No approved gloves meet this combination of training use, budget, style and material. Try changing a preference; we will not silently substitute a different style, material, or sparring glove.</p>'}
       <div class="limitations"><h3>Before You Buy</h3><ul>${cautions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
       <p class="data-note">Recommendations use ${result.readyCount} approved gloves. When online pricing is unavailable, a clearly labeled Combat Culture MSRP estimate is used. No external community ratings or affiliate payments affect the order.</p></div>`;
     controls.innerHTML=`<button class="btn btn-secondary" type="button" id="edit">Edit Answers</button><button class="btn btn-primary" type="button" id="again">Start Over <span aria-hidden="true">↺</span></button>`;
