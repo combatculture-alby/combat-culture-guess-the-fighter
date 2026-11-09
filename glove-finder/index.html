@@ -28,6 +28,20 @@
 .result-headline-row{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .result-headline-row>div{flex:1;min-width:0}
 @media(max-width:480px){.brand-figure{transform:scale(.82);transform-origin:center right;margin-left:-10px;margin-right:-2px}.q-head,.result-headline-row{gap:5px}.brand-ko-logo{flex-basis:36px}}
+
+[hidden]{display:none!important}
+.feedback-panel{margin:24px 0 4px;padding:23px;border:1px solid #505346;border-radius:12px;background:#242826}
+.feedback-panel h3{margin:0 0 7px;font-size:20px}
+.feedback-panel>p{margin:0 0 16px;color:var(--muted);font-size:14px;line-height:1.6}
+.feedback-toggle{width:auto}
+#feedback-form{margin-top:18px;display:grid;gap:9px}
+#feedback-form label{font-size:13px;font-weight:750}
+#feedback-form select,#feedback-form textarea{font:inherit;width:100%;border:1px solid #667070;border-radius:8px;padding:13px;background:#111718;color:var(--white)}
+#feedback-form textarea{resize:vertical;min-height:112px;line-height:1.5}
+#feedback-form .fineprint{margin:2px 0 10px;color:#c4cccc;max-width:650px}
+.feedback-send{display:inline-flex;align-items:center;justify-content:center;max-width:240px;text-align:center;text-decoration:none}
+#feedback-status{min-height:1.4em;font-size:13px;color:var(--accent);margin:0}
+@media(max-width:640px){.feedback-panel{padding:18px}.feedback-toggle,.feedback-send{width:100%;max-width:none}}
 </style>
 </head>
 <body>
@@ -3141,8 +3155,69 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       ${result.matches.length?`<div class="results-grid">${result.matches.map(makeCard).join('')}</div>`:
         '<p class="empty">No approved gloves meet this combination of training use, budget, style and material. Try changing a preference; we will not silently substitute a different style, material, or sparring glove.</p>'}
       <div class="limitations"><h3>Before You Buy</h3><ul>${cautions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
-      <p class="data-note">Recommendations use ${result.readyCount} approved, owner-rated gloves. Core performance scores come from 1–3 firsthand ratings; no brand, editorial favorites or affiliate payments affect the order.</p></div>`;
+      <p class="data-note">Recommendations use ${result.readyCount} approved, owner-rated gloves. Core performance scores come from 1–3 firsthand ratings; no brand, editorial favorites or affiliate payments affect the order.</p></div>
+      <section class="feedback-panel" aria-label="Feedback on recommendations">
+        <h3>Disagree with our picks?</h3>
+        <p>Tell us what we got wrong or what could make the finder better.</p>
+        <button class="btn btn-secondary feedback-toggle" id="feedback-toggle" type="button" aria-expanded="false" aria-controls="feedback-form">Give Feedback</button>
+        <div id="feedback-form" hidden>
+          <label for="feedback-kind">What should we improve?</label>
+          <select id="feedback-kind">
+            <option value="Disagree with a recommendation">I disagree with a recommendation</option>
+            <option value="Missing glove or model">A glove or model is missing</option>
+            <option value="Incorrect information">Something is incorrect</option>
+            <option value="General suggestion">General suggestion</option>
+          </select>
+          <label for="feedback-details">Tell us more</label>
+          <textarea id="feedback-details" rows="4" maxlength="2000" placeholder="What do you disagree with, and what would you change?"></textarea>
+          <p class="fineprint">This opens your email app with your comments, quiz answers, and recommendations. Nothing is sent until you send the email.</p>
+          <a id="feedback-email" class="btn btn-primary feedback-send" href="mailto:combatcultureusa@gmail.com">Open Email Draft</a>
+          <p id="feedback-status" role="status" aria-live="polite"></p>
+        </div>
+      </section>`;
     controls.innerHTML=`<button class="btn btn-secondary" type="button" id="edit">Edit Answers</button><button class="btn btn-primary" type="button" id="again">Start Over <span aria-hidden="true">↺</span></button>`;
+    const feedbackToggle=document.getElementById('feedback-toggle');
+    const feedbackForm=document.getElementById('feedback-form');
+    feedbackToggle.addEventListener('click',()=>{
+      feedbackForm.hidden=!feedbackForm.hidden;
+      feedbackToggle.setAttribute('aria-expanded',String(!feedbackForm.hidden));
+      if(!feedbackForm.hidden)document.getElementById('feedback-details').focus?.();
+    });
+    document.getElementById('feedback-email').addEventListener('click',event=>{
+      const message=String(document.getElementById('feedback-details').value||'').trim();
+      const status=document.getElementById('feedback-status');
+      if(!message){
+        event?.preventDefault?.();
+        status.textContent='Add a short note before opening email.';
+        document.getElementById('feedback-details').focus?.();
+        return;
+      }
+      const kind=document.getElementById('feedback-kind').value||'General suggestion';
+      const body=[
+        'Feedback type: '+kind,
+        'Comment: '+message,
+        '',
+        'Quiz answers:',
+        'Sport: '+request.sport,
+        'Training use: '+request.use,
+        'Experience: '+labelFor(question('experience'),request.experience),
+        'Budget selected: '+labelFor(question('budget'),request.budget),
+        'Effective budget limit: $'+result.effectiveCap,
+        'Priorities: '+request.priorities.join(', '),
+        'Fit: '+request.fit,
+        'Glove style: '+request.style,
+        'Material: '+request.material,
+        '',
+        'Glove recommendations:',
+        ...(result.matches.length?result.matches.map(g=>g.brand+' '+g.model+' - $'+g.onlinePriceUsd):['No matches']),
+        '',
+        'Quiz: https://combatculture-alby.github.io/combat-culture-guess-the-fighter/glove-finder/'
+      ].join('\n');
+      document.getElementById('feedback-email').href=
+        'mailto:combatcultureusa@gmail.com?subject='+encodeURIComponent('Glove Finder Feedback - '+kind)+
+        '&body='+encodeURIComponent(body);
+      status.textContent='Your email app should open. Review and send the message.';
+    });
     document.getElementById('edit').addEventListener('click',()=>{playSound('back');step=0;finished=false;render()});
     document.getElementById('again').addEventListener('click',()=>{
       playSound('reset');
