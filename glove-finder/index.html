@@ -13,6 +13,7 @@
 
 .preview-warning{background:#3b311b;border:1px solid #b28c35;border-radius:12px;color:#fff1c3;padding:18px 20px;margin:22px 0 6px;line-height:1.55}.preview-warning strong{display:block;margin-bottom:6px}.preview-warning p{margin:0}.choices button:disabled{opacity:.65;cursor:not-allowed}
 
+.sound-toggle{border:1px solid #585f5a;background:#282d2c;color:#e5e9e5;padding:8px 12px;border-radius:7px;font-size:12px;font-weight:750;white-space:nowrap;cursor:pointer}.sound-toggle:hover{border-color:var(--accent)}.sound-toggle[aria-pressed="false"]{color:#aab5b2}
 </style>
 </head>
 <body>
@@ -20,11 +21,11 @@
     <div class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> COMBAT CULTURE <span class="eyebrow-divider">/</span> GLOVE FINDER</div>
     <header class="heading">
       <p class="kicker">THE RIGHT GLOVES. FOR YOUR TRAINING.</p>
-      <h1>Find your next <span>pair of gloves.</span></h1>
-      <p class="intro">Five quick questions. Recommendations shaped by our firsthand testing, not generic product scores.</p>
+      <h1>Find Your Next <span>Pair of Gloves.</span></h1>
+      <p class="intro">Seven quick questions. Recommendations shaped by our firsthand testing, not generic product scores.</p>
     </header>
     <section class="panel" aria-label="Glove finder quiz">
-      <div class="panel-top"><span id="stage-label" class="step-label">QUESTION 1 OF 7</span></div>
+      <div class="panel-top"><span id="stage-label" class="step-label">QUESTION 1 OF 7</span><button id="sound-toggle" class="sound-toggle" type="button" aria-pressed="true" aria-label="Mute sound effects">Sound: On</button></div>
       <div class="progress" aria-hidden="true"><div id="progress-fill"></div></div>
       <div id="preview-warning" role="status" class="preview-warning">
         <strong>JavaScript is required to run this quiz.</strong>
@@ -37,13 +38,13 @@
           <button type="button" class="choice" disabled>Muay Thai</button>
           <button type="button" class="choice" disabled>Kickboxing</button>
           <button type="button" class="choice" disabled>MMA</button>
-          <button type="button" class="choice" disabled>Fitness / cardio training</button>
+          <button type="button" class="choice" disabled>Fitness / Cardio Training</button>
         </div>
       </div>
       <div id="quiz-controls" class="controls"></div>
     </section>
     <footer class="footnote">
-      <p><strong>Independent recommendations.</strong> Affiliate relationships never determine quiz eligibility. Prices are approximate sheet values, not live offers.</p>
+      <p><strong>Independent recommendations.</strong> Affiliate relationships never determine quiz eligibility. Prices are researched listings or clearly marked estimates, not live offers.</p>
       <a href="https://combatcultureusa.com/boxing-muay-thai-glove-reviews/" target="_blank" rel="noopener noreferrer">Explore all Combat Culture glove reviews <span aria-hidden="true">↗</span></a>
     </footer>
   </main>
@@ -2181,21 +2182,56 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     {key:'sport',title:'What do you train?',hint:'This helps us tailor the advice, but it will not block otherwise suitable gloves.',options:[
       ['Boxing','Boxing'],['Muay Thai','Muay Thai'],['Kickboxing','Kickboxing'],['MMA','MMA'],['Fitness','Fitness / cardio training']]},
     {key:'use',title:'What are these gloves for?',hint:'Training purpose is the most important filter. Dedicated bag gloves never appear as sparring recommendations.',options:[
-      ['Sparring','Sparring'],['Bag & Pads','Heavy bag & pads'],['Both','Both / all-around']]},
+      ['Sparring','Sparring'],['Bag & Pads','Heavy Bag & Pads'],['Both','Both / All-Around']]},
     {key:'budget',title:'How much would you spend?',hint:'Choose a maximum budget in USD. We use checked retailer prices, not personal reference prices.',options:[
-      ['under100','Up to $100'],['b100to200','Up to $200'],['b200to300','Up to $300'],['b300plus','$300+ / no limit']]},
+      ['under100','Up to $100'],['b100to200','Up to $200'],['b200to300','Up to $300'],['b300plus','$300+ / No Limit']]},
     {key:'priorities',title:'What matters most to you?',hint:'Choose one or two. Your answer directly affects the ranking using firsthand glove notes.',multiple:true,options:[
-      ['Protection','Hand protection'],['Comfort','Comfort'],['Wrist Support','Wrist support'],['Feedback','Punch feedback / feel'],
-      ['Value','Value for money'],['Versatility','Versatility'],['Breathability','Breathability / airflow'],['Compactness','Compact / easy to pack'],['none','No strong preference']]},
+      ['Protection','Hand Protection'],['Comfort','Comfort'],['Wrist Support','Wrist Support'],['Feedback','Punch Feedback / Feel'],
+      ['Value','Value for Money'],['Versatility','Versatility'],['Breathability','Breathability / Airflow'],['Compactness','Compact / Easy to Pack'],['none','No Strong Preference']]},
     {key:'fit',title:'What fit do you prefer?',hint:'Fit is subjective. These descriptions reflect the reviewer’s experience and may differ for your hands.',options:[
-      ['Snug','Snug'],['Normal','Standard'],['Roomy','Roomy'],['Any','No preference']]},
+      ['Snug','Snug'],['Normal','Standard'],['Roomy','Roomy'],['Any','No Preference']]},
     {key:'style',title:'Do you prefer a glove style?',hint:'Styles describe traditional construction influences, not manufacturing country. Unverified styles are never assumed.',options:[
-      ['Japanese','Japanese-style'],['Mexican','Mexican-style'],['Thai','Thai-style'],['Western/Other','Other / Western-style'],['Any','No preference']]},
+      ['Japanese','Japanese-Style'],['Mexican','Mexican-Style'],['Thai','Thai-Style'],['Western/Other','Other / Western-Style'],['Any','No Preference']]},
     {key:'material',title:'Do you prefer leather or synthetic?',hint:'Material is a preference, not a measure of quality. We only use verified glove material classifications.',options:[
-      ['Genuine Leather','Real leather'],['Synthetic','Synthetic'],['Any','No preference']]}
+      ['Genuine Leather','Genuine Leather'],['Synthetic','Synthetic'],['Any','No Preference']]}
   ];
   const answers={sport:null,use:null,budget:null,priorities:[],fit:null,style:null,material:null};
   let step=0,finished=false;
+  // Lightweight synthesized sounds; playback only follows a direct user action.
+  let soundOn=true, audioContext=null;
+  const soundToggle=document.getElementById('sound-toggle');
+  function tone(freq,delay,duration,volume){
+    if(!soundOn)return;
+    try{
+      const Audio=window.AudioContext||window.webkitAudioContext;
+      if(!Audio)return;
+      if(!audioContext)audioContext=new Audio();
+      if(audioContext.state==='suspended')audioContext.resume();
+      const t=audioContext.currentTime+delay;
+      const osc=audioContext.createOscillator(),gain=audioContext.createGain();
+      osc.type='sine';osc.frequency.setValueAtTime(freq,t);
+      gain.gain.setValueAtTime(0.0001,t);
+      gain.gain.exponentialRampToValueAtTime(volume,t+0.012);
+      gain.gain.exponentialRampToValueAtTime(0.0001,t+duration);
+      osc.connect(gain);gain.connect(audioContext.destination);
+      osc.start(t);osc.stop(t+duration+0.01);
+    }catch(_){/* Stay silent if browser audio is unavailable. */}
+  }
+  function playSound(type){
+    if(!soundOn)return;
+    if(type==='select')tone(660,0,0.075,0.026);
+    else if(type==='back')tone(390,0,0.09,0.02);
+    else if(type==='done'){tone(523,0,0.14,0.032);tone(659,0.10,0.15,0.032);tone(784,0.20,0.23,0.036);}
+    else if(type==='reset')tone(440,0,0.1,0.023);
+    else tone(520,0,0.085,0.026);
+  }
+  soundToggle.addEventListener('click',()=>{
+    soundOn=!soundOn;
+    soundToggle.textContent=soundOn?'Sound: On':'Sound: Off';
+    soundToggle.setAttribute('aria-pressed',String(soundOn));
+    soundToggle.setAttribute('aria-label',soundOn?'Mute sound effects':'Enable sound effects');
+    if(soundOn)playSound('select');
+  });
   const content=document.getElementById('quiz-content'),controls=document.getElementById('quiz-controls');
   const progress=document.getElementById('progress-fill'),stage=document.getElementById('stage-label');
   const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -2208,6 +2244,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       else if(answers.priorities.includes(value)) answers.priorities=answers.priorities.filter(v=>v!==value);
       else {const prev=answers.priorities.filter(v=>v!=='none');if(prev.length<2)answers.priorities=[...prev,value];}
     }else answers[q.key]=value;
+    playSound('select');
     render();
   }
   function renderQuestion(){
@@ -2221,9 +2258,9 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       }).join('')}</div>${q.multiple?'<p class="fineprint">Choose up to two priorities, or select No strong preference.</p>':''}`;
     content.querySelectorAll('[data-answer]').forEach(btn=>btn.addEventListener('click',()=>toggle(q,btn.dataset.answer)));
     controls.innerHTML=`<button class="btn btn-secondary" id="back" type="button" ${step===0?'disabled':''}>Back</button>
-      <button class="btn btn-primary" id="continue" type="button" ${isValid(q)?'':'disabled'}>${step===Q.length-1?'Find my gloves':'Continue'} <span aria-hidden="true">→</span></button>`;
-    document.getElementById('back').addEventListener('click',()=>{step--;render()});
-    document.getElementById('continue').addEventListener('click',()=>{if(!isValid(q))return;if(step===Q.length-1){finished=true;render()}else{step++;render()}});
+      <button class="btn btn-primary" id="continue" type="button" ${isValid(q)?'':'disabled'}>${step===Q.length-1?'Find My Gloves':'Continue'} <span aria-hidden="true">→</span></button>`;
+    document.getElementById('back').addEventListener('click',()=>{if(step>0){playSound('back');step--;render()}});
+    document.getElementById('continue').addEventListener('click',()=>{if(!isValid(q))return;if(step===Q.length-1){playSound('done');finished=true;render()}else{playSound('next');step++;render()}});
   }
   const lower=x=>String(x).toLowerCase();
   function reasons(g){
@@ -2270,9 +2307,9 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
   function makeCard(g,i){
     return `<article class="result-card"><div class="card-top"><span class="result-tag">${esc(g.kind)}</span><span class="result-index">0${i+1}</span></div>
       <h3>${esc(g.brand)}</h3><p class="model">${esc(g.model)}</p>
-      <div class="stats"><span class="stat"><small>${g.priceStatus.startsWith('Owner MSRP fallback')?'Estimated price':'Online retail'}</small><strong>${Number(g.onlinePriceUsd).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</strong></span>
-      <span class="stat"><small>Tested at</small><strong>${esc(g.testedWeight||'Not recorded')}</strong></span>
-      <span class="stat"><small>Reviewer fit</small><strong>${esc(g.fit||'Unspecified')}</strong></span></div>
+      <div class="stats"><span class="stat"><small>${g.priceStatus.startsWith('Owner MSRP fallback')?'Estimated Price':'Online Retail'}</small><strong>${Number(g.onlinePriceUsd).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</strong></span>
+      <span class="stat"><small>Tested At</small><strong>${esc(g.testedWeight||'Not recorded')}</strong></span>
+      <span class="stat"><small>Reviewer Fit</small><strong>${esc(g.fit||'Unspecified')}</strong></span></div>
       ${g.priceStatus.startsWith('Owner MSRP fallback')?'<p class="fineprint">Estimated using Combat Culture reference MSRP. Current retailer price unverified.</p>':''}
       ${g.priceUrl?`<p class="fineprint">${g.priceStatus.startsWith('Converted')?'Approx. USD conversion. ':''}${g.priceStatus.startsWith('Representative')?'Comparable model; verify exact version. ':''}${g.priceStatus.includes('sold out')?'Listed item may be sold out. ':''}Price checked ${esc(g.priceCheckedOn)}. <a class="review-link" href="${esc(g.priceUrl)}" target="_blank" rel="noopener noreferrer">View retailer listing</a></p>`:''}
       <p class="match-reason">${esc(reasons(g))}</p>
@@ -2283,7 +2320,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
   function renderResults(){
     const result=engine.recommend(gloves,answers);stage.textContent='YOUR RESULTS';progress.style.width='100%';
     const prefs=answers.priorities.filter(x=>x!=='none').map(x=>x==='Feedback'?'Punch feedback':x);
-    const summary=[answers.sport,answers.use==='Both'?'All-around':answers.use,labelFor(Q[2],answers.budget),prefs.join(' + ')||'No priority',labelFor(Q[4],answers.fit),labelFor(Q[5],answers.style),labelFor(Q[6],answers.material)].join(' · ');
+    const summary=[answers.sport,answers.use==='Both'?'All-around':answers.use,labelFor(Q[2],answers.budget),prefs.join(' + ')||'No Priority',labelFor(Q[4],answers.fit),labelFor(Q[5],answers.style),labelFor(Q[6],answers.material)].join(' · ');
     const cautions=[
       'Prices generally use online listings checked November 8, 2026. Entries marked Estimated price use Combat Culture reference MSRP because a current exact-model price could not be verified. Verify current price, stock and shipping before buying.',
       '“Fit” and strengths reflect one reviewer’s experience, not a universal guarantee. Other glove weights can fit or feel different.',
@@ -2309,11 +2346,12 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       <span class="result-count">${esc(countText)}</span><p class="summary">${esc(summary)}</p></div>
       ${result.matches.length?`<div class="results-grid">${result.matches.map(makeCard).join('')}</div>`:
         '<p class="empty">We did not find an approved glove in your price range for that training purpose. Try a higher budget or a different use. We will not suggest bag-only gloves for sparring.</p>'}
-      <div class="limitations"><h3>Before you buy</h3><ul>${cautions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+      <div class="limitations"><h3>Before You Buy</h3><ul>${cautions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
       <p class="data-note">Recommendations use ${result.readyCount} approved gloves. When online pricing is unavailable, a clearly labeled Combat Culture MSRP estimate is used. No external community ratings or affiliate payments affect the order.</p></div>`;
-    controls.innerHTML=`<button class="btn btn-secondary" type="button" id="edit">Edit answers</button><button class="btn btn-primary" type="button" id="again">Start over <span aria-hidden="true">↺</span></button>`;
-    document.getElementById('edit').addEventListener('click',()=>{step=0;finished=false;render()});
+    controls.innerHTML=`<button class="btn btn-secondary" type="button" id="edit">Edit Answers</button><button class="btn btn-primary" type="button" id="again">Start Over <span aria-hidden="true">↺</span></button>`;
+    document.getElementById('edit').addEventListener('click',()=>{playSound('back');step=0;finished=false;render()});
     document.getElementById('again').addEventListener('click',()=>{
+      playSound('reset');
       // Fully clear answers and return to a clean first question.
       answers.sport=null;
       answers.use=null;
