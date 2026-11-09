@@ -42,6 +42,7 @@
 .feedback-send{display:inline-flex;align-items:center;justify-content:center;max-width:240px;text-align:center;text-decoration:none}
 #feedback-status{min-height:1.4em;font-size:13px;color:var(--accent);margin:0}
 @media(max-width:640px){.feedback-panel{padding:18px}.feedback-toggle,.feedback-send{width:100%;max-width:none}}
+.price-disclaimer{margin:12px 0 0;color:#c6cbca;font-size:12px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -2927,7 +2928,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     {key:'fit',title:'What Fit Do You Prefer?',hint:'Fit is subjective. These descriptions reflect the reviewer’s experience and may differ for your hands.',options:[
       ['Snug','Snug'],['Normal','Standard'],['Roomy','Roomy'],['Any','No Preference']]},
     {key:'style',title:'Do You Prefer a Glove Style?',hint:'Your style choice is a requirement. Only verified matches will appear.',options:[
-      ['Japanese','Japanese-Style'],['Mexican','Mexican-Style'],['Thai','Thai-Style'],['Other','Other'],['Any','No Preference']]},
+      ['Japanese','Japanese-Style'],['Mexican','Mexican-Style'],['Thai','Thai-Style'],['Any','No Preference']]},
     {key:'material',title:'Do You Prefer Leather or Synthetic?',hint:'Your material choice is a requirement. Gloves with unknown materials are excluded.',options:[
       ['Genuine Leather','Genuine Leather'],['Synthetic','Synthetic'],['Any','No Preference']]}
   ];
@@ -3151,7 +3152,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     );
     const countText=`${result.count} ${result.count===1?'approved glove matches':'approved gloves match'} your stated requirements`;
     content.innerHTML=`<div class="results-header"><div class="result-headline-row"><div><p class="kicker">COMBAT CULTURE PICKS</p><h2>${result.matches.length?'Your Glove Shortlist.':'No Exact Matches Yet.'}</h2></div><span class="brand-figure brand-results" aria-hidden="true"></span></div>
-      <span class="result-count">${esc(countText)}</span><p class="summary">${esc(summary)}</p></div>
+      <span class="result-count">${esc(countText)}</span><p class="summary">${esc(summary)}</p><p class="fineprint price-disclaimer">Prices shown may not include shipping fees or applicable taxes. Your final checkout total may be higher.</p></div>
       ${result.matches.length?`<div class="results-grid">${result.matches.map(makeCard).join('')}</div>`:
         '<p class="empty">No approved gloves meet this combination of training use, budget, style and material. Try changing a preference; we will not silently substitute a different style, material, or sparring glove.</p>'}
       <div class="limitations"><h3>Before You Buy</h3><ul>${cautions.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
