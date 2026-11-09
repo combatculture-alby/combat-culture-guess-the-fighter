@@ -21,6 +21,10 @@
 .brand-start{background-position:0 0}
 .brand-thinking{background-position:-72px 0}
 .brand-results{background-position:-144px 0}
+.brand-thinking-0,.brand-thinking-1,.brand-thinking-2{background-image:url("assets/three-thinking.webp");background-size:216px 112px}
+.brand-thinking-0{background-position:0 0}
+.brand-thinking-1{background-position:-72px 0}
+.brand-thinking-2{background-position:-144px 0}
 .result-headline-row{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .result-headline-row>div{flex:1;min-width:0}
 @media(max-width:480px){.brand-figure{transform:scale(.82);transform-origin:center right;margin-left:-10px;margin-right:-2px}.q-head,.result-headline-row{gap:5px}.brand-ko-logo{flex-basis:36px}}
@@ -2185,6 +2189,51 @@ const CC_GLOVES = [
     "mmaSpecs": "Synthetic microfiber, extra knuckle padding; sizes S, M, L, XL.",
     "mmaProtection": "Average",
     "ownerAssessment": "Excellent grappling mobility, affordable and easy to get. Take care when striking, as the padding is lighter."
+  },
+  {
+    "id": "winnings-ms-600",
+    "brand": "Winnings",
+    "model": "MS-600",
+    "testedWeight": "16 oz",
+    "use": "Both",
+    "fit": "Normal",
+    "strength": "Protection",
+    "weakness": "Accessibility",
+    "sport": "Multiple",
+    "reviewPublished": false,
+    "editorialSignal": "Check model",
+    "sourceArticle": "https://combatcultureusa.com/best-muay-thai-gloves/",
+    "approved": true,
+    "secondaryStrength": "Comfort",
+    "availability": "Limited",
+    "thirdStrength": "",
+    "secondaryWeakness": "Price",
+    "thirdWeakness": "",
+    "strengths": [
+      "Protection",
+      "Comfort"
+    ],
+    "weaknesses": [
+      "Accessibility",
+      "Price"
+    ],
+    "style": "Japanese",
+    "material": "Genuine Leather",
+    "breathability": "",
+    "compactness": "Compact",
+    "handmade": "Yes",
+    "origin": "Japan",
+    "checkedPrice": "USD 535 (KOZUJI, out of stock; 2026-11-08)",
+    "researchUrl": "https://www.kozuji.com/us/ms-600-16oz-white",
+    "researchDate": "2026-11-08",
+    "onlinePriceUsd": 535,
+    "priceStatus": "Verified online USD listing; exact MS-600 16 oz",
+    "priceUrl": "https://www.kozuji.com/us/ms-600-16oz-white",
+    "priceCheckedOn": "2026-11-08",
+    "clinchMobility": "",
+    "paddingFeel": "",
+    "breakInPeriod": "",
+    "gloveType": "Boxing"
   }
 ];
 if (typeof window !== 'undefined') window.CC_GLOVES = CC_GLOVES;
@@ -2331,7 +2380,14 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
         (useFits(g,a.use) && (!g.gloveType||g.gloveType==='Boxing'))));
     const ranked=eligible.map(g=>({...g,matchScore:score(g,a)}))
       .sort((x,y)=>y.matchScore-x.matchScore||x.onlinePriceUsd-y.onlinePriceUsd||x.brand.localeCompare(y.brand)||x.model.localeCompare(y.model));
-    const inBudget=ranked.filter(g=>g.onlinePriceUsd<=cap && (!fitnessBag||g.onlinePriceUsd<=fitnessCap));
+    // With an unlimited budget, favor serious premium options rather than
+    // automatically presenting a budget/value pair. Value remains a valid
+    // priority when explicitly requested.
+    const allInBudget=ranked.filter(g=>g.onlinePriceUsd<=cap && (!fitnessBag||g.onlinePriceUsd<=fitnessCap));
+    const premiumMode=a.budget==='b300plus' && a.sport!=='Fitness' &&
+      !mmaSparring && !(a.priorities||[]).includes('Value');
+    const premiumCandidates=allInBudget.filter(g=>g.onlinePriceUsd>=200);
+    const inBudget=premiumMode && premiumCandidates.length>=2 ? premiumCandidates : allInBudget;
     const chosen=[],families=new Set(),brands=new Set();
     function canAdd(g){return g && !families.has(family(g));}
     function add(g,kind) {
@@ -2353,7 +2409,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
         .map(g=>({...g,underUtility:g.matchScore-0.16*Math.abs(g.onlinePriceUsd-target)}))
         .sort((x,y)=>y.underUtility-x.underUtility||x.onlinePriceUsd-y.onlinePriceUsd);
       add(preferDifferentBrand(under),'Under-budget pick');
-    } else if(chosen.length>=2){
+    } else if(chosen.length>=2 && !premiumMode){
       const baseline=Math.min(...chosen.map(g=>g.onlinePriceUsd));
       const lower=inBudget.filter(g=>canAdd(g)&&g.onlinePriceUsd<baseline)
         .sort((x,y)=>y.matchScore-x.matchScore||x.onlinePriceUsd-y.onlinePriceUsd);
@@ -2474,6 +2530,16 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
     playSound('select');
     render();
   }
+  let lastThinkingStep=-1,lastThinkingIndex=-1;
+  function thinkingClass(){
+    if(step!==lastThinkingStep){
+      const next=lastThinkingIndex<0?Math.floor(Math.random()*3):
+        (lastThinkingIndex+1+Math.floor(Math.random()*2))%3;
+      lastThinkingIndex=next;
+      lastThinkingStep=step;
+    }
+    return 'brand-thinking-'+lastThinkingIndex;
+  }
   function renderQuestion(){
     const questions=route(),base=questions[step];
     const mmaPrefs=answers.sport==='MMA' && (answers.use==='Sparring'||answers.use==='Both');
@@ -2483,7 +2549,7 @@ if (typeof module !== 'undefined') module.exports = CC_GLOVES;
       ['Wrist Support','Wrist Support'],['Value','Value for Money'],['none','No Strong Preference']]}:base;
     stage.textContent=`QUESTION ${step+1} OF ${questions.length}`;
     progress.style.width=`${(step+1)/questions.length*100}%`;
-    content.innerHTML=`<div class="q-head"><div class="q-copy"><span class="q-number">0${step+1}</span><h2>${esc(q.title)}</h2><p>${esc(q.hint)}</p></div><span class="brand-figure ${step===0?'brand-start':'brand-thinking'}" aria-hidden="true"></span></div>
+    content.innerHTML=`<div class="q-head"><div class="q-copy"><span class="q-number">0${step+1}</span><h2>${esc(q.title)}</h2><p>${esc(q.hint)}</p></div><span class="brand-figure ${step===0?'brand-start':thinkingClass()}" aria-hidden="true"></span></div>
       <div class="choices" role="group" aria-label="${esc(q.title)}">${q.options.map(([value,label])=>{
         const selected=isSelected(q,value);
         return `<button type="button" class="choice ${selected?'selected':''}" data-answer="${esc(value)}" aria-pressed="${selected}">
