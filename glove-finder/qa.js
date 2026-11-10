@@ -170,9 +170,13 @@ assert.ok(!openMuay.matches.some(g=>g.kind==='Stretch alternative'),
 // New rating-driven checks: no brand bonuses, no guessed missing ratings.
 const allR=gloves.filter(g=>g.approved);
 assert.equal(allR.length,52,'52 approved glove records expected');
+const blackMambaUnrated=new Set(['Comfort','Feedback','Versatility','Value']);
 for(const g of allR){
+  const isBlackMamba=g.id==='cleto-reyes-black-mamba-mma-sparring';
   assert.ok(g.ratings&&['Protection','Comfort','Build Quality','Wrist Support','Feedback','Versatility','Value']
-    .every(k=>Number.isInteger(g.ratings[k])&&g.ratings[k]>=1&&g.ratings[k]<=3),
+    .every(k=>isBlackMamba&&blackMambaUnrated.has(k)
+      ? g.ratings[k]===null
+      : Number.isInteger(g.ratings[k])&&g.ratings[k]>=1&&g.ratings[k]<=3),
     'Missing or invalid core 1-3 rating for '+g.id);
   for(const name of ['Compactness','Clinch Mobility','MMA Grappling Mobility']){
     const n=g.ratings[name];
@@ -266,8 +270,8 @@ assert.ok(!gloves.some(g=>Object.hasOwn(g,'compactness')||Object.hasOwn(g,'clinc
   'Old categorical fields and Availability scoring must be gone');
 assert.ok(gloves.filter(g=>g.ratings.Compactness!==null).length>=45,'Existing compactness ratings lost');
 assert.ok(gloves.filter(g=>g.ratings['Clinch Mobility']!==null).length>=10,'Existing Muay Thai clinch ratings lost');
-assert.equal(gloves.filter(g=>g.ratings['MMA Grappling Mobility']!==null).length,3,
-  'Three separate MMA mobility assessments must be preserved');
+assert.equal(gloves.filter(g=>g.ratings['MMA Grappling Mobility']!==null).length,4,
+  'Four separate MMA mobility assessments must be preserved');
 assert.ok(gloves.filter(g=>g.gloveType==='MMA Sparring').every(g=>g.ratings['Clinch Mobility']===null),
   'No MMA glove should have a Muay Thai clinch rating');
 
@@ -328,7 +332,7 @@ assert.ok(!lowCost.matches.some(g=>g.kind==='Stretch alternative'),'$50 results 
     assert.ok(button && button.click,'Missing option '+value);
     button.click();
     get('continue').click();
-    if(value==='Muay Thai')assert.ok(/brand-thinking-[012]/.test(get('quiz-content').innerHTML),'Thinking chibi missing on question screen');
+    if(value==='Muay Thai')assert.ok(/brand-thinking-[0-4]/.test(get('quiz-content').innerHTML),'Thinking chibi missing on question screen');
     if(value==='b100to200')assert.ok(get('quiz-content').innerHTML.includes('data-answer="Clinch Mobility"'),
       'Muay Thai sparring priority question must offer Clinch Mobility');
   }
@@ -337,7 +341,7 @@ assert.ok(!lowCost.matches.some(g=>g.kind==='Stretch alternative'),'$50 results 
     let lastPose=null,thinkingTransitions=0;
     for(const v of ['Muay Thai','Sparring','1to3','b100to200','none','Any','Thai','Genuine Leather']){
       answer(v);
-      const pose=get('quiz-content').innerHTML.match(/brand-thinking-([012])/);
+      const pose=get('quiz-content').innerHTML.match(/brand-thinking-([0-4])/);
       if(pose){
         if(lastPose!==null)assert.ok(pose[1]!==lastPose,'Thinking chibi should change between questions');
         lastPose=pose[1];thinkingTransitions++;
@@ -345,7 +349,7 @@ assert.ok(!lowCost.matches.some(g=>g.kind==='Stretch alternative'),'$50 results 
     }
     assert.ok(thinkingTransitions>=3,'Expected multiple thinking chibi transitions');
     assert.ok(get('quiz-content').innerHTML.includes('Your Glove Shortlist.'),'Missing result cards');
-    assert.ok(get('quiz-content').innerHTML.includes('brand-results'),'Results thumbs-up chibi missing');
+    assert.ok(get('quiz-content').innerHTML.includes('brand-success'),'Successful result chibi missing');
     assert.ok(get('quiz-content').innerHTML.includes('Prices shown may not include shipping fees or applicable taxes.'),
       'Results must disclose possible shipping and tax charges');
     assert.ok(get('quiz-content').innerHTML.includes('id="feedback-toggle"'),'Feedback button missing');
