@@ -134,5 +134,22 @@
     "Expert (All Sports)::Easy": "Boxing::Oleksandr Usyk",
     "Expert (All Sports)::Medium": "MMA::Ken Shamrock",
     "Expert (All Sports)::Hard": "Kickboxing::Maurice Smith"
+  },
+  "2026-11-12": {
+    "Muay Thai::Easy": "Muay Thai::Prajanchai P.K. Saenchaimuaythaigym",
+    "Muay Thai::Medium": "Muay Thai::Apidej Sit-Hirun",
+    "Muay Thai::Hard": "Muay Thai::Kulabdam Sor.Jor.Piek-U-Thai",
+    "Boxing::Easy": "Boxing::Floyd Mayweather",
+    "Boxing::Medium": "Boxing::Sonny Liston",
+    "Boxing::Hard": "Boxing::Jaron Ennis",
+    "Kickboxing::Easy": "Kickboxing::Tenshin Nasukawa",
+    "Kickboxing::Medium": "Kickboxing::Jerome Le Banner",
+    "Kickboxing::Hard": "Kickboxing::Yuta Kubo",
+    "MMA::Easy": "MMA::BJ Penn",
+    "MMA::Medium": "MMA::Rampage Jackson",
+    "MMA::Hard": "MMA::Antonio Rogerio Nogueira",
+    "Expert (All Sports)::Easy": "Muay Thai::Tawanchai P.K. Saenchaimuaythaigym",
+    "Expert (All Sports)::Medium": "MMA::Rashad Evans",
+    "Expert (All Sports)::Hard": "Boxing::Andy Ruiz"
   }
 }
