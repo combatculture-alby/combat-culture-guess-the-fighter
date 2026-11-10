@@ -3,13 +3,14 @@
 import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
-import { dirname } from 'node:path';
+import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const __dirname=dirname(fileURLToPath(import.meta.url));
 const html=fs.readFileSync(__dirname+'/index.html','utf8');
 const scripts=html.split('<script>').slice(1).map(x=>x.split('</script>')[0]);
-for (const image of ['start-hands-on-hips-1.png','results-thumbs-up-1.png','success-fist-1.png','thinking-chin-1.png','thinking-arms-crossed-1.png','thinking-embarrassed-1.png','thinking-finger-up-1.png','thinking-stressed-1.png']) {
-  assert.ok(html.includes('https://combatcultureusa.com/wp-content/uploads/2026/11/'+image), 'Original HD chibi reference missing: '+image);
+for (const image of ['start-hands-on-hips.webp','results-thumbs-up.webp','success-fist.webp','thinking-chin.webp','thinking-arms-crossed.webp','thinking-embarrassed.webp','thinking-finger-up.webp','thinking-stressed.webp']) {
+  assert.ok(html.includes('assets/chibi/'+image), 'Local chibi reference missing: '+image);
+  assert.ok(fs.existsSync(join(__dirname,'assets','chibi',image)), 'Chibi asset missing: '+image);
 }
 assert.ok(html.includes('Math.floor(Math.random()*5)'), 'Five thinking poses must rotate');
 assert.ok(html.includes('class="brand-ko-logo"'),'KO logo missing');
@@ -18,7 +19,7 @@ const start=scripts[0].indexOf('const CC_GLOVES = ')+'const CC_GLOVES = '.length
 const end=scripts[0].indexOf(';\nif (typeof window',start);
 assert.ok(start>20&&end>start,'Could not read approved data');
 const gloves=JSON.parse(scripts[0].slice(start,end));
-assert.equal(gloves.length,51,'Unexpected number of approved gloves');
+assert.equal(gloves.length,52,'Unexpected number of approved gloves');
 const module={exports:{}};
 vm.runInNewContext(scripts[1],{module,window:{}});
 new vm.Script(scripts[2]); // UI syntax check
@@ -27,7 +28,7 @@ assert.ok(!scripts[2].includes("['Other','Other']"),
 assert.ok(scripts[2].includes("['Any','No Preference']"),
   'No Preference must remain a style option');
 const engine=module.exports;
-assert.equal(gloves.filter(g=>Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0).length,51,'Unexpected priced glove count');
+assert.equal(gloves.filter(g=>Number.isFinite(g.onlinePriceUsd)&&g.onlinePriceUsd>0).length,52,'Unexpected priced glove count');
 assert.equal(gloves.find(g=>g.id==='fairtex-bgv1').onlinePriceUsd,139,'Fairtex should use online, not reviewer price');
 let combinations=0;
 const ceilings={under50:50,under100:100,b100to200:200,b200to300:300,b300plus:Infinity};
@@ -101,8 +102,8 @@ const mmaBase={sport:'MMA',experience:'1to3',budget:'b100to200',fit:'Any',priori
 const mmaBag=engine.recommend(gloves,{...mmaBase,use:'Bag & Pads'});
 assert.ok(mmaBag.matches.length>0,'MMA bag work should retain boxing glove options');
 assert.ok(mmaBag.matches.every(g=>!g.gloveType||g.gloveType==='Boxing'),'MMA bag work returned an MMA sparring glove');
-const mmaModels=new Set(['onx-freedom-250-mma-sparring','isami-pounding-gloves','fairtex-fgv18-mma-sparring']);
-assert.equal(gloves.filter(g=>g.gloveType==='MMA Sparring').length,3,'Expected three MMA sparring models');
+const mmaModels=new Set(['onx-freedom-250-mma-sparring','isami-pounding-gloves','fairtex-fgv18-mma-sparring','cleto-reyes-black-mamba-mma-sparring']);
+assert.equal(gloves.filter(g=>g.gloveType==='MMA Sparring').length,4,'Expected four MMA sparring models');
 for(const use of ['Sparring','Both']){
   for(const budget of Object.keys(ceilings)){
     const result=engine.recommend(gloves,{...mmaBase,use,budget});
@@ -168,7 +169,7 @@ assert.ok(!openMuay.matches.some(g=>g.kind==='Stretch alternative'),
 
 // New rating-driven checks: no brand bonuses, no guessed missing ratings.
 const allR=gloves.filter(g=>g.approved);
-assert.equal(allR.length,51,'51 approved glove records expected');
+assert.equal(allR.length,52,'52 approved glove records expected');
 for(const g of allR){
   assert.ok(g.ratings&&['Protection','Comfort','Build Quality','Wrist Support','Feedback','Versatility','Value']
     .every(k=>Number.isInteger(g.ratings[k])&&g.ratings[k]>=1&&g.ratings[k]<=3),
