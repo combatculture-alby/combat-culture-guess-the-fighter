@@ -18,14 +18,16 @@
 .q-head{display:flex;align-items:center;justify-content:space-between;gap:15px}
 .q-copy{flex:1;min-width:0}
 .brand-figure{display:block;flex:0 0 100px;width:100px;height:140px;background-repeat:no-repeat;background-position:center center;background-size:contain}
-.brand-start{background-image:url("assets/chibi/start-hands-on-hips.webp")}
-.brand-results{background-image:url("assets/chibi/results-thumbs-up.webp")}
-.brand-success{background-image:url("assets/chibi/success-fist.webp")}
-.brand-thinking-0{background-image:url("assets/chibi/thinking-chin.webp")}
-.brand-thinking-1{background-image:url("assets/chibi/thinking-arms-crossed.webp")}
-.brand-thinking-2{background-image:url("assets/chibi/thinking-embarrassed.webp")}
-.brand-thinking-3{background-image:url("assets/chibi/thinking-finger-up.webp")}
-.brand-thinking-4{background-image:url("assets/chibi/thinking-stressed.webp")}
+.brand-start{background-image:url("assets/chibi/start-hands-on-hips.webp?v=original")}
+.brand-results{background-image:url("assets/chibi/results-thumbs-up.webp?v=original")}
+.brand-success{background-image:url("assets/chibi/success-fist.webp?v=original")}
+.brand-thinking-0{background-image:url("assets/chibi/thinking-chin.webp?v=original")}
+.brand-thinking-1{background-image:url("assets/chibi/thinking-arms-crossed.webp?v=original")}
+.brand-thinking-2{background-image:url("assets/chibi/thinking-embarrassed.webp?v=original")}
+.brand-thinking-3{background-image:url("assets/chibi/thinking-finger-up.webp?v=original")}
+/* Clear the faint background grain in the three source poses that contain it. */
+.brand-results,.brand-thinking-0,.brand-thinking-3{filter:url(#cc-chibi-alpha)}
+.brand-thinking-4{background-image:url("assets/chibi/thinking-stressed.webp?v=original")}
 .result-headline-row{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .result-headline-row>div{flex:1;min-width:0}
 @media(max-width:480px){.brand-figure{flex-basis:80px;width:80px;height:112px}.q-head,.result-headline-row{gap:5px}.brand-ko-logo{flex-basis:36px}}
@@ -55,6 +57,11 @@ body.cc-embed .progress{margin:16px 0 22px}
 </style>
 </head>
 <body>
+<svg width="0" height="0" aria-hidden="true" style="position:absolute">
+  <defs><filter id="cc-chibi-alpha" color-interpolation-filters="sRGB">
+    <feComponentTransfer><feFuncA type="linear" slope="1.25" intercept="-0.25"/></feComponentTransfer>
+  </filter></defs>
+</svg>
   <main class="shell">
     <div class="eyebrow"><span class="brand-ko-logo" aria-hidden="true"></span> COMBAT CULTURE <span class="eyebrow-divider">/</span> GLOVE FINDER</div>
     <header class="heading">
