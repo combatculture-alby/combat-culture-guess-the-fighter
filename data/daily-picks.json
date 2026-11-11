@@ -151,5 +151,22 @@
     "Expert (All Sports)::Easy": "Muay Thai::Tawanchai P.K. Saenchaimuaythaigym",
     "Expert (All Sports)::Medium": "MMA::Rashad Evans",
     "Expert (All Sports)::Hard": "Boxing::Andy Ruiz"
+  },
+  "2026-11-13": {
+    "Muay Thai::Easy": "Muay Thai::Lerdsila Chumpairtour",
+    "Muay Thai::Medium": "Muay Thai::Karuhat Sor Supawan",
+    "Muay Thai::Hard": "Muay Thai::Veeraphol Sahaprom",
+    "Boxing::Easy": "Boxing::Rocky Marciano",
+    "Boxing::Medium": "Boxing::Wladimir Klitschko",
+    "Boxing::Hard": "Boxing::Vitali Klitschko",
+    "Kickboxing::Easy": "Kickboxing::Remy Bonjasky",
+    "Kickboxing::Medium": "Kickboxing::Masaaki Noiri",
+    "Kickboxing::Hard": "Kickboxing::Joe Lewis",
+    "MMA::Easy": "MMA::Fedor Emelianenko",
+    "MMA::Medium": "MMA::Ken Shamrock",
+    "MMA::Hard": "MMA::Renzo Gracie",
+    "Expert (All Sports)::Easy": "MMA::Amanda Nunes",
+    "Expert (All Sports)::Medium": "Muay Thai::Phetjeeja Lukjaoporongtom",
+    "Expert (All Sports)::Hard": "Muay Thai::Thepnimit Sitmonchai"
   }
 }
