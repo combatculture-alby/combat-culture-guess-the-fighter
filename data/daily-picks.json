@@ -168,5 +168,22 @@
     "Expert (All Sports)::Easy": "MMA::Amanda Nunes",
     "Expert (All Sports)::Medium": "Muay Thai::Phetjeeja Lukjaoporongtom",
     "Expert (All Sports)::Hard": "Muay Thai::Thepnimit Sitmonchai"
+  },
+  "2026-11-14": {
+    "Muay Thai::Easy": "Muay Thai::Superlek Kiatmuu9",
+    "Muay Thai::Medium": "Muay Thai::Coban Lookchaomaesaitong",
+    "Muay Thai::Hard": "Muay Thai::Phet-ek Sitjaopho",
+    "Boxing::Easy": "Boxing::Muhammad Ali",
+    "Boxing::Medium": "Boxing::Juan Manuel Marquez",
+    "Boxing::Hard": "Boxing::Pernell Whitaker",
+    "Kickboxing::Easy": "Kickboxing::Peter Aerts",
+    "Kickboxing::Medium": "Kickboxing::Ray Sefo",
+    "Kickboxing::Hard": "Kickboxing::Don Wilson",
+    "MMA::Easy": "MMA::Max Holloway",
+    "MMA::Medium": "MMA::Vitor Belfort",
+    "MMA::Hard": "MMA::Don Frye",
+    "Expert (All Sports)::Easy": "Muay Thai::Sagat Petchyindee",
+    "Expert (All Sports)::Medium": "MMA::Frankie Edgar",
+    "Expert (All Sports)::Hard": "MMA::Josh Barnett"
   }
 }
