@@ -185,5 +185,22 @@
     "Expert (All Sports)::Easy": "Muay Thai::Sagat Petchyindee",
     "Expert (All Sports)::Medium": "MMA::Frankie Edgar",
     "Expert (All Sports)::Hard": "MMA::Josh Barnett"
+  },
+  "2026-11-15": {
+    "Muay Thai::Easy": "Muay Thai::Liam Harrison",
+    "Muay Thai::Medium": "Muay Thai::Nathan Corbett",
+    "Muay Thai::Hard": "Muay Thai::Sangtiennoi Sor Rungroj",
+    "Boxing::Easy": "Boxing::Evander Holyfield",
+    "Boxing::Medium": "Boxing::Gervonta Davis",
+    "Boxing::Hard": "Boxing::Jack Johnson",
+    "Kickboxing::Easy": "Kickboxing::Takeru Segawa",
+    "Kickboxing::Medium": "Kickboxing::Petchpanomrung Kiatmuu9",
+    "Kickboxing::Hard": "Kickboxing::Sam Greco",
+    "MMA::Easy": "MMA::Israel Adesanya",
+    "MMA::Medium": "MMA::Cris Cyborg",
+    "MMA::Hard": "MMA::Mark Coleman",
+    "Expert (All Sports)::Easy": "Muay Thai::Stamp Fairtex",
+    "Expert (All Sports)::Medium": "Muay Thai::Samson Dutch Boy Gym",
+    "Expert (All Sports)::Hard": "Kickboxing::Rick Roufus"
   }
 }
