@@ -202,5 +202,22 @@
     "Expert (All Sports)::Easy": "Muay Thai::Stamp Fairtex",
     "Expert (All Sports)::Medium": "Muay Thai::Samson Dutch Boy Gym",
     "Expert (All Sports)::Hard": "Kickboxing::Rick Roufus"
+  },
+  "2026-11-16": {
+    "Muay Thai::Easy": "Muay Thai::Tawanchai P.K. Saenchaimuaythaigym",
+    "Muay Thai::Medium": "Muay Thai::Anuwat Kaewsamrit",
+    "Muay Thai::Hard": "Muay Thai::Wichannoi Porntawee",
+    "Boxing::Easy": "Boxing::Joe Frazier",
+    "Boxing::Medium": "Boxing::Deontay Wilder",
+    "Boxing::Hard": "Boxing::Floyd Patterson",
+    "Kickboxing::Easy": "Kickboxing::Badr Hari",
+    "Kickboxing::Medium": "Kickboxing::Rob Kaman",
+    "Kickboxing::Hard": "Kickboxing::Branko Cikatic",
+    "MMA::Easy": "MMA::Islam Makhachev",
+    "MMA::Medium": "MMA::Frankie Edgar",
+    "MMA::Hard": "MMA::Dan Severn",
+    "Expert (All Sports)::Easy": "Boxing::Naoya Inoue",
+    "Expert (All Sports)::Medium": "Boxing::Wladimir Klitschko",
+    "Expert (All Sports)::Hard": "Boxing::Nigel Benn"
   }
 }
