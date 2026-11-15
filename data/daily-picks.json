@@ -219,5 +219,22 @@
     "Expert (All Sports)::Easy": "Boxing::Naoya Inoue",
     "Expert (All Sports)::Medium": "Boxing::Wladimir Klitschko",
     "Expert (All Sports)::Hard": "Boxing::Nigel Benn"
+  },
+  "2026-11-17": {
+    "Muay Thai::Easy": "Muay Thai::Sagat Petchyindee",
+    "Muay Thai::Medium": "Muay Thai::Namsaknoi Yudthagarngamtorn",
+    "Muay Thai::Hard": "Muay Thai::Langsuan Panyuthaphum",
+    "Boxing::Easy": "Boxing::Tyson Fury",
+    "Boxing::Medium": "Boxing::Joe Louis",
+    "Boxing::Hard": "Boxing::Salvador Sanchez",
+    "Kickboxing::Easy": "Kickboxing::Rico Verhoeven",
+    "Kickboxing::Medium": "Kickboxing::Andy Souwer",
+    "Kickboxing::Hard": "Kickboxing::Kaew Fairtex",
+    "MMA::Easy": "MMA::Anderson Silva",
+    "MMA::Medium": "MMA::Nate Diaz",
+    "MMA::Hard": "MMA::Antonio Rogerio Nogueira",
+    "Expert (All Sports)::Easy": "Kickboxing::Mirko Cro Cop",
+    "Expert (All Sports)::Medium": "Boxing::Joe Louis",
+    "Expert (All Sports)::Hard": "Muay Thai::Kevin Ross"
   }
 }
