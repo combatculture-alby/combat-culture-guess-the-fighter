@@ -236,5 +236,22 @@
     "Expert (All Sports)::Easy": "Kickboxing::Mirko Cro Cop",
     "Expert (All Sports)::Medium": "Boxing::Joe Louis",
     "Expert (All Sports)::Hard": "Muay Thai::Kevin Ross"
+  },
+  "2026-11-18": {
+    "Muay Thai::Easy": "Muay Thai::Rodtang Jitmuangnon",
+    "Muay Thai::Medium": "Muay Thai::Yothin FA Group",
+    "Muay Thai::Hard": "Muay Thai::Neungsiam Fairtex",
+    "Boxing::Easy": "Boxing::Oscar De La Hoya",
+    "Boxing::Medium": "Boxing::Bernard Hopkins",
+    "Boxing::Hard": "Boxing::Vitali Klitschko",
+    "Kickboxing::Easy": "Kickboxing::Ernesto Hoost",
+    "Kickboxing::Medium": "Kickboxing::Nieky Holzken",
+    "Kickboxing::Hard": "Kickboxing::Tiffany van Soest",
+    "MMA::Easy": "MMA::Ronda Rousey",
+    "MMA::Medium": "MMA::Khamzat Chimaev",
+    "MMA::Hard": "MMA::Josh Barnett",
+    "Expert (All Sports)::Easy": "Boxing::Manny Pacquiao",
+    "Expert (All Sports)::Medium": "Kickboxing::Masaaki Noiri",
+    "Expert (All Sports)::Hard": "Muay Thai::Neungsiam Fairtex"
   }
 }
