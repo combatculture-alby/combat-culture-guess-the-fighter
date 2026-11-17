@@ -253,5 +253,22 @@
     "Expert (All Sports)::Easy": "Boxing::Manny Pacquiao",
     "Expert (All Sports)::Medium": "Kickboxing::Masaaki Noiri",
     "Expert (All Sports)::Hard": "Muay Thai::Neungsiam Fairtex"
+  },
+  "2026-11-19": {
+    "Muay Thai::Easy": "Muay Thai::Yodsanklai Fairtex",
+    "Muay Thai::Medium": "Muay Thai::Sylvie von Duuglas-Ittu",
+    "Muay Thai::Hard": "Muay Thai::Bunkerd Fairtex",
+    "Boxing::Easy": "Boxing::Canelo Alvarez",
+    "Boxing::Medium": "Boxing::Marvin Hagler",
+    "Boxing::Hard": "Boxing::David Tua",
+    "Kickboxing::Easy": "Kickboxing::Superbon Singha Mawynn",
+    "Kickboxing::Medium": "Kickboxing::Mike Bernardo",
+    "Kickboxing::Hard": "Kickboxing::Bill Wallace",
+    "MMA::Easy": "MMA::Tito Ortiz",
+    "MMA::Medium": "MMA::Rashad Evans",
+    "MMA::Hard": "MMA::Mark Coleman",
+    "Expert (All Sports)::Easy": "Boxing::Sugar Ray Leonard",
+    "Expert (All Sports)::Medium": "Kickboxing::Andy Souwer",
+    "Expert (All Sports)::Hard": "Muay Thai::Chamuekpet Hapalang"
   }
 }
