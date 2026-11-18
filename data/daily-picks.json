@@ -270,5 +270,22 @@
     "Expert (All Sports)::Easy": "Boxing::Sugar Ray Leonard",
     "Expert (All Sports)::Medium": "Kickboxing::Andy Souwer",
     "Expert (All Sports)::Hard": "Muay Thai::Chamuekpet Hapalang"
+  },
+  "2026-11-20": {
+    "Muay Thai::Easy": "Muay Thai::John Wayne Parr",
+    "Muay Thai::Medium": "Muay Thai::Sam-A Gaiyanghadao",
+    "Muay Thai::Hard": "Muay Thai::Panomtuanlek Hapalang",
+    "Boxing::Easy": "Boxing::Anthony Joshua",
+    "Boxing::Medium": "Boxing::Larry Holmes",
+    "Boxing::Hard": "Boxing::Chris Eubank Sr.",
+    "Kickboxing::Easy": "Kickboxing::Andy Hug",
+    "Kickboxing::Medium": "Kickboxing::Sitthichai Sitsongpeenong",
+    "Kickboxing::Hard": "Kickboxing::Rick Roufus",
+    "MMA::Easy": "MMA::Sean O'Malley",
+    "MMA::Medium": "MMA::Robbie Lawler",
+    "MMA::Hard": "MMA::Mark Coleman",
+    "Expert (All Sports)::Easy": "Muay Thai::Prajanchai P.K. Saenchaimuaythaigym",
+    "Expert (All Sports)::Medium": "Kickboxing::Sitthichai Sitsongpeenong",
+    "Expert (All Sports)::Hard": "Kickboxing::Albert Kraus"
   }
 }
