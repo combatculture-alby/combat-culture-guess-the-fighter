@@ -287,5 +287,22 @@
     "Expert (All Sports)::Easy": "Muay Thai::Prajanchai P.K. Saenchaimuaythaigym",
     "Expert (All Sports)::Medium": "Kickboxing::Sitthichai Sitsongpeenong",
     "Expert (All Sports)::Hard": "Kickboxing::Albert Kraus"
+  },
+  "2026-11-21": {
+    "Muay Thai::Easy": "Muay Thai::Stamp Fairtex",
+    "Muay Thai::Medium": "Muay Thai::Nabil Anane",
+    "Muay Thai::Hard": "Muay Thai::Chamuekpet Hapalang",
+    "Boxing::Easy": "Boxing::Oleksandr Usyk",
+    "Boxing::Medium": "Boxing::Shane Mosley",
+    "Boxing::Hard": "Boxing::Nigel Benn",
+    "Kickboxing::Easy": "Kickboxing::Alistair Overeem",
+    "Kickboxing::Medium": "Kickboxing::Masato",
+    "Kickboxing::Hard": "Kickboxing::Rick Roufus",
+    "MMA::Easy": "MMA::Charles Oliveira",
+    "MMA::Medium": "MMA::Zhang Weili",
+    "MMA::Hard": "MMA::Stephan Bonnar",
+    "Expert (All Sports)::Easy": "Boxing::Muhammad Ali",
+    "Expert (All Sports)::Medium": "Kickboxing::Mike Bernardo",
+    "Expert (All Sports)::Hard": "Boxing::Chris Eubank Sr."
   }
 }
