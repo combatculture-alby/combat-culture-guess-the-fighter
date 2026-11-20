@@ -304,5 +304,22 @@
     "Expert (All Sports)::Easy": "Boxing::Muhammad Ali",
     "Expert (All Sports)::Medium": "Kickboxing::Mike Bernardo",
     "Expert (All Sports)::Hard": "Boxing::Chris Eubank Sr."
+  },
+  "2026-11-22": {
+    "Muay Thai::Easy": "Muay Thai::Samart Payakaroon",
+    "Muay Thai::Medium": "Muay Thai::Samson Dutch Boy Gym",
+    "Muay Thai::Hard": "Muay Thai::Yodkhunpon Sittraiphum",
+    "Boxing::Easy": "Boxing::Naoya Inoue",
+    "Boxing::Medium": "Boxing::Gennady Golovkin",
+    "Boxing::Hard": "Boxing::Tommy Morrison",
+    "Kickboxing::Easy": "Kickboxing::Semmy Schilt",
+    "Kickboxing::Medium": "Kickboxing::Chingiz Allazov",
+    "Kickboxing::Hard": "Kickboxing::Petchtanong Petchfergus",
+    "MMA::Easy": "MMA::Holly Holm",
+    "MMA::Medium": "MMA::Urijah Faber",
+    "MMA::Hard": "MMA::Antonio Rogerio Nogueira",
+    "Expert (All Sports)::Easy": "MMA::Royce Gracie",
+    "Expert (All Sports)::Medium": "MMA::Rose Namajunas",
+    "Expert (All Sports)::Hard": "Muay Thai::Jean-Charles Skarbowsky"
   }
 }
