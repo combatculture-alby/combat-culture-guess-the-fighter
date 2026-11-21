@@ -321,5 +321,22 @@
     "Expert (All Sports)::Easy": "MMA::Royce Gracie",
     "Expert (All Sports)::Medium": "MMA::Rose Namajunas",
     "Expert (All Sports)::Hard": "Muay Thai::Jean-Charles Skarbowsky"
+  },
+  "2026-11-23": {
+    "Muay Thai::Easy": "Muay Thai::Buakaw Banchamek",
+    "Muay Thai::Medium": "Muay Thai::Petchmorakot Petchyindee Academy",
+    "Muay Thai::Hard": "Muay Thai::Malaipet Sasiprapa",
+    "Boxing::Easy": "Boxing::Roberto Duran",
+    "Boxing::Medium": "Boxing::Vasiliy Lomachenko",
+    "Boxing::Hard": "Boxing::Floyd Patterson",
+    "Kickboxing::Easy": "Kickboxing::Buakaw Banchamek",
+    "Kickboxing::Medium": "Kickboxing::Benny Urquidez",
+    "Kickboxing::Hard": "Kickboxing::Murat Direkci",
+    "MMA::Easy": "MMA::Alexander Volkanovski",
+    "MMA::Medium": "MMA::Antonio Rodrigo Nogueira",
+    "MMA::Hard": "MMA::Kimo Leopoldo",
+    "Expert (All Sports)::Easy": "MMA::Islam Makhachev",
+    "Expert (All Sports)::Medium": "MMA::Lyoto Machida",
+    "Expert (All Sports)::Hard": "Muay Thai::Yodkhunpon Sittraiphum"
   }
 }
