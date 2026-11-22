@@ -338,5 +338,22 @@
     "Expert (All Sports)::Easy": "MMA::Islam Makhachev",
     "Expert (All Sports)::Medium": "MMA::Lyoto Machida",
     "Expert (All Sports)::Hard": "Muay Thai::Yodkhunpon Sittraiphum"
+  },
+  "2026-11-24": {
+    "Muay Thai::Easy": "Muay Thai::Superbon Singha Mawynn",
+    "Muay Thai::Medium": "Muay Thai::Panpayak Jitmuangnon",
+    "Muay Thai::Hard": "Muay Thai::Superlek Sorn Esarn",
+    "Boxing::Easy": "Boxing::Lennox Lewis",
+    "Boxing::Medium": "Boxing::Adrien Broner",
+    "Boxing::Hard": "Boxing::Andy Ruiz",
+    "Kickboxing::Easy": "Kickboxing::Peter Aerts",
+    "Kickboxing::Medium": "Kickboxing::Mark Hunt",
+    "Kickboxing::Hard": "Kickboxing::Yoshihiro Sato",
+    "MMA::Easy": "MMA::Royce Gracie",
+    "MMA::Medium": "MMA::Dan Henderson",
+    "MMA::Hard": "MMA::Gilbert Melendez",
+    "Expert (All Sports)::Easy": "MMA::Jose Aldo",
+    "Expert (All Sports)::Medium": "MMA::Tony Ferguson",
+    "Expert (All Sports)::Hard": "Muay Thai::Malaipet Sasiprapa"
   }
 }
