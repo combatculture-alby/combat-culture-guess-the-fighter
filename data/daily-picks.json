@@ -355,5 +355,22 @@
     "Expert (All Sports)::Easy": "MMA::Jose Aldo",
     "Expert (All Sports)::Medium": "MMA::Tony Ferguson",
     "Expert (All Sports)::Hard": "Muay Thai::Malaipet Sasiprapa"
+  },
+  "2026-11-25": {
+    "Muay Thai::Easy": "Muay Thai::Jonathan Haggerty",
+    "Muay Thai::Medium": "Muay Thai::Dany Bill",
+    "Muay Thai::Hard": "Muay Thai::Jean-Charles Skarbowsky",
+    "Boxing::Easy": "Boxing::Roy Jones Jr.",
+    "Boxing::Medium": "Boxing::Thomas Hearns",
+    "Boxing::Hard": "Boxing::Tommy Morrison",
+    "Kickboxing::Easy": "Kickboxing::Giorgio Petrosyan",
+    "Kickboxing::Medium": "Kickboxing::Masaaki Noiri",
+    "Kickboxing::Hard": "Kickboxing::Albert Kraus",
+    "MMA::Easy": "MMA::Brock Lesnar",
+    "MMA::Medium": "MMA::Miesha Tate",
+    "MMA::Hard": "MMA::Gilbert Melendez",
+    "Expert (All Sports)::Easy": "Boxing::Evander Holyfield",
+    "Expert (All Sports)::Medium": "MMA::Zhang Weili",
+    "Expert (All Sports)::Hard": "Muay Thai::Boonlai Sor.Thanikul"
   }
 }
