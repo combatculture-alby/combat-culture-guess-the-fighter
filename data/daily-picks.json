@@ -372,5 +372,22 @@
     "Expert (All Sports)::Easy": "Boxing::Evander Holyfield",
     "Expert (All Sports)::Medium": "MMA::Zhang Weili",
     "Expert (All Sports)::Hard": "Muay Thai::Boonlai Sor.Thanikul"
+  },
+  "2026-11-26": {
+    "Muay Thai::Easy": "Muay Thai::Dieselnoi Chor Thanasukarn",
+    "Muay Thai::Medium": "Muay Thai::Saeksan Or. Kwanmuang",
+    "Muay Thai::Hard": "Muay Thai::Mathee Jadeepitak",
+    "Boxing::Easy": "Boxing::Mike Tyson",
+    "Boxing::Medium": "Boxing::Terence Crawford",
+    "Boxing::Hard": "Boxing::Jaron Ennis",
+    "Kickboxing::Easy": "Kickboxing::Mirko Cro Cop",
+    "Kickboxing::Medium": "Kickboxing::Anissa Meksen",
+    "Kickboxing::Hard": "Kickboxing::Maurice Smith",
+    "MMA::Easy": "MMA::Randy Couture",
+    "MMA::Medium": "MMA::Wanderlei Silva",
+    "MMA::Hard": "MMA::Mark Kerr",
+    "Expert (All Sports)::Easy": "Kickboxing::Buakaw Banchamek",
+    "Expert (All Sports)::Medium": "MMA::Rafael dos Anjos",
+    "Expert (All Sports)::Hard": "Muay Thai::Mathee Jadeepitak"
   }
 }
