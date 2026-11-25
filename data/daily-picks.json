@@ -389,5 +389,22 @@
     "Expert (All Sports)::Easy": "Kickboxing::Buakaw Banchamek",
     "Expert (All Sports)::Medium": "MMA::Rafael dos Anjos",
     "Expert (All Sports)::Hard": "Muay Thai::Mathee Jadeepitak"
+  },
+  "2026-11-27": {
+    "Muay Thai::Easy": "Muay Thai::Saenchai Sor Kingstar",
+    "Muay Thai::Medium": "Muay Thai::Yodwicha Por.Boonsit",
+    "Muay Thai::Hard": "Muay Thai::Toshio Fujiwara",
+    "Boxing::Easy": "Boxing::Floyd Mayweather",
+    "Boxing::Medium": "Boxing::Dmitry Bivol",
+    "Boxing::Hard": "Boxing::Vitali Klitschko",
+    "Kickboxing::Easy": "Kickboxing::Tenshin Nasukawa",
+    "Kickboxing::Medium": "Kickboxing::Jerome Le Banner",
+    "Kickboxing::Hard": "Kickboxing::Yuta Kubo",
+    "MMA::Easy": "MMA::Alex Pereira",
+    "MMA::Medium": "MMA::Valentina Shevchenko",
+    "MMA::Hard": "MMA::Don Frye",
+    "Expert (All Sports)::Easy": "Muay Thai::Lerdsila Chumpairtour",
+    "Expert (All Sports)::Medium": "Muay Thai::Namsaknoi Yudthagarngamtorn",
+    "Expert (All Sports)::Hard": "Muay Thai::Kulabdam Sor.Jor.Piek-U-Thai"
   }
 }
