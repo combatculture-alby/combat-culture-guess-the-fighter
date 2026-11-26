@@ -406,5 +406,22 @@
     "Expert (All Sports)::Easy": "Muay Thai::Lerdsila Chumpairtour",
     "Expert (All Sports)::Medium": "Muay Thai::Namsaknoi Yudthagarngamtorn",
     "Expert (All Sports)::Hard": "Muay Thai::Kulabdam Sor.Jor.Piek-U-Thai"
+  },
+  "2026-11-28": {
+    "Muay Thai::Easy": "Muay Thai::Lerdsila Chumpairtour",
+    "Muay Thai::Medium": "Muay Thai::Dani Rodriguez",
+    "Muay Thai::Hard": "Muay Thai::Kevin Ross",
+    "Boxing::Easy": "Boxing::Manny Pacquiao",
+    "Boxing::Medium": "Boxing::Shakur Stevenson",
+    "Boxing::Hard": "Boxing::Tommy Morrison",
+    "Kickboxing::Easy": "Kickboxing::Remy Bonjasky",
+    "Kickboxing::Medium": "Kickboxing::Ray Sefo",
+    "Kickboxing::Hard": "Kickboxing::Joe Lewis",
+    "MMA::Easy": "MMA::Conor McGregor",
+    "MMA::Medium": "MMA::Cain Velasquez",
+    "MMA::Hard": "MMA::Renzo Gracie",
+    "Expert (All Sports)::Easy": "Boxing::Julio Cesar Chavez",
+    "Expert (All Sports)::Medium": "MMA::Frank Shamrock",
+    "Expert (All Sports)::Hard": "MMA::Gilbert Melendez"
   }
 }
