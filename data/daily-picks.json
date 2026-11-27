@@ -423,5 +423,22 @@
     "Expert (All Sports)::Easy": "Boxing::Julio Cesar Chavez",
     "Expert (All Sports)::Medium": "MMA::Frank Shamrock",
     "Expert (All Sports)::Hard": "MMA::Gilbert Melendez"
+  },
+  "2026-11-29": {
+    "Muay Thai::Easy": "Muay Thai::Prajanchai P.K. Saenchaimuaythaigym",
+    "Muay Thai::Medium": "Muay Thai::Sangmanee Sor Tienpo",
+    "Muay Thai::Hard": "Muay Thai::Phet-ek Sitjaopho",
+    "Boxing::Easy": "Boxing::Sugar Ray Robinson",
+    "Boxing::Medium": "Boxing::Wladimir Klitschko",
+    "Boxing::Hard": "Boxing::Pernell Whitaker",
+    "Kickboxing::Easy": "Kickboxing::Semmy Schilt",
+    "Kickboxing::Medium": "Kickboxing::Chingiz Allazov",
+    "Kickboxing::Hard": "Kickboxing::Don Wilson",
+    "MMA::Easy": "MMA::Max Holloway",
+    "MMA::Medium": "MMA::Mauricio Shogun Rua",
+    "MMA::Hard": "MMA::Renzo Gracie",
+    "Expert (All Sports)::Easy": "MMA::Sean O'Malley",
+    "Expert (All Sports)::Medium": "MMA::Forrest Griffin",
+    "Expert (All Sports)::Hard": "Muay Thai::Chatchai Paiseetong"
   }
 }
