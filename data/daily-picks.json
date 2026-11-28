@@ -440,5 +440,22 @@
     "Expert (All Sports)::Easy": "MMA::Sean O'Malley",
     "Expert (All Sports)::Medium": "MMA::Forrest Griffin",
     "Expert (All Sports)::Hard": "Muay Thai::Chatchai Paiseetong"
+  },
+  "2026-11-30": {
+    "Muay Thai::Easy": "Muay Thai::Liam Harrison",
+    "Muay Thai::Medium": "Muay Thai::Fabio Pinca",
+    "Muay Thai::Hard": "Muay Thai::Veeraphol Sahaprom",
+    "Boxing::Easy": "Boxing::George Foreman",
+    "Boxing::Medium": "Boxing::Juan Manuel Marquez",
+    "Boxing::Hard": "Boxing::Jack Johnson",
+    "Kickboxing::Easy": "Kickboxing::Takeru Segawa",
+    "Kickboxing::Medium": "Kickboxing::Petchpanomrung Kiatmuu9",
+    "Kickboxing::Hard": "Kickboxing::Sam Greco",
+    "MMA::Easy": "MMA::Daniel Cormier",
+    "MMA::Medium": "MMA::Rose Namajunas",
+    "MMA::Hard": "MMA::Dan Severn",
+    "Expert (All Sports)::Easy": "Muay Thai::Stamp Fairtex",
+    "Expert (All Sports)::Medium": "Muay Thai::Yothin FA Group",
+    "Expert (All Sports)::Hard": "MMA::Mark Coleman"
   }
 }
